@@ -1,13 +1,7 @@
-# OS
+GUIDE-RAPIDE.md
+RAPPORT-QA.md
+README-CONTINUATION.md
 .DS_Store
 Thumbs.db
-
-# IDE
 .vscode/
 .idea/
-*.swp
-*.swo
-
-# Local
-node_modules/
-*.log
