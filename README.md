@@ -2,6 +2,12 @@
 
 > An interactive bedtime storybook with text-to-speech narration. 31 enchanting stories designed for children ages 6+, featuring the hero **Amine**.
 
+## 📖 Read Now
+
+**[👉 Open the book in your browser](https://cdn.jsdelivr.net/gh/theb2a/night-audio-book@main/livre-histoires.html)**
+
+No installation needed — just click and start reading!
+
 ## Features
 
 ✨ **31 Interactive Stories**
@@ -28,22 +34,33 @@
 
 ## Getting Started
 
-### Open in Browser
+### Option 1: Read Online (No Installation)
 
-Simply open `livre-histoires.html` in any modern web browser:
-```bash
-# On Mac/Linux
-open livre-histoires.html
+Click the link at the top of this page to read directly in your browser. The book is served instantly via jsDelivr CDN.
 
-# On Windows
-start livre-histoires.html
-```
+### Option 2: Open Locally
 
-Or serve it locally:
-```bash
-python -m http.server 8000
-# Visit http://localhost:8000/livre-histoires.html
-```
+1. **Download or clone this repo:**
+   ```bash
+   git clone https://github.com/theb2a/night-audio-book.git
+   cd night-audio-book
+   ```
+
+2. **Open `livre-histoires.html` in your browser:**
+   ```bash
+   # On Mac/Linux
+   open livre-histoires.html
+
+   # On Windows
+   start livre-histoires.html
+   ```
+
+3. **(Optional) Serve locally to test on other devices:**
+   ```bash
+   python -m http.server 8000
+   # Visit http://localhost:8000/livre-histoires.html
+   # Or from another device: http://YOUR_IP:8000/livre-histoires.html
+   ```
 
 ### How to Use
 
