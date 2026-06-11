@@ -4,9 +4,14 @@
 
 ## 📖 Read Now
 
-**[👉 Open the book in your browser](https://cdn.jsdelivr.net/gh/theb2a/night-audio-book@main/livre-histoires.html)**
+### ⭐ Main Link (GitHub Pages)
+**[👉 Open the book in your browser](https://theb2a.github.io/night-audio-book/livre-histoires.html)**
 
-No installation needed — just click and start reading!
+No installation needed — hosted directly on GitHub Pages!
+
+### Alternative Links
+- **jsDelivr CDN**: https://cdn.jsdelivr.net/gh/theb2a/night-audio-book@main/livre-histoires.html
+- **GitHub Raw**: https://raw.githubusercontent.com/theb2a/night-audio-book/main/livre-histoires.html
 
 ## Features
 
@@ -34,9 +39,9 @@ No installation needed — just click and start reading!
 
 ## Getting Started
 
-### Option 1: Read Online (No Installation)
+### Option 1: Read from GitHub Pages (Recommended)
 
-Click the link at the top of this page to read directly in your browser. The book is served instantly via jsDelivr CDN.
+Click **"Open the book in your browser"** at the top of this page. The book is served directly from GitHub Pages — no installation, no setup, just instant access.
 
 ### Option 2: Open Locally
 
