@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Le Grand Livre des Histoires du Soir — Tome 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Fredoka:wght@500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night-1:#1a1147;
+    --night-2:#2a1f6b;
+    --night-3:#3b2c8f;
+    --lamp:#ffd27a;
+    --lamp-soft:#ffe9c2;
+    --page:#fff7ea;
+    --page-edge:#f0e2c8;
+    --ink:#3a2e4f;
+    --ink-soft:#6b5f7d;
+    --grass:#6cbb3c;
+    --grass-d:#4e8a2a;
+    --creeper:#67c860;
+    --goku-aura:#ffd60a;
+    --diamond:#5be0d8;
+    --heart:#ff7a9c;
+    --cat-hero:#ff8a3d;
+    --cat-fun:#ffcf3d;
+    --cat-manners:#5bd0e8;
+    --cat-family:#ff7a9c;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;height:100%;}
+  body{
+    font-family:'Baloo 2','Fredoka','Trebuchet MS',sans-serif;
+    background:
+      radial-gradient(circle at 18% 12%, rgba(255,210,122,.18), transparent 40%),
+      radial-gradient(circle at 82% 85%, rgba(91,224,216,.14), transparent 45%),
+      linear-gradient(160deg,var(--night-1),var(--night-2) 55%,var(--night-3));
+    color:var(--page);
+    min-height:100%;
+    overflow-x:hidden;
+    display:flex;flex-direction:column;align-items:center;
+    padding:14px;
+  }
+  /* étoiles d'ambiance */
+  .stars{position:fixed;inset:0;pointer-events:none;z-index:0;}
+  .star-dot{position:absolute;background:#fff;border-radius:50%;opacity:.8;
+    animation:twinkle 3s ease-in-out infinite;}
+  @keyframes twinkle{0%,100%{opacity:.15;transform:scale(.7)}50%{opacity:.9;transform:scale(1.1)}}
+
+  .wrap{position:relative;z-index:2;width:100%;max-width:560px;display:flex;flex-direction:column;align-items:center;}
+
+  header.topbar{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;}
+  .brand{display:flex;align-items:center;gap:9px;}
+  .brand .moon{width:26px;height:26px;border-radius:50%;
+    background:radial-gradient(circle at 35% 35%,#fff6da,#ffd27a);
+    box-shadow:0 0 16px rgba(255,210,122,.7);}
+  .brand b{font-family:'Fredoka',sans-serif;font-weight:700;font-size:15px;letter-spacing:.3px;}
+  .home-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+    color:var(--page);font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;
+    padding:8px 14px;border-radius:14px;cursor:pointer;backdrop-filter:blur(4px);transition:.2s;}
+  .home-btn:hover{background:rgba(255,255,255,.22);}
+  .home-btn:active{transform:scale(.96);}
+
+  /* === LIVRE === */
+  .book{position:relative;width:100%;aspect-ratio:3/4;max-height:74vh;
+    perspective:1800px;}
+  .page{
+    position:absolute;inset:0;background:linear-gradient(160deg,var(--page),#fdeccf);
+    border-radius:22px;
+    box-shadow:0 18px 40px rgba(10,6,40,.55), inset 0 0 0 6px rgba(255,255,255,.5),
+      inset 6px 0 22px rgba(0,0,0,.06);
+    color:var(--ink);
+    padding:20px 20px 16px;
+    display:flex;flex-direction:column;
+    transform-origin:left center;
+    backface-visibility:hidden;
+    overflow:hidden;
+  }
+  .page::before{content:"";position:absolute;left:0;top:0;bottom:0;width:16px;
+    background:linear-gradient(90deg,rgba(0,0,0,.10),transparent);border-radius:22px 0 0 22px;}
+  .page.flip-out{animation:flipOut .34s ease-in forwards;}
+  .page.flip-in{animation:flipIn .34s ease-out forwards;}
+  @keyframes flipOut{from{transform:rotateY(0);opacity:1}to{transform:rotateY(-95deg);opacity:.25}}
+  @keyframes flipIn{from{transform:rotateY(95deg);opacity:.25}to{transform:rotateY(0);opacity:1}}
+
+  /* bandeau catégorie */
+  .cat-tag{align-self:flex-start;display:inline-flex;align-items:center;gap:7px;
+    font-family:'Fredoka',sans-serif;font-weight:700;font-size:12px;text-transform:uppercase;
+    letter-spacing:.6px;color:#fff;padding:5px 12px;border-radius:999px;margin-bottom:6px;}
+  .story-no{position:absolute;top:18px;right:20px;font-family:'Press Start 2P',monospace;
+    font-size:11px;color:var(--ink-soft);opacity:.8;}
+
+  .illus{width:100%;height:42%;min-height:150px;display:flex;align-items:center;justify-content:center;
+    margin:2px 0 6px;}
+  .illus svg{width:auto;height:100%;max-width:100%;}
+
+  .page h2{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(20px,5.4vw,26px);
+    line-height:1.1;margin:2px 0 8px;color:var(--ink);}
+  .story-text{font-size:clamp(15px,3.9vw,18px);line-height:1.5;color:#4a3d5c;overflow-y:auto;flex:1;padding-right:4px;}
+  .story-text p{margin:0 0 10px;}
+  .story-text::-webkit-scrollbar{width:8px;}
+  .story-text::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:8px;}
+
+  /* COUVERTURE */
+  .cover{align-items:center;justify-content:center;text-align:center;gap:6px;
+    background:
+      radial-gradient(circle at 50% 22%, rgba(255,210,122,.45), transparent 55%),
+      linear-gradient(165deg,#2a1f6b,#1a1147);
+    color:var(--page);}
+  .cover::before{display:none;}
+  .cover .eyebrow{font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:1px;color:var(--lamp);}
+  .cover h1{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(26px,7vw,40px);
+    line-height:1.05;margin:6px 18px 4px;text-shadow:0 3px 0 rgba(0,0,0,.25);}
+  .cover .sub{font-size:15px;color:var(--lamp-soft);margin-bottom:8px;}
+  .cover .cover-art{height:36%;min-height:120px;display:flex;align-items:center;justify-content:center;}
+  .cover .start{margin-top:14px;background:linear-gradient(180deg,#ff9d4d,#ff7a3d);
+    color:#fff;border:none;font-family:'Fredoka',sans-serif;font-weight:700;font-size:18px;
+    padding:13px 30px;border-radius:18px;cursor:pointer;box-shadow:0 8px 0 #c9531f,0 14px 24px rgba(0,0,0,.4);
+    transition:.12s;}
+  .cover .start:active{transform:translateY(5px);box-shadow:0 3px 0 #c9531f;}
+  .cover .pour{margin-top:12px;font-size:14px;color:rgba(255,255,255,.7);}
+
+  /* SOMMAIRE */
+  .menu{position:relative;z-index:2;width:100%;max-width:560px;display:none;flex-direction:column;gap:14px;}
+  .menu.show{display:flex;}
+  .menu h3{font-family:'Fredoka',sans-serif;font-weight:700;font-size:17px;margin:4px 2px;
+    display:flex;align-items:center;gap:8px;color:#fff;}
+  .menu h3 .pip{width:12px;height:12px;border-radius:4px;}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+  .scard{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);
+    border-radius:14px;padding:11px 12px;cursor:pointer;display:flex;flex-direction:column;gap:3px;
+    transition:.15s;backdrop-filter:blur(3px);}
+  .scard:hover{background:rgba(255,255,255,.18);transform:translateY(-2px);}
+  .scard:active{transform:scale(.97);}
+  .scard .nn{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--lamp);}
+  .scard .tt{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;line-height:1.15;color:#fff;}
+
+  /* NAV */
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;margin-top:14px;}
+  .nbtn{flex:0 0 auto;width:58px;height:58px;border-radius:50%;border:none;cursor:pointer;
+    background:linear-gradient(180deg,#6a4fd0,#4a34a8);color:#fff;font-size:26px;font-weight:700;
+    box-shadow:0 6px 0 #2e1f74,0 10px 18px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;
+    transition:.12s;}
+  .nbtn:active{transform:translateY(4px);box-shadow:0 2px 0 #2e1f74;}
+  .nbtn:disabled{opacity:.35;box-shadow:0 6px 0 #2e1f74;cursor:default;}
+  .progress{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;}
+  .pcount{font-family:'Fredoka',sans-serif;font-weight:700;font-size:14px;color:var(--lamp-soft);}
+  .pbar{width:100%;height:9px;background:rgba(255,255,255,.14);border-radius:999px;overflow:hidden;}
+  .pfill{height:100%;width:0;background:linear-gradient(90deg,var(--lamp),#ff8a3d);border-radius:999px;transition:width .35s ease;}
+
+  .hint{margin-top:10px;font-size:12px;color:rgba(255,255,255,.55);text-align:center;}
+
+  /* contrôles de lecture à voix haute */
+  .speak-ctl{display:flex;gap:8px;justify-content:center;align-items:center;margin-top:10px;flex:0 0 auto;flex-wrap:wrap;}
+  .speak-btn{background:linear-gradient(180deg,#ffd27a,#ffba4a);color:#5a3b12;border:none;
+    font-family:'Fredoka',sans-serif;font-weight:700;font-size:15px;
+    padding:10px 18px;border-radius:14px;cursor:pointer;
+    box-shadow:0 4px 0 #c98a2a,0 8px 14px rgba(0,0,0,.18);transition:.12s;}
+  .speak-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #c98a2a;}
+  .speak-btn.s-pause{background:linear-gradient(180deg,#9be7a0,#5fcf6a);color:#0f481b;box-shadow:0 4px 0 #2f8a3a;}
+  .speak-btn.s-pause:active{box-shadow:0 1px 0 #2f8a3a;}
+  .speak-btn.s-stop{background:linear-gradient(180deg,#ff9d9d,#ff6b6b);color:#fff;box-shadow:0 4px 0 #c93a3a;padding:10px 14px;}
+  .speak-btn.s-stop:active{box-shadow:0 1px 0 #c93a3a;}
+  .speak-btn:focus-visible{outline:3px solid var(--lamp);outline-offset:3px;}
+
+  /* jauge de progression audio (lecture à voix haute) */
+  .audio-progress{width:100%;display:none;flex-direction:column;align-items:center;gap:4px;margin-top:8px;}
+  .audio-progress .alabel{font-family:'Fredoka',sans-serif;font-weight:600;font-size:11px;color:var(--lamp-soft);letter-spacing:.3px;}
+  .abar{width:100%;height:7px;background:rgba(255,255,255,.14);border-radius:999px;overflow:hidden;}
+  .afill{height:100%;width:0%;background:linear-gradient(90deg,var(--diamond),#3ec8c0);border-radius:999px;transition:width .25s linear;}
+
+  /* ANIMATIONS ILLUSTRATIONS */
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-5px) rotate(2deg)}}
+  @keyframes pulse{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.12);opacity:1}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes spark{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:1;transform:scale(1.15)}}
+  @keyframes sway{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
+  @keyframes bounce{0%,100%{transform:translateY(0)}40%{transform:translateY(-16px)}60%{transform:translateY(-8px)}}
+  @keyframes shoot{0%{transform:translate(40px,-40px);opacity:0}20%{opacity:1}100%{transform:translate(-30px,30px);opacity:0}}
+  @keyframes hue{to{filter:hue-rotate(360deg)}}
+  .a-float{animation:float 3s ease-in-out infinite;transform-origin:center;}
+  .a-bob{animation:bob 2.4s ease-in-out infinite;transform-origin:center bottom;}
+  .a-pulse{animation:pulse 2s ease-in-out infinite;transform-origin:center;}
+  .a-spin{animation:spin 9s linear infinite;transform-origin:center;}
+  .a-spark{animation:spark 1.6s ease-in-out infinite;transform-origin:center;}
+  .a-sway{animation:sway 3s ease-in-out infinite;transform-origin:center bottom;}
+  .a-bounce{animation:bounce 1.6s ease-in-out infinite;transform-origin:center bottom;}
+  .a-shoot{animation:shoot 2.2s ease-in infinite;}
+  .a-hue{animation:hue 6s linear infinite;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms!important;animation-iteration-count:1!important;}
+    .star-dot{display:none;}
+  }
+  .nbtn:focus-visible,.home-btn:focus-visible,.scard:focus-visible,.start:focus-visible{outline:3px solid var(--lamp);outline-offset:3px;}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+
+<!-- VUE LIVRE -->
+<div class="wrap" id="bookView">
+  <header class="topbar">
+    <div class="brand"><span class="moon"></span><b>Histoires du Soir · T2</b></div>
+    <button type="button" class="home-btn" id="menuBtn">📖 Sommaire</button>
+  </header>
+
+  <div class="book" id="book">
+    <div class="page" id="page"></div>
+  </div>
+
+  <div class="nav">
+    <button type="button" class="nbtn" id="prev" aria-label="Page précédente">‹</button>
+    <div class="progress">
+      <div class="pcount" id="pcount"></div>
+      <div class="pbar"><div class="pfill" id="pfill"></div></div>
+    </div>
+    <button type="button" class="nbtn" id="next" aria-label="Page suivante">›</button>
+  </div>
+  <div class="hint">Touche les flèches ou glisse la page • Bonne nuit 🌙</div>
+</div>
+
+<!-- VUE SOMMAIRE -->
+<div class="menu" id="menuView">
+  <header class="topbar">
+    <div class="brand"><span class="moon"></span><b>Sommaire</b></div>
+    <button type="button" class="home-btn" id="backBtn">← Lecture</button>
+  </header>
+  <div id="menuList"></div>
+</div>
+
+<script>
+/* ============ ILLUSTRATIONS (SVG + animation) ============ */
+function px(x,y,w,h,c){return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${c}"/>`;}
+
+// Figure réutilisable d'Amine (héros à la cape rouge), centrée ~ (100,100)
+function amineHero(o){
+  o=o||{};
+  const cape = (o.cape!==false)
+    ? `<g class="a-sway"><path d="M82 80 Q56 124 70 170 L100 150 L100 88 Z" fill="#e23b4e"/>
+        <path d="M118 80 Q144 124 130 170 L100 150 L100 88 Z" fill="#c8243a"/></g>` : '';
+  const arms = (o.armUp!==false)
+    ? `<rect x="118" y="58" width="13" height="34" rx="6" fill="#c68642" transform="rotate(32 124 75)"/>
+       <rect x="69" y="86" width="13" height="32" rx="6" fill="#c68642"/>`
+    : `<rect x="64" y="88" width="13" height="32" rx="6" fill="#c68642"/>
+       <rect x="123" y="88" width="13" height="32" rx="6" fill="#c68642"/>`;
+  return `${cape}<g class="a-float">
+      <circle cx="100" cy="58" r="26" fill="#c68642"/>
+      <path d="M75 54 Q100 24 125 54 Q126 40 100 35 Q74 40 75 54 Z" fill="#241006"/>
+      ${px(89,55,7,8,'#241006')}${px(104,55,7,8,'#241006')}
+      <path d="M92 70 q8 7 16 0" stroke="#7a4a2a" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <rect x="78" y="82" width="44" height="46" rx="11" fill="#2b6fd6"/>
+      <path d="M100 92 l7 15 -7 5 -7-5 z" fill="#ffd60a"/>
+      ${arms}
+      <rect x="82" y="128" width="15" height="30" rx="5" fill="#26408c"/>
+      <rect x="103" y="128" width="15" height="30" rx="5" fill="#26408c"/>
+    </g>`;
+}
+
+// Figure réutilisable de Leyla (la petite sœur de 2 ans), repère interne centré sur son torse
+function leylaToddler(o){
+  o=o||{};
+  const armUp=(o.armUp!==false);
+  const arm = armUp
+    ? `<rect x="10" y="6" width="9" height="20" rx="4" fill="#f3c9a0" transform="rotate(-30 14 12)"/>`
+    : `<rect x="10" y="16" width="9" height="20" rx="4" fill="#f3c9a0"/>`;
+  return `<g>
+      <circle cx="-13" cy="-20" r="6" fill="#3a2a18"/>
+      <circle cx="13" cy="-20" r="6" fill="#3a2a18"/>
+      <circle cx="0" cy="-8" r="16" fill="#f3c9a0"/>
+      <path d="M-14 -16 Q0 -30 14 -16 Q13 -22 0 -23 Q-13 -22 -14 -16 Z" fill="#3a2a18"/>
+      <circle cx="-6" cy="-10" r="2.2" fill="#241006"/><circle cx="6" cy="-10" r="2.2" fill="#241006"/>
+      <path d="M-5 -1 q5 4 10 0" stroke="#a05a2a" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <ellipse cx="0" cy="26" rx="16" ry="9" fill="#a85ad0"/>
+      <rect x="-15" y="2" width="30" height="26" rx="13" fill="#c878dd"/>
+      <rect x="-23" y="6" width="9" height="16" rx="4" fill="#f3c9a0"/>
+      ${arm}
+      <rect x="-9" y="26" width="8" height="12" rx="4" fill="#f3c9a0"/>
+      <rect x="1" y="26" width="8" height="12" rx="4" fill="#f3c9a0"/>
+    </g>`;
+}
+
+const SCENES = {
+  // --- AMINE seul ---
+  amine(){return `<svg viewBox="0 0 200 200">
+    <g class="a-pulse"><circle cx="100" cy="98" r="60" fill="#ff8a3d" opacity=".20"/></g>
+    ${amineHero({armUp:true})}
+    <g class="a-spark"><path d="M150 48 l4 10 10 4 -10 4 -4 10 -4-10 -10-4 10-4z" fill="#fff"/></g>
+    <g class="a-spark" style="animation-delay:.7s"><path d="M44 66 l3 8 8 3 -8 3 -3 8 -3-8 -8-3 8-3z" fill="#ffd60a"/></g>
+    ${px(20,160,160,30,'#4e8a2a')}${px(20,160,160,8,'#6cbb3c')}</svg>`;},
+
+  // --- AMINE & LEYLA (10 scènes) ---
+  amineLeylaTower(){return `<svg viewBox="0 0 200 200">
+    <g class="a-bob"><rect x="20" y="120" width="26" height="26" fill="#caa07a"/><rect x="20" y="94" width="26" height="26" fill="#e8c29a"/><rect x="20" y="68" width="26" height="26" fill="#caa07a"/></g>
+    <g transform="translate(-10,8) scale(0.8)">${amineHero({armUp:true})}</g>
+    <g transform="translate(150,118) scale(1.7)">${leylaToddler({armUp:true})}</g>
+    ${px(20,160,160,30,'#4e8a2a')}${px(20,160,160,8,'#6cbb3c')}</svg>`;},
+
+  amineLeylaMonster(){return `<svg viewBox="0 0 200 200">
+    <g class="a-float"><circle cx="150" cy="44" r="22" fill="#ffe9a8"/><circle cx="160" cy="38" r="19" fill="#1a1147"/></g>
+    <g class="a-sway"><ellipse cx="48" cy="80" rx="22" ry="30" fill="#2a1f6b" opacity=".55"/></g>
+    <g transform="translate(-12,10) scale(0.8)">${amineHero({armUp:false})}</g>
+    <g transform="translate(150,120) scale(1.7)">${leylaToddler({armUp:false})}</g>
+    ${px(20,162,160,28,'#3a4a8a')}${px(20,162,160,8,'#5a6ab0')}</svg>`;},
+
+  amineLeylaRescue(){return `<svg viewBox="0 0 200 200">
+    <g class="a-pulse"><ellipse cx="120" cy="150" rx="50" ry="16" fill="#5bd0e8" opacity=".5"/></g>
+    <g class="a-bounce"><circle cx="128" cy="138" r="11" fill="#ff7a3d"/></g>
+    <g transform="translate(-30,6) scale(0.82)">${amineHero({armUp:true})}</g>
+    <g transform="translate(150,108) scale(1.6)">${leylaToddler({armUp:false})}</g>
+    ${px(0,168,200,32,'#4e8a2a')}</svg>`;},
+
+  amineLeylaCape(){return `<svg viewBox="0 0 200 200">
+    <g class="a-pulse"><circle cx="100" cy="100" r="64" fill="#ffd60a" opacity=".18"/></g>
+    <g transform="translate(-12,8) scale(0.8)">${amineHero({armUp:true})}</g>
+    <g class="a-sway" transform="translate(150,118) scale(1.7)"><path d="M-14 -2 Q-30 24 -18 46 L0 32 L0 4 Z" fill="#a85ad0"/></g>
+    <g transform="translate(150,118) scale(1.7)">${leylaToddler({armUp:true})}</g>
+    ${px(20,160,160,30,'#4e8a2a')}${px(20,160,160,8,'#6cbb3c')}</svg>`;},
+
+  amineLeylaPeekaboo(){return `<svg viewBox="0 0 200 200">
+    <g class="a-spark"><text x="36" y="46" font-size="20">✨</text></g>
+    <g class="a-spark" style="animation-delay:.6s"><text x="148" y="60" font-size="20">✨</text></g>
+    <g transform="translate(-14,10) scale(0.8)">${amineHero({armUp:true})}</g>
+    <g transform="translate(150,120) scale(1.7)">${leylaToddler({armUp:true})}</g>
+    ${px(20,160,160,30,'#4e8a2a')}${px(20,160,160,8,'#6cbb3c')}</svg>`;},
+
+  amineLeylaMess(){return `<svg viewBox="0 0 200 200">
+    <g class="a-spin"><circle cx="40" cy="60" r="7" fill="#ff5757"/></g>
+    <g class="a-spin" style="animation-delay:.3s"><circle cx="160" cy="50" r="6" fill="#19a0e0"/></g>
+    <g class="a-spin" style="animation-delay:.6s"><circle cx="56" cy="150" r="6" fill="#3aa24a"/></g>
+    <g class="a-spin" style="animation-delay:.9s"><circle cx="150" cy="148" r="7" fill="#ffd84d"/></g>
+    <g transform="translate(-12,10) scale(0.8)">${amineHero({armUp:false})}</g>
+    <g transform="translate(150,120) scale(1.7)">${leylaToddler({armUp:true})}</g></svg>`;},
+
+  amineLeylaShare(){return `<svg viewBox="0 0 200 200">
+    <g class="a-bob"><ellipse cx="100" cy="118" rx="18" ry="14" fill="#caa07a"/><circle cx="100" cy="100" r="13" fill="#caa07a"/>
+      ${px(95,96,4,4,'#222')}${px(103,96,4,4,'#222')}</g>
+    <g transform="translate(-26,10) scale(0.78)">${amineHero({armUp:false})}</g>
+    <g transform="translate(150,120) scale(1.6)">${leylaToddler({armUp:false})}</g>
+    ${px(20,160,160,30,'#4e8a2a')}${px(20,160,160,8,'#6cbb3c')}</svg>`;},
+
+  amineLeylaPlease(){return `<svg viewBox="0 0 200 200">
+    <g class="a-float"><path d="M120 36 q24 -4 26 18 q1 14 -14 16 l-4 12 -6 -11 q-14 -2 -14 -16 q0 -16 12 -19 z" fill="#fff" opacity=".92"/>
+      <text x="130" y="60" font-size="10" fill="#3a2e4f">S'il te plaît</text></g>
+    <g transform="translate(-14,12) scale(0.8)">${amineHero({armUp:false})}</g>
+    <g transform="translate(150,122) scale(1.7)">${leylaToddler({armUp:true})}</g>
+    ${px(20,162,160,28,'#3a4a8a')}${px(20,162,160,8,'#5a6ab0')}</svg>`;},
+
+  amineLeylaWalk(){return `<svg viewBox="0 0 200 200">
+    <g class="a-pulse"><circle cx="58" cy="168" r="5" fill="#fff" opacity=".5"/><circle cx="78" cy="172" r="5" fill="#fff" opacity=".4"/>
+      <circle cx="100" cy="168" r="5" fill="#fff" opacity=".5"/><circle cx="120" cy="172" r="5" fill="#fff" opacity=".4"/></g>
+    <g transform="translate(-18,12) scale(0.78)">${amineHero({armUp:false})}</g>
+    <g transform="translate(148,118) scale(1.6)">${leylaToddler({armUp:true})}</g>
+    ${px(20,160,160,30,'#4e8a2a')}${px(20,160,160,8,'#6cbb3c')}</svg>`;},
+
+  amineLeylaSleep(){return `<svg viewBox="0 0 200 200">
+    <g class="a-float"><circle cx="150" cy="44" r="24" fill="#ffe9a8"/><circle cx="160" cy="38" r="21" fill="#2a1f6b"/></g>
+    <g class="a-spark"><text x="36" y="42" font-size="14">⭐</text></g>
+    <g class="a-bob"><rect x="46" y="132" width="116" height="34" rx="10" fill="#9a6ad0"/>
+      <rect x="46" y="124" width="28" height="16" rx="6" fill="#fff"/></g>
+    <g transform="translate(-10,2) scale(0.62)">${amineHero({armUp:false,cape:false})}</g>
+    <g transform="translate(130,86) scale(1.2)">${leylaToddler({armUp:false})}</g></svg>`;},
+
+  // --- STEVE (Minecraft héros) ---
+  steve(){return `<svg viewBox="0 0 200 200">
+    <g class="a-float">
+      <rect x="78" y="36" width="44" height="44" rx="3" fill="#caa07a"/>
+      <rect x="78" y="36" width="44" height="14" fill="#5a3b22"/>
+      ${px(88,58,8,8,'#fff')}${px(106,58,8,8,'#fff')}
+      <rect x="91" y="60" width="5" height="5" fill="#5b3a8c"/><rect x="109" y="60" width="5" height="5" fill="#5b3a8c"/>
+      <rect x="82" y="68" width="36" height="6" fill="#7a5436"/>
+      <rect x="74" y="80" width="52" height="40" rx="2" fill="#1f9c8f"/>
+      <rect x="64" y="82" width="12" height="34" fill="#caa07a"/>
+      <rect x="124" y="82" width="12" height="34" fill="#caa07a"/>
+      <rect x="80" y="120" width="18" height="34" fill="#3a4a8a"/>
+      <rect x="102" y="120" width="18" height="34" fill="#3a4a8a"/>
+      <g class="a-sway"><rect x="128" y="40" width="9" height="48" fill="#9a6a3a" transform="rotate(28 132 64)"/>
+      <rect x="120" y="34" width="26" height="14" fill="#cfd6dd" transform="rotate(28 132 40)"/></g>
+    </g>
+    ${px(20,160,160,30,'#4e8a2a')}${px(20,160,160,8,'#6cbb3c')}
+    <g class="a-pulse"><circle cx="158" cy="44" r="13" fill="#ffd60a"/></g></svg>`;},
+
+  creeper(){return `<svg viewBox="0 0 200 200">
+    <g class="a-bob">
+      <rect x="66" y="40" width="68" height="60" rx="2" fill="#67c860"/>
+      <rect x="66" y="40" width="68" height="60" fill="url(#g1)"/>
+      <defs><pattern id="g1" width="14" height="14" patternUnits="userSpaceOnUse">
+        <rect width="14" height="14" fill="#67c860"/><rect width="7" height="7" fill="#57b850"/>
+        <rect x="7" y="7" width="7" height="7" fill="#57b850"/></pattern></defs>
+      ${px(80,56,14,14,'#1d1d1d')}${px(106,56,14,14,'#1d1d1d')}
+      ${px(92,72,16,12,'#1d1d1d')}${px(86,84,8,14,'#1d1d1d')}${px(106,84,8,14,'#1d1d1d')}
+      <rect x="72" y="100" width="56" height="46" rx="2" fill="#5ab84f"/>
+    </g>
+    ${px(20,150,160,40,'#4e8a2a')}${px(20,150,160,8,'#6cbb3c')}</svg>`;},
+
+  // --- NOOBI (Roblox) ---
+  noobi(){return `<svg viewBox="0 0 200 200">
+    <g class="a-float">
+      <rect x="74" y="38" width="44" height="40" rx="4" fill="#ffd84d"/>
+      ${px(85,52,7,9,'#2b2b2b')}${px(100,52,7,9,'#2b2b2b')}
+      <path d="M86 66 q10 9 20 0" stroke="#2b2b2b" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <rect x="70" y="80" width="52" height="36" rx="3" fill="#19a0e0"/>
+      <rect x="58" y="82" width="12" height="32" rx="3" fill="#ffd84d"/>
+      <rect x="122" y="82" width="12" height="32" rx="3" fill="#ffd84d"/>
+      <rect x="78" y="116" width="16" height="36" rx="3" fill="#3aa24a"/>
+      <rect x="98" y="116" width="16" height="36" rx="3" fill="#3aa24a"/>
+    </g>
+    <g class="a-spin"><rect x="150" y="30" width="16" height="16" fill="#ff5757" transform="rotate(45 158 38)"/></g>
+    ${px(20,158,160,32,'#3a4a8a')}${px(20,158,160,8,'#5a6ab0')}</svg>`;},
+
+  // --- GOKU (DBZ) ---
+  goku(){return `<svg viewBox="0 0 200 200">
+    <g class="a-pulse"><ellipse cx="100" cy="96" rx="62" ry="78" fill="#ffd60a" opacity=".35"/></g>
+    <g class="a-float">
+      <path d="M100 18 L78 50 L88 46 L74 70 L90 64 L80 86 L120 86 L110 64 L126 70 L112 46 L122 50 Z" fill="#3a2a18"/>
+      <rect x="80" y="50" width="40" height="40" rx="4" fill="#f3c69a"/>
+      ${px(88,64,7,8,'#222')}${px(105,64,7,8,'#222')}
+      <path d="M90 80 q10 6 20 0" stroke="#a05a2a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <rect x="76" y="92" width="48" height="36" rx="3" fill="#ff7a1a"/>
+      <rect x="76" y="92" width="48" height="10" fill="#2b56c4"/>
+      <rect x="64" y="94" width="14" height="30" fill="#f3c69a"/>
+      <rect x="122" y="94" width="14" height="30" fill="#f3c69a"/>
+      <rect x="82" y="128" width="16" height="30" fill="#2b56c4"/>
+      <rect x="102" y="128" width="16" height="30" fill="#2b56c4"/>
+    </g>
+    <g class="a-spark"><circle cx="146" cy="120" r="16" fill="#9fe8ff"/><circle cx="146" cy="120" r="9" fill="#fff"/></g></svg>`;},
+
+  team(){return `<svg viewBox="0 0 200 200">
+    <g class="a-bob"><rect x="22" y="70" width="34" height="34" rx="3" fill="#1f9c8f"/><rect x="26" y="50" width="26" height="22" rx="2" fill="#caa07a"/></g>
+    <g class="a-float"><rect x="84" y="56" width="34" height="34" rx="3" fill="#19a0e0"/><rect x="88" y="36" width="26" height="22" rx="3" fill="#ffd84d"/></g>
+    <g class="a-bob"><rect x="146" y="72" width="34" height="34" rx="3" fill="#ff7a1a"/><path d="M159 40 l-8 14 6-2-8 14 22 0-8-14 6 2-8-14z" fill="#3a2a18"/></g>
+    <g class="a-spark"><circle cx="100" cy="150" r="40" fill="#ffd60a" opacity=".25"/></g>
+    ${px(0,168,200,32,'#2a1f6b')}</svg>`;},
+
+  diamond(){return `<svg viewBox="0 0 200 200">
+    <g class="a-float"><path d="M100 40 L140 80 L100 150 L60 80 Z" fill="#5be0d8"/>
+      <path d="M100 40 L140 80 L100 90 L60 80 Z" fill="#9af3ee"/>
+      <path d="M60 80 L100 90 L100 150 Z" fill="#3ec8c0"/></g>
+    <g class="a-spark"><path d="M150 50 l4 10 10 4 -10 4 -4 10 -4-10 -10-4 10-4z" fill="#fff"/></g>
+    <g class="a-spark" style="animation-delay:.6s"><path d="M44 110 l3 8 8 3 -8 3 -3 8 -3-8 -8-3 8-3z" fill="#fff"/></g></svg>`;},
+
+  sheep(){return `<svg viewBox="0 0 200 200">
+    <g class="a-bob a-hue">
+      <ellipse cx="100" cy="100" rx="50" ry="40" fill="#ff7ab0"/>
+      <ellipse cx="78" cy="90" rx="16" ry="14" fill="#ffa84d"/>
+      <ellipse cx="100" cy="78" rx="16" ry="14" fill="#ffe24d"/>
+      <ellipse cx="122" cy="90" rx="16" ry="14" fill="#7ad0ff"/>
+      <ellipse cx="118" cy="118" rx="16" ry="14" fill="#b07aff"/>
+      <ellipse cx="82" cy="118" rx="16" ry="14" fill="#7affb0"/>
+      <rect x="124" y="96" width="30" height="26" rx="8" fill="#2b2b2b"/>
+      ${px(132,104,5,5,'#fff')}
+      <rect x="86" y="138" width="7" height="20" fill="#444"/><rect x="108" y="138" width="7" height="20" fill="#444"/>
+    </g>
+    ${px(20,158,160,32,'#4e8a2a')}${px(20,158,160,8,'#6cbb3c')}</svg>`;},
+
+  cow(){return `<svg viewBox="0 0 200 200">
+    <g class="a-bounce">
+      <ellipse cx="100" cy="92" rx="46" ry="34" fill="#3a3a3a"/>
+      <ellipse cx="86" cy="86" rx="14" ry="12" fill="#fff"/><ellipse cx="118" cy="100" rx="12" ry="10" fill="#fff"/>
+      <rect x="120" y="70" width="30" height="26" rx="8" fill="#3a3a3a"/>
+      ${px(128,78,5,5,'#fff')}<ellipse cx="146" cy="92" rx="8" ry="6" fill="#ffb3c1"/>
+      <rect x="74" y="120" width="8" height="14" fill="#222"/><rect x="116" y="120" width="8" height="14" fill="#222"/>
+    </g>
+    <g class="a-pulse"><rect x="40" y="150" width="120" height="22" rx="6" fill="#7ad17a"/></g></svg>`;},
+
+  star(){return `<svg viewBox="0 0 200 200">
+    <g class="a-shoot"><path d="M150 30 l5 12 13 1 -10 9 3 13 -11-7 -11 7 3-13 -10-9 13-1z" fill="#ffe24d"/></g>
+    <g class="a-float"><path d="M100 70 l9 20 22 2 -17 15 5 22 -19-12 -19 12 5-22 -17-15 22-2z" fill="#ffd60a" stroke="#ffb300" stroke-width="3"/>
+      ${px(90,100,7,7,'#222')}${px(104,100,7,7,'#222')}
+      <path d="M92 116 q8 8 16 0" stroke="#222" stroke-width="3" fill="none" stroke-linecap="round"/></g>
+    <g class="a-spark"><circle cx="50" cy="60" r="4" fill="#fff"/></g>
+    <g class="a-spark" style="animation-delay:.8s"><circle cx="60" cy="140" r="3" fill="#fff"/></g></svg>`;},
+
+  hiccup(){return `<svg viewBox="0 0 200 200">
+    <g class="a-bounce">
+      <rect x="70" y="60" width="60" height="54" rx="2" fill="#67c860"/>
+      ${px(82,74,12,12,'#1d1d1d')}${px(106,74,12,12,'#1d1d1d')}
+      ${px(93,90,14,10,'#1d1d1d')}
+    </g>
+    <g class="a-float"><circle cx="150" cy="50" r="14" fill="#9fe8ff" opacity=".8"/>
+      <text x="150" y="55" text-anchor="middle" font-size="13" fill="#0a6" font-family="Fredoka">boing</text></g>
+    <g class="a-float" style="animation-delay:.7s"><circle cx="48" cy="70" r="11" fill="#9fe8ff" opacity=".7"/></g>
+    ${px(20,150,160,40,'#4e8a2a')}${px(20,150,160,8,'#6cbb3c')}</svg>`;},
+
+  socks(){return `<svg viewBox="0 0 200 200">
+    <g class="a-pulse"><ellipse cx="100" cy="100" rx="58" ry="70" fill="#ffd60a" opacity=".25"/></g>
+    <g class="a-float"><rect x="84" y="80" width="34" height="34" rx="4" fill="#f3c69a"/>
+      <path d="M101 50 l-9 16 6-2-7 14 20 0-7-14 6 2-9-16z" fill="#3a2a18"/>
+      ${px(91,92,6,7,'#222')}${px(105,92,6,7,'#222')}</g>
+    <g class="a-bob" style="animation-delay:.2s"><path d="M40 60 h18 v14 q0 8 -8 8 h-10 z" fill="#ff5757"/></g>
+    <g class="a-bob" style="animation-delay:.6s"><path d="M150 50 h18 v14 q0 8 -8 8 h-10 z" fill="#19a0e0"/></g>
+    <g class="a-bob" style="animation-delay:1s"><path d="M135 130 h18 v14 q0 8 -8 8 h-10 z" fill="#7affb0"/></g>
+    <g class="a-bob" style="animation-delay:1.3s"><path d="M40 130 h18 v14 q0 8 -8 8 h-10 z" fill="#ffa84d"/></g></svg>`;},
+
+  dance(){return `<svg viewBox="0 0 200 200">
+    <g class="a-sway">
+      <rect x="80" y="40" width="40" height="36" rx="4" fill="#ffd84d"/>
+      ${px(90,54,7,9,'#2b2b2b')}${px(105,54,7,9,'#2b2b2b')}
+      <path d="M92 66 q8 8 16 0" stroke="#2b2b2b" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <rect x="76" y="78" width="48" height="34" rx="3" fill="#19a0e0"/>
+      <rect x="56" y="70" width="14" height="30" rx="4" fill="#ffd84d" transform="rotate(-30 63 85)"/>
+      <rect x="130" y="70" width="14" height="30" rx="4" fill="#ffd84d" transform="rotate(30 137 85)"/>
+      <rect x="80" y="112" width="16" height="34" rx="3" fill="#3aa24a" transform="rotate(-12 88 129)"/>
+      <rect x="104" y="112" width="16" height="34" rx="3" fill="#3aa24a" transform="rotate(12 112 129)"/>
+    </g>
+    <g class="a-spark"><text x="40" y="60" font-size="20">🎵</text></g>
+    <g class="a-spark" style="animation-delay:.6s"><text x="150" y="80" font-size="20">🎵</text></g></svg>`;},
+
+  villager(){return `<svg viewBox="0 0 200 200">
+    <g class="a-float">
+      <rect x="78" y="36" width="44" height="48" rx="3" fill="#caa07a"/>
+      <rect x="92" y="50" width="16" height="22" fill="#8a5a3a"/>
+      ${px(84,58,8,8,'#3a6')}${px(108,58,8,8,'#3a6')}
+      <rect x="72" y="84" width="56" height="48" rx="3" fill="#7a4a8a"/>
+      <rect x="86" y="84" width="28" height="48" fill="#caa07a"/>
+      <rect x="80" y="132" width="18" height="26" fill="#5a3a6a"/><rect x="102" y="132" width="18" height="26" fill="#5a3a6a"/>
+    </g>
+    <g class="a-spark"><text x="138" y="56" font-size="22">💚</text></g>
+    ${px(0,168,200,32,'#3a4a8a')}</svg>`;},
+
+  heart(){return `<svg viewBox="0 0 200 200">
+    <g class="a-pulse"><path d="M100 158 C40 116 36 70 64 56 C88 44 100 70 100 70 C100 70 112 44 136 56 C164 70 160 116 100 158 Z" fill="#ff7a9c"/>
+      <path d="M100 158 C40 116 36 70 64 56 C88 44 100 70 100 70" fill="#ff96b0"/></g>
+    <g class="a-float" style="animation-delay:.3s"><text x="38" y="60" font-size="22">✨</text></g>
+    <g class="a-float" style="animation-delay:.8s"><text x="146" y="72" font-size="22">✨</text></g></svg>`;},
+
+  night(){return `<svg viewBox="0 0 200 200">
+    <g class="a-float"><circle cx="100" cy="74" r="34" fill="#ffe9a8"/><circle cx="114" cy="66" r="30" fill="#2a1f6b"/></g>
+    <g class="a-spark"><text x="40" y="50" font-size="18">⭐</text></g>
+    <g class="a-spark" style="animation-delay:.5s"><text x="150" y="60" font-size="16">⭐</text></g>
+    <g class="a-spark" style="animation-delay:1s"><text x="56" y="120" font-size="14">⭐</text></g>
+    <g class="a-bob"><rect x="60" y="140" width="80" height="30" rx="6" fill="#9a6ad0"/>
+      <rect x="60" y="134" width="26" height="14" rx="5" fill="#fff"/></g></svg>`;},
+
+  table(){return `<svg viewBox="0 0 200 200">
+    <g class="a-float"><rect x="56" y="86" width="88" height="40" rx="18" fill="#e8a23a"/>
+      <ellipse cx="100" cy="86" rx="44" ry="14" fill="#ffd27a"/>
+      <circle cx="86" cy="84" r="7" fill="#c44"/><circle cx="106" cy="80" r="6" fill="#5b3"/><circle cx="118" cy="86" r="6" fill="#fa3"/></g>
+    <g class="a-spark"><path d="M70 60 q6 -14 0 -26 M82 60 q6 -14 0 -26 M94 60 q6 -14 0 -26" stroke="#fff" stroke-width="3" fill="none" opacity=".8"/></g>
+    <rect x="40" y="150" width="120" height="14" rx="6" fill="#8a5a3a"/></svg>`;},
+
+  slide(){return `<svg viewBox="0 0 200 200">
+    <g class="a-float">
+      <rect x="40" y="60" width="10" height="100" fill="#c0392b"/>
+      <path d="M50 70 Q150 70 150 150" stroke="#3498db" stroke-width="14" fill="none" stroke-linecap="round"/>
+      <rect x="36" y="56" width="60" height="10" rx="4" fill="#f1c40f"/>
+    </g>
+    <g class="a-bob"><rect x="58" y="70" width="22" height="22" rx="4" fill="#ffd84d"/><rect x="62" y="56" width="14" height="14" rx="3" fill="#caa07a"/></g>
+    ${px(20,160,160,28,'#6cbb3c')}</svg>`;},
+};
+
+/* ============ LES 31 HISTOIRES (TOME 2) ============ */
+const C={hero:'Super-héros',fun:'Histoire drôle',manners:'Bonnes manières',family:'La famille'};
+const CCOL={hero:'var(--cat-hero)',fun:'var(--cat-fun)',manners:'var(--cat-manners)',family:'var(--cat-family)'};
+const CICON={hero:'🦸',fun:'😄',manners:'✨',family:'❤️'};
+
+const STORIES=[
+// ---- SUPER-HÉROS (11) ----
+{cat:'hero',scene:'amineLeylaTower',title:'Amine construit une tour pour Leyla',text:[
+"Leyla, la petite sœur d'Amine, n'avait que deux ans mais une grande curiosité. Elle voulait voir les oiseaux par-dessus la haie du jardin, mais elle était trop petite.",
+"« Ne t'inquiète pas, Leyla ! » dit Amine en enfilant sa cape. Bloc après bloc, il construisit une jolie petite tour bien stable, juste à la bonne hauteur.",
+"Il souleva Leyla tout doucement et la posa sur la première marche. « Regarde, les oiseaux dansent dans le ciel ! » Leyla rit aux éclats en tapant des mains.",
+"Un héros, ce n'est pas seulement voler très haut. C'est aussi aider sa petite sœur à voir le monde d'un peu plus haut."]},
+
+{cat:'hero',scene:'amineLeylaMonster',title:'Amine chasse le monstre de l\'armoire',text:[
+"Cette nuit-là, Leyla pleurait dans son petit lit. « Il y a un monstre dans l'armoire ! » dit-elle en pointant du doigt, toute tremblante.",
+"Amine arriva en cape, prêt à affronter n'importe quel danger. Il ouvrit la porte de l'armoire très lentement, le cœur battant fort.",
+"Dedans, il n'y avait qu'un gros manteau accroché qui se balançait doucement avec le vent de la fenêtre. « Regarde, Leyla, ce n'est qu'un manteau qui dit bonsoir ! »",
+"Leyla rigola et serra très fort son doudou. Avec un grand frère héroïque tout près, plus aucun monstre ne faisait peur."]},
+
+{cat:'hero',scene:'amineLeylaRescue',title:'Amine sauve le doudou de Leyla',text:[
+"Au parc, le doudou-lapin de Leyla tomba de la poussette et roula tout droit vers la mare aux canards. Leyla cria, affolée.",
+"Amine ne perdit pas une seconde. Il courut à toute vitesse, sa cape flottant derrière lui, et attrapa le doudou juste avant qu'il ne touche l'eau.",
+"« Ouf, sauvé ! » dit-il en époussetant le petit lapin en peluche. Leyla tendit ses petits bras pour le récupérer très vite.",
+"Elle serra son doudou contre elle et fit un gros câlin à son grand frère. Un vrai héros arrive toujours à temps pour ce qui compte."]},
+
+{cat:'hero',scene:'amineLeylaCape',title:'Une cape pour la petite sœur',text:[
+"« Moi aussi je veux une cape ! » dit Leyla en regardant celle d'Amine, rouge et brillante. Elle tirait sur son tee-shirt avec espoir.",
+"Amine eut une idée. Il prit un petit foulard violet de maman et le noua tout doucement autour des épaules de sa petite sœur.",
+"« Voilà, Leyla, tu es maintenant Super-Leyla ! » Elle se mit à courir partout dans le salon, ravie, en criant « Hop hop hop ! »",
+"Ensemble, ils posèrent en super-héros devant le miroir. Les Super-Siblings venaient de naître, et rien ne pouvait les arrêter."]},
+
+{cat:'hero',scene:'steve',title:'Steve et le pont cassé',text:[
+"Une grosse pluie avait emporté le vieux pont de bois du village. Plus personne ne pouvait traverser la rivière pour aller chercher de l'eau.",
+"Steve prit sa hache et son sac de planches. « Je vais réparer ce pont avant la nuit », dit-il, déterminé.",
+"Il travailla bloc par bloc, plantant chaque planche bien droite, testant la solidité avec son pied avant d'avancer.",
+"Quand le soleil se coucha, le pont tenait bon. Les villageois purent enfin traverser. Steve sourit : un héros répare ce qui est cassé."]},
+
+{cat:'hero',scene:'noobi',title:'Noobi et le chat sur le toit',text:[
+"Un petit chat orange s'était aventuré sur le toit du magasin et n'osait plus redescendre. Il miaulait tristement.",
+"Noobi regarda autour de lui et eut une idée maligne. Il empila des caisses en bois, une par-dessus l'autre, pour fabriquer un escalier.",
+"Tout doucement, il grimpa jusqu'au chat et le prit délicatement dans ses bras. « Ça va aller, je te ramène en bas. »",
+"Le chat ronronna de soulagement. Noobi le reposa au sol sous les applaudissements des passants. Être malin, c'est aussi être un héros."]},
+
+{cat:'hero',scene:'goku',title:'Goku et le vent trop fort',text:[
+"Un vent très violent soufflait sur le marché et faisait voler les fruits, les paniers et même le chapeau du marchand.",
+"Goku se plaça devant les étals et leva les bras. Il rassembla son énergie pour créer un petit mur d'air qui calmait les bourrasques.",
+"Pendant ce temps, les villageois purent ramasser leurs affaires sans craindre de tout voir s'envoler à nouveau.",
+"Quand le vent se calma enfin, tout le monde remercia Goku. « Ce n'était rien », dit-il en souriant, déjà prêt pour aider ailleurs."]},
+
+{cat:'hero',scene:'team',title:'Le trio contre la tempête de sable',text:[
+"Une immense tempête de sable approchait du désert où jouaient Steve, Noobi et Goku. Le ciel devenait tout orange et le vent rugissait.",
+"« Il nous faut un abri, vite ! » cria Steve. Noobi rassembla des planches tandis que Goku tenait le vent à distance avec son énergie.",
+"Steve construisit un petit refuge solide en un temps record. Les trois amis s'y précipitèrent juste avant que le sable n'arrive en force.",
+"Serrés les uns contre les autres, ils attendirent que la tempête passe. Ensemble, même la pire tempête ne leur faisait pas peur."]},
+
+{cat:'hero',scene:'diamond',title:'Le bouclier en diamant',text:[
+"Des pierres commençaient à tomber de la falaise, juste au-dessus de l'entrée du village. C'était dangereux pour tous ceux qui passaient par là.",
+"Steve façonna un grand bouclier avec ses précieux diamants, le plus solide des matériaux qu'il possédait.",
+"Il se posta à l'entrée et, chaque fois qu'une pierre tombait, il la bloquait avec son bouclier brillant. Toc ! Toc !",
+"Grâce à lui, plus personne ne fut blessé. Le village lui offrit une médaille de héros, qu'il accepta avec un grand sourire modeste."]},
+
+{cat:'hero',scene:'creeper',title:'Le petit creeper qui voulait aider',text:[
+"Tout le monde avait peur du petit creeper vert qui rôdait près du village. Pourtant, il ne voulait faire de mal à personne.",
+"Un jour, il vit Steve en difficulté pour porter de lourds blocs de pierre. Timidement, il s'approcha et poussa un bloc avec sa tête.",
+"Steve fut surpris, puis ravi. « Merci, petit ami ! Tu es plus utile que dangereux ! » Ensemble, ils finirent le mur du village.",
+"Depuis ce jour, le creeper aidait souvent à construire. On apprit que même celui qui fait peur peut devenir un véritable héros."]},
+
+{cat:'hero',scene:'amine',title:'Amine et le ballon coincé',text:[
+"Au parc, le ballon rouge d'un petit garçon resta coincé tout en haut d'un grand arbre, emporté par une rafale de vent malicieuse.",
+"Le petit garçon était très triste. Amine, sans hésiter, enfila sa cape et grimpa de branche en branche avec prudence.",
+"Tout en haut, il attrapa le ballon et le lança doucement vers le sol où des amis l'attrapèrent en riant.",
+"Le petit garçon sauta de joie. « Merci, héros ! » Amine redescendit fièrement : aider les autres, c'est le plus beau des jeux."]},
+
+// ---- DRÔLES (5) ----
+{cat:'fun',scene:'amineLeylaPeekaboo',title:'Coucou ! Le jeu préféré de Leyla',text:[
+"Leyla adorait par-dessus tout un jeu : le coucou-caché. Elle se cachait derrière ses petites mains en pouffant de rire à l'avance.",
+"« Où est Leyla ? » demandait Amine en faisant semblant de chercher partout, sous le coussin, derrière la porte.",
+"« COUCOU ! » criait Leyla en écartant ses mains d'un coup, explosant de rire chaque fois comme si c'était la première.",
+"Ils jouèrent si longtemps que même le chat vint se cacher avec eux. Le jeu le plus simple est parfois le plus drôle de tous."]},
+
+{cat:'fun',scene:'amineLeylaMess',title:'La grande bataille de peinture',text:[
+"Amine voulait peindre un joli dessin pour maman. Leyla, elle, préférait peindre... directement sur les joues d'Amine !",
+"« Leyla, non ! » rigola-t-il en essayant d'esquiver un pinceau plein de jaune. Trop tard, il avait déjà une moustache verte.",
+"Bientôt, ce fut la bataille générale : taches bleues, points rouges, mains pleines de peinture partout sur la table et les bras.",
+"Quand maman arriva, elle trouva deux enfants multicolores et hilares. « On a fait une œuvre d'art... sur nous-mêmes ! » dit Amine en riant."]},
+
+{cat:'fun',scene:'hiccup',title:'Le creeper qui chantait trop fort',text:[
+"Un petit creeper adorait chanter, mais dès qu'il chantait trop fort, il se mettait à faire BOING à chaque note !",
+"« Do, BOING, ré, BOING, mi, BOING ! » Il rebondissait dans tous les sens au milieu de la prairie, sous les rires des moutons.",
+"Steve essaya de l'aider en lui proposant de chanter tout bas. Mais chanter doucement, ce n'était pas drôle du tout pour le creeper.",
+"Finalement, tout le monde décida de chanter avec lui, BOING compris. La chanson la plus rigolote du village était née."]},
+
+{cat:'fun',scene:'cow',title:'La vache qui voulait danser',text:[
+"Une vache du pré regardait Noobi danser tous les après-midis et trouvait cela formidable. Elle voulait essayer aussi.",
+"Elle se mit à balancer la tête, puis les pattes, puis tout son corps. « Meuh-meuh-meuh ! » chantonnait-elle, hors du rythme.",
+"Les autres vaches la regardaient, perplexes, avant d'éclater de rire devant ses mouvements complètement loufoques.",
+"Bientôt, tout le troupeau dansait n'importe comment dans le pré. Quel spectacle pour les villageois qui passaient par là !"]},
+
+{cat:'fun',scene:'dance',title:'Les chaussures magiques de Noobi',text:[
+"Noobi trouva une paire de chaussures brillantes dans un coffre mystérieux. Dès qu'il les mit, ses pieds se mirent à danser tout seuls !",
+"Impossible de s'arrêter : il dansait en marchant, en mangeant, même en dormant debout, les pieds toujours en mouvement.",
+"Ses amis essayèrent de l'attraper pour l'aider, mais finirent eux aussi par danser en le tenant par les mains.",
+"Quand les chaussures finirent par s'endormir (oui, elles aussi étaient fatiguées), tout le monde était mort de rire dans l'herbe."]},
+
+// ---- BONNES MANIÈRES (8) ----
+{cat:'manners',scene:'amineLeylaShare',title:'Partager son goûter avec Leyla',text:[
+"Amine avait reçu un délicieux biscuit au chocolat pour le goûter. Leyla le regardait avec de grands yeux gourmands.",
+"D'abord, Amine pensa à le manger tout seul, bien vite. Mais il vit le petit sourire plein d'espoir de sa sœur.",
+"Il cassa le biscuit en deux et lui donna la plus grosse moitié. « Tiens, Leyla, c'est pour toi aussi ! »",
+"Leyla applaudit de joie et croqua dedans avec un grand sourire chocolaté. Partager rend un petit biscuit deux fois plus bon."]},
+
+{cat:'manners',scene:'amineLeylaPlease',title:'Le mot magique de Leyla : s\'il te plaît',text:[
+"Leyla voulait le ballon rouge qu'Amine tenait dans ses mains. « Donne ! Donne ! » criait-elle en tendant les bras.",
+"Amine s'agenouilla près d'elle. « Leyla, essaie de dire : s'il te plaît. C'est un mot magique qui ouvre les cœurs. »",
+"Leyla réfléchit fort, puis articula doucement : « Si...te...plé ! » avec un sourire tout fier d'elle-même.",
+"Amine lui tendit le ballon en riant de bonheur. Même à deux ans, on peut apprendre les plus belles politesses."]},
+
+{cat:'manners',scene:'diamond',title:'Steve et la patience du mineur',text:[
+"Steve voulait absolument trouver un diamant tout de suite. Il creusait vite, sans regarder, en grognant d'impatience.",
+"Après une heure, toujours rien. Il s'assit, déçu, et son ami villageois lui dit : « La patience, ça paie toujours plus que la vitesse. »",
+"Steve recommença, cette fois lentement et avec attention, en observant bien chaque roche avant de creuser.",
+"Une heure plus tard, un beau diamant scintilla devant lui. La patience avait fini par récompenser son effort."]},
+
+{cat:'manners',scene:'goku',title:'Goku attend son tour à l\'entraînement',text:[
+"Au dojo, plusieurs élèves attendaient pour s'entraîner avec le maître. Goku, impatient, voulut passer devant tout le monde.",
+"Le maître l'arrêta gentiment. « Chacun a le droit d'attendre son tour, Goku, même le plus fort d'entre nous. »",
+"Un peu gêné, Goku recula et laissa les autres passer avant lui, en les encourageant avec le sourire.",
+"Quand son tour arriva enfin, il s'entraîna avec encore plus d'enthousiasme. Attendre sagement, c'est aussi une force."]},
+
+{cat:'manners',scene:'slide',title:'La politesse au toboggan',text:[
+"Au parc de Roblox, un grand toboggan attirait tous les enfants. Certains poussaient pour passer devant les autres.",
+"Noobi remarqua un petit qui n'osait pas s'avancer dans la bousculade. « Après toi, je t'en prie ! » lui dit-il en souriant.",
+"Le petit, surpris et content, grimpa et glissa le premier, ravi de cette gentille attention.",
+"Bientôt, tout le monde se mit à dire « après toi » en riant. Le toboggan devint encore plus amusant dans la bonne humeur."]},
+
+{cat:'manners',scene:'villager',title:'Dire s\'il vous plaît au marchand',text:[
+"Steve voulait acheter des pommes au marché. « Donnez-moi des pommes ! » dit-il un peu trop brusquement.",
+"Le marchand resta silencieux, surpris par ce ton. Steve comprit son erreur et se reprit avec un sourire.",
+"« Pardon. Pourriez-vous me donner des pommes, s'il vous plaît ? » Le marchand sourit aussitôt et lui en donna les plus belles.",
+"« Merci beaucoup ! » ajouta Steve en partant. Les mots gentils ouvrent toujours les plus belles portes."]},
+
+{cat:'manners',scene:'table',title:'Goku et la bouche pleine',text:[
+"Au repas, Goku avait tellement faim qu'il parlait la bouche pleine de riz, ce qui faisait rire (et un peu grimacer) tout le monde.",
+"Sa maman lui dit doucement : « Mâche bien, avale, puis parle. On comprend mieux et c'est plus agréable pour tous. »",
+"Goku essaya, un peu difficilement au début, mais petit à petit il prit l'habitude d'attendre avant de parler.",
+"Le repas devint bien plus calme et agréable. Et Goku découvrit même qu'il appréciait davantage le goût des plats."]},
+
+{cat:'manners',scene:'star',title:'Le souhait qui demande de la politesse',text:[
+"Une étoile magique promettait d'exaucer un souhait, mais seulement si on le demandait avec les mots les plus polis.",
+"Le premier enfant cria : « Je veux des bonbons, vite ! » L'étoile resta éteinte, sans bouger d'un éclat.",
+"Une petite fille s'approcha et dit doucement : « S'il te plaît, étoile, pourrais-tu m'aider à retrouver mon chat ? Merci d'avance. »",
+"L'étoile scintilla de mille feux et exauça son souhait sur le champ. La politesse, c'est la clé qui ouvre toutes les magies."]},
+
+// ---- FAMILLE (7) ----
+{cat:'family',scene:'amineLeylaWalk',title:'Les premiers pas de Leyla',text:[
+"Ce jour-là, Leyla se tenait debout, hésitante, les bras tendus vers Amine qui l'attendait à quelques pas.",
+"« Viens, Leyla, tu peux le faire ! » l'encouragea-t-il doucement, ses mains ouvertes, prêt à l'accueillir.",
+"Un pas. Puis un autre. Leyla trottina en chancelant un peu, les yeux brillants de fierté et de surprise.",
+"Elle tomba dans les bras d'Amine en riant aux éclats. Toute la famille applaudit : ses tout premiers pas, vers son grand frère."]},
+
+{cat:'family',scene:'amineLeylaSleep',title:'Le doudou et la berceuse',text:[
+"Le soir venu, Leyla ne voulait pas s'endormir sans son doudou-lapin et sans une histoire de son grand frère.",
+"Amine s'assit près de son petit lit et lui raconta tout doucement l'histoire d'une étoile qui aimait sa famille.",
+"Il fredonna ensuite une petite berceuse, presque en chuchotant, en caressant gentiment la main potelée de Leyla.",
+"Ses yeux se fermèrent petit à petit. Amine resta encore un instant, heureux de veiller sur sa petite sœur qui dormait paisiblement."]},
+
+{cat:'family',scene:'steve',title:'Steve construit la chambre du bébé',text:[
+"Un nouveau bébé allait bientôt arriver dans la famille de Steve. Toute la maison s'activait pour préparer sa chambre.",
+"Steve construisit avec soin un petit lit douillet et une étagère pour les jouets, en choisissant les couleurs les plus douces.",
+"Son petit frère l'aida à peindre des étoiles sur le mur, malgré quelques taches de peinture sur leurs mains.",
+"Quand la chambre fut terminée, toute la famille admira leur travail ensemble. Préparer une arrivée, c'est déjà aimer."]},
+
+{cat:'family',scene:'goku',title:'Goku et sa maman cuisinent',text:[
+"Le dimanche, Goku adorait cuisiner avec sa maman. Ce jour-là, ils préparaient de grosses boulettes de riz pour toute la famille.",
+"« Attention de ne pas trop serrer, sinon elles deviennent trop dures », lui expliqua-t-elle en lui montrant le bon geste.",
+"Goku s'entraîna patiemment, et ses boulettes devinrent de plus en plus parfaites, rondes comme de petites lunes.",
+"Au dîner, toute la famille se régala. « C'est Goku qui les a faites ! » dit fièrement sa maman, devant son sourire radieux."]},
+
+{cat:'family',scene:'heart',title:'Le bisou du matin',text:[
+"Chaque matin, avant de partir jouer, Noobi avait une habitude bien spéciale avec sa famille.",
+"Il faisait un gros câlin à son papa, un bisou sur la joue de sa maman, et tapait dans la main de son petit frère.",
+"Un matin pressé, il oublia ce petit rituel et fila directement dehors. Mais quelque chose lui manquait toute la journée.",
+"Le soir, il rattrapa son retard avec trois fois plus de câlins. Les petits gestes d'amour, on ne doit jamais les oublier."]},
+
+{cat:'family',scene:'villager',title:'Le jardin de mamie',text:[
+"La grand-mère du village cultivait un magnifique jardin de fleurs et de légumes depuis de très nombreuses années.",
+"Chaque samedi, Steve venait l'aider à arroser les tomates et à cueillir les fraises bien mûres et sucrées.",
+"« Tu sais, mon grand, dit mamie, ce jardin a vu grandir ton papa quand il était petit comme toi. »",
+"Steve regarda les fleurs avec un regard neuf. Le jardin de mamie, c'était aussi un peu l'histoire de toute sa famille."]},
+
+{cat:'family',scene:'night',title:'Toute la famille sous les étoiles',text:[
+"Un soir d'été, toute la famille sortit des couvertures dans le jardin pour regarder les étoiles ensemble.",
+"Amine montra à Leyla la Grande Ourse, papa raconta une légende sur la Lune, et maman chanta une douce chanson.",
+"« Pourquoi il y a tant d'étoiles ? » demanda Leyla en bâillant. « Pour qu'aucune famille ne manque jamais de lumière », répondit maman.",
+"Blottis les uns contre les autres, ils s'endormirent presque sous le ciel étoilé. Une famille réunie est la plus belle des constellations. Bonne nuit, fais de beaux rêves. 🌙"]},
+];
+
+/* ============ MOTEUR DU LIVRE ============ */
+const COVER=-1;
+let idx=COVER;
+const bookEl=document.getElementById('book');
+const prevBtn=document.getElementById('prev');
+const nextBtn=document.getElementById('next');
+const pcount=document.getElementById('pcount');
+const pfill=document.getElementById('pfill');
+const total=STORIES.length;
+const amineLeylaCount=STORIES.filter(s=>/^amineLeyla/.test(s.scene)).length;
+console.assert(total===31, `STORIES devrait contenir 31 histoires, en contient ${total}`);
+console.assert(amineLeylaCount===10, `amineLeylaCount devrait être 10, vaut ${amineLeylaCount}`);
+
+function coverHTML(){
+  return `<div class="page cover" id="page">
+    <div class="eyebrow">★ DODO TIME · TOME 2 ★</div>
+    <h1>Le Grand Livre des Histoires du Soir</h1>
+    <div class="sub">${total} nouvelles histoires, dont ${amineLeylaCount} avec Amine et sa petite sœur Leyla</div>
+    <div class="cover-art" aria-hidden="true">${SCENES.amineLeylaCape()}</div>
+    <button type="button" class="start" id="startBtn">Commencer ▶</button>
+    <div class="pour">Minecraft · Roblox · Dragon Ball · Amine & Leyla</div>
+  </div>`;
+}
+function storyHTML(i){
+  const s=STORIES[i];
+  return `<div class="page" id="page">
+    <span class="cat-tag" style="background:${CCOL[s.cat]}">${CICON[s.cat]} ${C[s.cat]}</span>
+    <span class="story-no">${String(i+1).padStart(2,'0')}/${total}</span>
+    <div class="illus" aria-hidden="true">${SCENES[s.scene]()}</div>
+    <h2>${s.title}</h2>
+    <div class="story-text">${s.text.map(p=>`<p>${p}</p>`).join('')}</div>
+    <div class="speak-ctl" id="speakCtl">
+      <button type="button" class="speak-btn s-play" aria-label="Écouter l'histoire à voix haute">🔊 Écouter l'histoire</button>
+      <button type="button" class="speak-btn s-pause" aria-label="Mettre en pause ou reprendre la lecture" style="display:none">⏸️ Pause</button>
+      <button type="button" class="speak-btn s-stop" aria-label="Arrêter la lecture" style="display:none">⏹️</button>
+    </div>
+    <div class="audio-progress" id="audioProgress">
+      <div class="alabel" id="alabel">Progression de la lecture</div>
+      <div class="abar" role="progressbar" aria-labelledby="alabel" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="afill" id="afill"></div></div>
+    </div>
+  </div>`;
+}
+function render(){
+  if(typeof stopSpeak==='function') stopSpeak();
+  // re-acquérir l'élément vivant : après outerHTML, l'ancienne référence est détachée
+  document.getElementById('page').outerHTML = (idx===COVER)?coverHTML():storyHTML(idx);
+  rebind();
+  // progression des pages
+  if(idx===COVER){pcount.textContent='Couverture';pfill.style.width='0%';}
+  else{pcount.textContent=`Page ${idx+1} sur ${total}`;pfill.style.width=`${((idx+1)/total)*100}%`;}
+  prevBtn.disabled=(idx===COVER);
+  nextBtn.disabled=(idx===total-1);
+}
+function rebind(){
+  const sb=document.getElementById('startBtn');
+  if(sb) sb.onclick=()=>turn(1);
+  const ctl=document.getElementById('speakCtl');
+  if(ctl){
+    if('speechSynthesis' in window){
+      ctl.querySelector('.s-play').onclick=startSpeak;
+      ctl.querySelector('.s-pause').onclick=togglePause;
+      ctl.querySelector('.s-stop').onclick=stopSpeak;
+      updateSpeakUI();
+    } else {
+      ctl.style.display='none';   // navigateur sans synthèse vocale
+      const ap=document.getElementById('audioProgress'); if(ap) ap.style.display='none';
+    }
+  }
+}
+
+/* ===== LECTURE À VOIX HAUTE (synthèse vocale) + jauge de progression ===== */
+let speaking=false, paused=false, speakLen=0;
+let cachedFrVoice=null;
+function pickFrVoice(){
+  const vs=window.speechSynthesis.getVoices()||[];
+  return vs.find(v=>/^fr-fr$/i.test(v.lang)) || vs.find(v=>/^fr(-|_)/i.test(v.lang)) || vs.find(v=>(v.lang||'').toLowerCase().startsWith('fr')) || null;
+}
+function refreshFrVoice(){ cachedFrVoice=pickFrVoice(); }
+function updateSpeakUI(){
+  const ctl=document.getElementById('speakCtl');
+  if(!ctl) return;
+  const play=ctl.querySelector('.s-play'), pause=ctl.querySelector('.s-pause'), stop=ctl.querySelector('.s-stop');
+  if(!speaking){
+    play.style.display=''; pause.style.display='none'; stop.style.display='none';
+  } else {
+    play.style.display='none'; pause.style.display=''; stop.style.display='';
+    pause.innerHTML = paused ? '▶️ Reprendre' : '⏸️ Pause';
+    pause.setAttribute('aria-label', paused ? 'Reprendre la lecture' : 'Mettre en pause la lecture');
+  }
+  const ap=document.getElementById('audioProgress');
+  if(ap) ap.style.display = speaking ? 'flex' : 'none';
+}
+let lastProgressPct=0;
+function setAudioProgress(pct){
+  const p=Math.max(0,Math.min(100,pct));
+  if(p<lastProgressPct) return; // onboundary et secours temporel ne se contredisent jamais : la jauge n'avance que vers l'avant
+  lastProgressPct=p;
+  const af=document.getElementById('afill');
+  if(af) af.style.width = p+'%';
+  const ab=document.querySelector('.abar');
+  if(ab) ab.setAttribute('aria-valuenow', Math.round(p));
+}
+function resetAudioProgress(){
+  lastProgressPct=0;
+  const af=document.getElementById('afill');
+  if(af) af.style.width='0%';
+  const ab=document.querySelector('.abar');
+  if(ab) ab.setAttribute('aria-valuenow','0');
+}
+// secours basé sur le temps estimé : certains navigateurs (ex. Safari iOS)
+// ne déclenchent jamais onboundary, la jauge resterait alors figée à 0%
+let progTimer=null, progStart=0, progEstMs=0, progPausedAt=0;
+function tickProgress(){
+  setAudioProgress(Math.min(96,(Date.now()-progStart)/progEstMs*100));
+}
+function startProgressFallback(estMs){
+  progEstMs=estMs; progStart=Date.now();
+  clearInterval(progTimer);
+  progTimer=setInterval(tickProgress,200);
+}
+function pauseProgressFallback(){ clearInterval(progTimer); progTimer=null; progPausedAt=Date.now(); }
+function resumeProgressFallback(){
+  if(!progEstMs) return;
+  progStart += (Date.now()-progPausedAt);
+  progTimer=setInterval(tickProgress,200);
+}
+function stopProgressFallback(){ clearInterval(progTimer); progTimer=null; progEstMs=0; }
+function stopSpeak(){
+  if(!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  speaking=false; paused=false;
+  stopProgressFallback();
+  resetAudioProgress();
+  updateSpeakUI();
+}
+function startSpeak(){
+  if(!('speechSynthesis' in window)||idx===COVER) return;
+  const s=STORIES[idx];
+  const fullText = s.title+'. '+s.text.join(' ');
+  speakLen = fullText.length || 1;
+  const u=new SpeechSynthesisUtterance(fullText);
+  u.lang='fr-FR';u.rate=0.85;u.pitch=1.05;      // débit ralenti, voix douce pour l'enfant
+  const v=cachedFrVoice||pickFrVoice();if(v){u.voice=v;u.lang=v.lang;}
+  // ~70 ms/caractère à ce débit : estimation grossière pour le secours temporel
+  const estMs=Math.max(2000,fullText.length*70);
+  u.onstart=()=>{ startProgressFallback(estMs); };
+  u.onboundary=(e)=>{
+    if(typeof e.charIndex==='number') setAudioProgress((e.charIndex/speakLen)*100);
+  };
+  u.onend=()=>{
+    stopProgressFallback();
+    setAudioProgress(100);   // flash de complétion avant de masquer la jauge
+    paused=false;
+    setTimeout(()=>{ speaking=false; resetAudioProgress(); updateSpeakUI(); },450);
+  };
+  u.onerror=()=>{speaking=false;paused=false;stopProgressFallback();resetAudioProgress();updateSpeakUI();};
+  window.speechSynthesis.cancel();
+  // Chrome avorte parfois un speak() lancé dans le même tick qu'un cancel() : on laisse un court délai
+  setTimeout(()=>window.speechSynthesis.speak(u),50);
+  speaking=true; paused=false;
+  resetAudioProgress();
+  updateSpeakUI();
+}
+function togglePause(){          // met en pause OU reprend là où on s'est arrêté
+  if(!speaking) return;
+  if(paused){ window.speechSynthesis.resume(); paused=false; resumeProgressFallback(); }
+  else      { window.speechSynthesis.pause();  paused=true;  pauseProgressFallback(); }
+  updateSpeakUI();
+}
+// certaines plateformes chargent la liste des voix de façon asynchrone
+if('speechSynthesis' in window){ window.speechSynthesis.onvoiceschanged=refreshFrVoice; refreshFrVoice(); }
+let busy=false;
+function turn(dir){
+  if(busy) return;
+  const target=idx+dir;
+  if(target<COVER||target>total-1) return;
+  busy=true;
+  const cur=document.getElementById('page');
+  cur.classList.add('flip-out');
+  setTimeout(()=>{
+    idx=target;
+    render();
+    const np=document.getElementById('page');
+    np.classList.add('flip-in');
+    let safety;
+    const release=()=>{np.classList.remove('flip-in');busy=false;clearTimeout(safety);};
+    np.addEventListener('animationend',release,{once:true});
+    // sécurité si animationend ne se déclenche pas
+    safety=setTimeout(release,500);
+  },340);
+}
+
+prevBtn.onclick=()=>turn(-1);
+nextBtn.onclick=()=>turn(1);
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('menuView').classList.contains('show')) return;
+  if(e.key==='ArrowRight') turn(1);
+  if(e.key==='ArrowLeft') turn(-1);
+});
+
+// swipe
+let sx=0, sy=0;
+bookEl.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+bookEl.addEventListener('touchend',e=>{
+  if(document.getElementById('menuView').classList.contains('show')) return;
+  const dx=e.changedTouches[0].clientX-sx;
+  const dy=e.changedTouches[0].clientY-sy;
+  // ignore les défilements verticaux (lecture du texte) qui ont un léger déplacement horizontal
+  if(Math.abs(dx)>50 && Math.abs(dx)>Math.abs(dy)){ if(dx<0) turn(1); else turn(-1); }
+});
+
+/* ===== SOMMAIRE ===== */
+const menuBtn=document.getElementById('menuBtn');
+const backBtn=document.getElementById('backBtn');
+const menuView=document.getElementById('menuView');
+const bookView=document.getElementById('bookView');
+const menuList=document.getElementById('menuList');
+
+function buildMenu(){
+  const groups={hero:[],fun:[],manners:[],family:[]};
+  STORIES.forEach((s,i)=>groups[s.cat].push({s,i}));
+  let html='';
+  for(const k of ['hero','fun','manners','family']){
+    html+=`<h3><span class="pip" style="background:${CCOL[k]}"></span>${CICON[k]} ${C[k]} (${groups[k].length})</h3><div class="cards">`;
+    groups[k].forEach(({s,i})=>{
+      html+=`<div class="scard" role="button" tabindex="0" data-i="${i}">
+        <span class="nn">N°${String(i+1).padStart(2,'0')}</span>
+        <span class="tt">${s.title}</span></div>`;
+    });
+    html+='</div>';
+  }
+  menuList.innerHTML=html;
+  menuList.querySelectorAll('.scard').forEach(c=>{
+    const go=()=>{
+      const n=parseInt(c.dataset.i,10);
+      if(!Number.isInteger(n)||n<0||n>=total) return;
+      idx=n;busy=false;closeMenu();render();
+    };
+    c.onclick=go;
+    c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}};
+  });
+}
+function openMenu(){stopSpeak();busy=false;menuView.classList.add('show');bookView.style.display='none';buildMenu();}
+function closeMenu(){menuView.classList.remove('show');bookView.style.display='flex';}
+menuBtn.onclick=openMenu;
+backBtn.onclick=closeMenu;
+
+/* étoiles d'ambiance */
+const starWrap=document.getElementById('stars');
+for(let i=0;i<40;i++){
+  const d=document.createElement('div');
+  d.className='star-dot';
+  const sz=Math.random()*2.4+1;
+  d.style.width=d.style.height=sz+'px';
+  d.style.left=Math.random()*100+'%';
+  d.style.top=Math.random()*100+'%';
+  d.style.animationDelay=(Math.random()*3)+'s';
+  starWrap.appendChild(d);
+}
+
+render();
+</script>
+</body>
+</html>

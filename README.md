@@ -1,17 +1,20 @@
 # 🌙 Night Audio Book
 
-> An interactive bedtime storybook with text-to-speech narration. 31 enchanting stories designed for children ages 6+, featuring the hero **Amine**.
+> An interactive bedtime storybook with text-to-speech narration. Two volumes, 31 enchanting stories each, designed for children ages 6+, featuring the hero **Amine** — and in Tome 2, his little sister **Leyla**.
 
 ## 📖 Read Now
 
-### ⭐ Main Link (GitHub Pages)
-**[👉 Open the book in your browser](https://theb2a.github.io/night-audio-book/livre-histoires.html)**
+### ⭐ Tome 1 (GitHub Pages)
+**[👉 Open Tome 1 in your browser](https://theb2a.github.io/night-audio-book/livre-histoires.html)**
+
+### ⭐ Tome 2 — with Leyla (GitHub Pages)
+**[👉 Open Tome 2 in your browser](https://theb2a.github.io/night-audio-book/livre-histoires-tome2.html)**
 
 No installation needed — hosted directly on GitHub Pages!
 
 ### Alternative Links
-- **jsDelivr CDN**: https://cdn.jsdelivr.net/gh/theb2a/night-audio-book@main/livre-histoires.html
-- **GitHub Raw**: https://raw.githubusercontent.com/theb2a/night-audio-book/main/livre-histoires.html
+- **jsDelivr CDN**: https://cdn.jsdelivr.net/gh/theb2a/night-audio-book@main/livre-histoires.html (Tome 1) · https://cdn.jsdelivr.net/gh/theb2a/night-audio-book@main/livre-histoires-tome2.html (Tome 2)
+- **GitHub Raw**: https://raw.githubusercontent.com/theb2a/night-audio-book/main/livre-histoires.html (Tome 1) · https://raw.githubusercontent.com/theb2a/night-audio-book/main/livre-histoires-tome2.html (Tome 2)
 
 ## Features
 
@@ -82,11 +85,12 @@ Click **"Open the book in your browser"** at the top of this page. The book is s
 
 ```
 .
-├── livre-histoires.html    # Main application (single file, no build needed)
-├── GUIDE-RAPIDE.md         # Quick modification guide
-├── RAPPORT-QA.md           # Quality assurance & validation report
-├── README-CONTINUATION.md  # Development notes & feature roadmap
-└── README.md              # This file
+├── livre-histoires.html         # Tome 1 (single file, no build needed)
+├── livre-histoires-tome2.html   # Tome 2, with Amine & Leyla (single file, no build needed)
+├── GUIDE-RAPIDE.md              # Quick modification guide
+├── RAPPORT-QA.md                # Tome 1 quality assurance & validation report
+├── README-CONTINUATION.md       # Development notes & feature roadmap
+└── README.md                    # This file
 ```
 
 ## Stories Overview
@@ -108,6 +112,15 @@ Stories about saying "thank you," sharing, waiting your turn, and more.
 
 ### Family Tales ❤️
 Heartwarming stories about family bonds and togetherness.
+
+## Tome 2 — Amine & Leyla 👧🦸
+
+A full second volume (`livre-histoires-tome2.html`), same structure as Tome 1 (31 stories, 11/5/8/7 split), introducing Amine's 2-year-old little sister **Leyla**. 10 of the 31 stories feature them together; the rest are brand-new tales with the existing cast (Steve, Noobi, Goku, and more).
+
+🎯 **New: Audio Progress Gauge**
+- Shows live reading progress while the story is narrated aloud
+- Always moves forward smoothly, even on browsers that don't support fine-grained playback events (e.g. iOS Safari)
+- Reaches 100% when the story finishes
 
 ## Technology
 
