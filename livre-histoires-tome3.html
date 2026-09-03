@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Le Grand Livre des Histoires du Soir — Tome 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Fredoka:wght@500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night-1:#1a1147;
+    --night-2:#2a1f6b;
+    --night-3:#3b2c8f;
+    --lamp:#ffd27a;
+    --lamp-soft:#ffe9c2;
+    --page:#fff7ea;
+    --ink:#3a2e4f;
+    --ink-soft:#6b5f7d;
+    --diamond:#5be0d8;
+    --heart:#ff7a9c;
+    --cat-hero:#ff8a3d;
+    --cat-fun:#ffcf3d;
+    --cat-manners:#5bd0e8;
+    --cat-family:#ff7a9c;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;height:100%;}
+  body{
+    font-family:'Baloo 2','Fredoka','Trebuchet MS',sans-serif;
+    background:
+      radial-gradient(circle at 18% 12%, rgba(255,210,122,.18), transparent 40%),
+      radial-gradient(circle at 82% 85%, rgba(91,224,216,.14), transparent 45%),
+      linear-gradient(160deg,var(--night-1),var(--night-2) 55%,var(--night-3));
+    color:var(--page);
+    min-height:100%;
+    overflow-x:hidden;
+    display:flex;flex-direction:column;align-items:center;
+    padding:14px;
+  }
+  .svg-defs{position:absolute;width:0;height:0;overflow:hidden;}
+  .stars{position:fixed;inset:0;pointer-events:none;z-index:0;}
+  .star-dot{position:absolute;background:#fff;border-radius:50%;opacity:.8;
+    animation:twinkle 3s ease-in-out infinite;}
+  @keyframes twinkle{0%,100%{opacity:.15;transform:scale(.7)}50%{opacity:.9;transform:scale(1.1)}}
+
+  .wrap{position:relative;z-index:2;width:100%;max-width:580px;display:flex;flex-direction:column;align-items:center;}
+
+  header.topbar{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;}
+  .brand{display:flex;align-items:center;gap:9px;}
+  .brand .moon{width:26px;height:26px;border-radius:50%;
+    background:radial-gradient(circle at 35% 35%,#fff6da,#ffd27a);
+    box-shadow:0 0 16px rgba(255,210,122,.7);}
+  .brand b{font-family:'Fredoka',sans-serif;font-weight:700;font-size:15px;letter-spacing:.3px;}
+  .home-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+    color:var(--page);font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;
+    padding:8px 14px;border-radius:14px;cursor:pointer;backdrop-filter:blur(4px);transition:.2s;}
+  .home-btn:hover{background:rgba(255,255,255,.22);}
+  .home-btn:active{transform:scale(.96);}
+
+  /* === LIVRE === */
+  .book{position:relative;width:100%;aspect-ratio:3/4.1;max-height:76vh;perspective:1800px;}
+  .page{
+    position:absolute;inset:0;background:linear-gradient(160deg,var(--page),#fdeccf);
+    border-radius:22px;
+    box-shadow:0 18px 40px rgba(10,6,40,.55), inset 0 0 0 6px rgba(255,255,255,.5),
+      inset 6px 0 22px rgba(0,0,0,.06);
+    color:var(--ink);
+    padding:18px 18px 14px;
+    display:flex;flex-direction:column;
+    transform-origin:left center;
+    backface-visibility:hidden;
+    overflow:hidden;
+  }
+  .page::before{content:"";position:absolute;left:0;top:0;bottom:0;width:16px;
+    background:linear-gradient(90deg,rgba(0,0,0,.10),transparent);border-radius:22px 0 0 22px;}
+  .page.flip-out{animation:flipOut .34s ease-in forwards;}
+  .page.flip-in{animation:flipIn .34s ease-out forwards;}
+  @keyframes flipOut{from{transform:rotateY(0);opacity:1}to{transform:rotateY(-95deg);opacity:.25}}
+  @keyframes flipIn{from{transform:rotateY(95deg);opacity:.25}to{transform:rotateY(0);opacity:1}}
+
+  .cat-tag{align-self:flex-start;display:inline-flex;align-items:center;gap:7px;
+    font-family:'Fredoka',sans-serif;font-weight:700;font-size:11px;text-transform:uppercase;
+    letter-spacing:.6px;color:#fff;padding:5px 12px;border-radius:999px;margin-bottom:4px;}
+  .story-no{position:absolute;top:16px;right:18px;font-family:'Press Start 2P',monospace;
+    font-size:10px;color:var(--ink-soft);opacity:.8;}
+  .page h2{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(19px,5vw,25px);
+    line-height:1.1;margin:2px 0 8px;color:var(--ink);}
+
+  /* === DÉROULÉ ILLUSTRÉ : une image avant chaque moment du récit === */
+  .story-scroll{flex:1;overflow-y:auto;padding-right:6px;scrollbar-width:thin;}
+  .story-scroll::-webkit-scrollbar{width:8px;}
+  .story-scroll::-webkit-scrollbar-thumb{background:rgba(0,0,0,.16);border-radius:8px;}
+  .panel{margin:0 0 16px;}
+  .panel:last-child{margin-bottom:4px;}
+  /* l'image occupe toute la largeur du panneau : même rapport que le viewBox 320x180 */
+  .pillus{width:100%;aspect-ratio:320/180;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(180deg,#fffdf8,#f6ead4);
+    border:1px solid rgba(120,90,40,.14);border-radius:16px;overflow:hidden;
+    box-shadow:0 5px 14px rgba(90,60,20,.13);margin-bottom:9px;}
+  .pillus svg{width:100%;height:100%;display:block;}
+  .step{display:inline-flex;align-items:center;gap:6px;font-family:'Press Start 2P',monospace;
+    font-size:8px;color:var(--ink-soft);opacity:.75;margin-bottom:5px;letter-spacing:.5px;}
+  .step .dot{width:7px;height:7px;border-radius:50%;}
+  .panel p{margin:0;font-size:clamp(15px,3.8vw,17px);line-height:1.52;color:#4a3d5c;}
+
+  /* COUVERTURE */
+  .cover{align-items:center;justify-content:center;text-align:center;gap:4px;
+    background:
+      radial-gradient(circle at 50% 24%, rgba(255,210,122,.45), transparent 55%),
+      linear-gradient(165deg,#2a1f6b,#1a1147);
+    color:var(--page);}
+  .cover::before{display:none;}
+  .cover .eyebrow{font-family:'Press Start 2P',monospace;font-size:9px;letter-spacing:1px;color:var(--lamp);}
+  .cover h1{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(25px,6.6vw,38px);
+    line-height:1.05;margin:6px 14px 4px;text-shadow:0 3px 0 rgba(0,0,0,.25);}
+  .cover .sub{font-size:15px;color:var(--lamp-soft);margin-bottom:6px;padding:0 10px;}
+  .cover .cover-art{width:100%;height:34%;min-height:130px;display:flex;align-items:center;justify-content:center;}
+  .cover .cover-art svg{width:100%;height:100%;}
+  .cover .start{margin-top:12px;background:linear-gradient(180deg,#ff9d4d,#ff7a3d);
+    color:#fff;border:none;font-family:'Fredoka',sans-serif;font-weight:700;font-size:18px;
+    padding:13px 30px;border-radius:18px;cursor:pointer;box-shadow:0 8px 0 #c9531f,0 14px 24px rgba(0,0,0,.4);
+    transition:.12s;}
+  .cover .start:active{transform:translateY(5px);box-shadow:0 3px 0 #c9531f;}
+  .cover .pour{margin-top:10px;font-size:13.5px;color:rgba(255,255,255,.72);}
+
+  /* SOMMAIRE */
+  .menu{position:relative;z-index:2;width:100%;max-width:580px;display:none;flex-direction:column;gap:14px;}
+  .menu.show{display:flex;}
+  .menu h3{font-family:'Fredoka',sans-serif;font-weight:700;font-size:17px;margin:4px 2px;
+    display:flex;align-items:center;gap:8px;color:#fff;}
+  .menu h3 .pip{width:12px;height:12px;border-radius:4px;}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+  .scard{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);
+    border-radius:14px;padding:11px 12px;cursor:pointer;display:flex;flex-direction:column;gap:3px;
+    transition:.15s;backdrop-filter:blur(3px);}
+  .scard:hover{background:rgba(255,255,255,.18);transform:translateY(-2px);}
+  .scard:active{transform:scale(.97);}
+  .scard .nn{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--lamp);}
+  .scard .tt{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;line-height:1.15;color:#fff;}
+
+  /* NAV */
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;margin-top:14px;}
+  .nbtn{flex:0 0 auto;width:58px;height:58px;border-radius:50%;border:none;cursor:pointer;
+    background:linear-gradient(180deg,#6a4fd0,#4a34a8);color:#fff;font-size:26px;font-weight:700;
+    box-shadow:0 6px 0 #2e1f74,0 10px 18px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;
+    transition:.12s;}
+  .nbtn:active{transform:translateY(4px);box-shadow:0 2px 0 #2e1f74;}
+  .nbtn:disabled{opacity:.35;box-shadow:0 6px 0 #2e1f74;cursor:default;}
+  .progress{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;}
+  .pcount{font-family:'Fredoka',sans-serif;font-weight:700;font-size:14px;color:var(--lamp-soft);}
+  .pbar{width:100%;height:9px;background:rgba(255,255,255,.14);border-radius:999px;overflow:hidden;}
+  .pfill{height:100%;width:0;background:linear-gradient(90deg,var(--lamp),#ff8a3d);border-radius:999px;transition:width .35s ease;}
+  .hint{margin-top:10px;font-size:12px;color:rgba(255,255,255,.55);text-align:center;}
+
+  /* lecture à voix haute */
+  .speak-ctl{display:flex;gap:8px;justify-content:center;align-items:center;margin-top:10px;flex:0 0 auto;flex-wrap:wrap;}
+  .speak-btn{background:linear-gradient(180deg,#ffd27a,#ffba4a);color:#5a3b12;border:none;
+    font-family:'Fredoka',sans-serif;font-weight:700;font-size:15px;
+    padding:10px 18px;border-radius:14px;cursor:pointer;
+    box-shadow:0 4px 0 #c98a2a,0 8px 14px rgba(0,0,0,.18);transition:.12s;}
+  .speak-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #c98a2a;}
+  .speak-btn.s-pause{background:linear-gradient(180deg,#9be7a0,#5fcf6a);color:#0f481b;box-shadow:0 4px 0 #2f8a3a;}
+  .speak-btn.s-pause:active{box-shadow:0 1px 0 #2f8a3a;}
+  .speak-btn.s-stop{background:linear-gradient(180deg,#ff9d9d,#ff6b6b);color:#fff;box-shadow:0 4px 0 #c93a3a;padding:10px 14px;}
+  .speak-btn.s-stop:active{box-shadow:0 1px 0 #c93a3a;}
+  .speak-btn:focus-visible{outline:3px solid var(--lamp);outline-offset:3px;}
+  .audio-progress{width:100%;display:none;flex-direction:column;align-items:center;gap:4px;margin-top:8px;}
+  .audio-progress .alabel{font-family:'Fredoka',sans-serif;font-weight:600;font-size:11px;color:var(--lamp-soft);letter-spacing:.3px;}
+  .abar{width:100%;height:7px;background:rgba(255,255,255,.14);border-radius:999px;overflow:hidden;}
+  .afill{height:100%;width:0%;background:linear-gradient(90deg,var(--diamond),#3ec8c0);border-radius:999px;transition:width .25s linear;}
+
+  /* ANIMATIONS ILLUSTRATIONS */
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-4px) rotate(2deg)}}
+  @keyframes pulse{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.1);opacity:1}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes spark{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:1;transform:scale(1.15)}}
+  @keyframes sway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+  @keyframes bounce{0%,100%{transform:translateY(0)}40%{transform:translateY(-13px)}60%{transform:translateY(-6px)}}
+  @keyframes drift{0%{transform:translateX(-14px)}100%{transform:translateX(14px)}}
+  @keyframes beat{0%,100%{transform:scale(1)}30%{transform:scale(1.16)}60%{transform:scale(1.04)}}
+  @keyframes halo{0%,100%{transform:scale(1)}50%{transform:scale(1.09)}}
+  .a-float{animation:float 3s ease-in-out infinite;transform-origin:center;}
+  .a-bob{animation:bob 2.4s ease-in-out infinite;transform-origin:center bottom;}
+  .a-pulse{animation:pulse 2s ease-in-out infinite;transform-origin:center;}
+  .a-spin{animation:spin 9s linear infinite;transform-origin:center;}
+  .a-spark{animation:spark 1.6s ease-in-out infinite;transform-origin:center;}
+  .a-sway{animation:sway 3s ease-in-out infinite;transform-origin:center top;}
+  .a-bounce{animation:bounce 1.7s ease-in-out infinite;transform-origin:center bottom;}
+  .a-drift{animation:drift 7s ease-in-out infinite alternate;}
+  .a-beat{animation:beat 1.8s ease-in-out infinite;transform-origin:center;}
+  /* halo : ne touche pas a l'opacite, contrairement a .a-pulse */
+  .a-halo{animation:halo 2.4s ease-in-out infinite;transform-origin:center;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms!important;animation-iteration-count:1!important;}
+    .star-dot{display:none;}
+  }
+  .nbtn:focus-visible,.home-btn:focus-visible,.scard:focus-visible,.start:focus-visible{outline:3px solid var(--lamp);outline-offset:3px;}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+
+<!-- dégradés partagés par toutes les illustrations (définis une seule fois, ids uniques) -->
+<svg class="svg-defs" aria-hidden="true" focusable="false"><defs>
+  <linearGradient id="gNight" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#141046"/><stop offset="1" stop-color="#4a2f88"/></linearGradient>
+  <linearGradient id="gDay" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7cc8f0"/><stop offset="1" stop-color="#dff2ff"/></linearGradient>
+  <linearGradient id="gDusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b2c8f"/><stop offset=".55" stop-color="#a35a9a"/><stop offset="1" stop-color="#ffb36b"/></linearGradient>
+  <linearGradient id="gRoom" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe9c9"/><stop offset="1" stop-color="#f6cf9d"/></linearGradient>
+  <linearGradient id="gHosp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eaf8f5"/><stop offset="1" stop-color="#c9e7e2"/></linearGradient>
+  <linearGradient id="gGrass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7ecb4e"/><stop offset="1" stop-color="#47822a"/></linearGradient>
+  <linearGradient id="gWood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cf9455"/><stop offset="1" stop-color="#9c6330"/></linearGradient>
+  <linearGradient id="gWater" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#63c8e8"/><stop offset="1" stop-color="#2b7fb8"/></linearGradient>
+  <linearGradient id="gSnow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4fbff"/><stop offset="1" stop-color="#cfe4f2"/></linearGradient>
+  <radialGradient id="gGlow"><stop offset="0" stop-color="#fff3cf" stop-opacity=".95"/><stop offset="1" stop-color="#ffd27a" stop-opacity="0"/></radialGradient>
+  <radialGradient id="gDome"><stop offset="0" stop-color="#ffffff" stop-opacity=".55"/><stop offset="1" stop-color="#bfe6ea" stop-opacity=".28"/></radialGradient>
+</defs></svg>
+
+<!-- VUE LIVRE -->
+<div class="wrap" id="bookView">
+  <header class="topbar">
+    <div class="brand"><span class="moon"></span><b>Histoires du Soir · T3</b></div>
+    <button type="button" class="home-btn" id="menuBtn">📖 Sommaire</button>
+  </header>
+
+  <div class="book" id="book">
+    <div class="page" id="page"></div>
+  </div>
+
+  <div class="nav">
+    <button type="button" class="nbtn" id="prev" aria-label="Page précédente">‹</button>
+    <div class="progress">
+      <div class="pcount" id="pcount"></div>
+      <div class="pbar"><div class="pfill" id="pfill"></div></div>
+    </div>
+    <button type="button" class="nbtn" id="next" aria-label="Page suivante">›</button>
+  </div>
+  <div class="hint">Fais défiler l'histoire • flèches ou glisse pour tourner la page 🌙</div>
+</div>
+
+<!-- VUE SOMMAIRE -->
+<div class="menu" id="menuView">
+  <header class="topbar">
+    <div class="brand"><span class="moon"></span><b>Sommaire</b></div>
+    <button type="button" class="home-btn" id="backBtn">← Lecture</button>
+  </header>
+  <div id="menuList"></div>
+</div>
+
+<script>
+/* ==========================================================================
+   BOÎTE À OUTILS D'ILLUSTRATION
+   Toutes les scènes utilisent le même cadre 320x180, un sol à y=152,
+   et des personnages dessinés « pieds à l'origine » que l'on place
+   avec (x, y, échelle). Les dégradés viennent du bloc <defs> partagé.
+   ========================================================================== */
+const V=(inner)=>`<svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid meet">${inner}</svg>`;
+
+/* --- petits éléments réutilisables --- */
+const ombre=(x,y,rx,op)=>`<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${rx*0.26}" fill="#1a1030" opacity="${op||.16}"/>`;
+const etoile=(x,y,r,c)=>`<path d="M${x} ${y-r} L${x+r*0.3} ${y-r*0.3} L${x+r} ${y} L${x+r*0.3} ${y+r*0.3} L${x} ${y+r} L${x-r*0.3} ${y+r*0.3} L${x-r} ${y} L${x-r*0.3} ${y-r*0.3}Z" fill="${c||'#fff6cf'}"/>`;
+const coeur=(x,y,s,c)=>`<path transform="translate(${x},${y}) scale(${s})" d="M0 7 C-9 0 -9 -7 -4.5 -7 C-2 -7 0 -5 0 -3.5 C0 -5 2 -7 4.5 -7 C9 -7 9 0 0 7Z" fill="${c||'#ff7a9c'}"/>`;
+const nuage=(x,y,s,op)=>`<g transform="translate(${x},${y}) scale(${s})" opacity="${op||.92}"><ellipse cx="0" cy="0" rx="22" ry="12" fill="#fff"/><ellipse cx="-15" cy="4" rx="14" ry="9" fill="#fff"/><ellipse cx="16" cy="3" rx="15" ry="10" fill="#fff"/></g>`;
+const fleur=(x,y,c)=>`<g transform="translate(${x},${y})"><rect x="-1" y="-1" width="2" height="9" fill="#3f7d24"/><circle cx="0" cy="-4" r="3.4" fill="${c}"/><circle cx="-3.4" cy="-1.6" r="2.6" fill="${c}"/><circle cx="3.4" cy="-1.6" r="2.6" fill="${c}"/><circle cx="0" cy="-4" r="1.4" fill="#ffe97a"/></g>`;
+const arbre=(x,y,s)=>`<g transform="translate(${x},${y}) scale(${s})"><rect x="-6" y="-34" width="12" height="34" rx="4" fill="url(#gWood)"/><circle cx="0" cy="-46" r="26" fill="#3f9c35"/><circle cx="-18" cy="-36" r="17" fill="#4bb03e"/><circle cx="18" cy="-37" r="18" fill="#357f2c"/><circle cx="2" cy="-58" r="15" fill="#4bb03e"/></g>`;
+const lune=(x,y,r)=>`<g><circle cx="${x}" cy="${y}" r="${r*2.6}" fill="url(#gGlow)" opacity=".55"/><circle cx="${x}" cy="${y}" r="${r}" fill="#fff3cf"/><circle cx="${x-r*0.35}" cy="${y-r*0.2}" r="${r*0.16}" fill="#f0dfb0"/><circle cx="${x+r*0.3}" cy="${y+r*0.3}" r="${r*0.12}" fill="#f0dfb0"/></g>`;
+const soleil=(x,y,r)=>`<g><circle cx="${x}" cy="${y}" r="${r*2.4}" fill="url(#gGlow)" opacity=".7"/><circle cx="${x}" cy="${y}" r="${r}" fill="#ffd85e"/></g>`;
+
+/* semis d'étoiles fixe (pas d'aléatoire : rendu identique à chaque affichage) */
+const CIEL_ETOILES=[[24,26,2],[58,14,1.5],[92,34,2.2],[128,18,1.4],[168,30,1.8],[206,16,2],[244,38,1.5],[286,22,2.2],[300,58,1.5],[16,62,1.6],[74,52,1.3],[150,50,1.5]];
+const semisEtoiles=()=>CIEL_ETOILES.map(([x,y,r],i)=>`<circle class="a-spark" style="animation-delay:${(i*0.27).toFixed(2)}s" cx="${x}" cy="${y}" r="${r}" fill="#fff8dc"/>`).join('');
+
+/* --- décors --- */
+const bgNuit=()=>`<rect width="320" height="180" fill="url(#gNight)"/>${semisEtoiles()}${lune(268,36,16)}
+  <path d="M0 152 Q60 126 120 146 Q180 166 240 140 Q280 124 320 142 L320 180 L0 180Z" fill="#1d1550"/>
+  <path d="M0 162 Q80 146 160 160 Q240 174 320 158 L320 180 L0 180Z" fill="#151041"/>`;
+const bgJour=()=>`<rect width="320" height="180" fill="url(#gDay)"/>${soleil(50,34,17)}
+  <g class="a-drift">${nuage(120,36,1)}</g>${nuage(238,28,.8,.85)}
+  <path d="M0 140 Q70 116 140 138 Q210 158 320 130 L320 180 L0 180Z" fill="#8ed36a"/>
+  <rect y="152" width="320" height="28" fill="url(#gGrass)"/>`;
+const bgSoir=()=>`<rect width="320" height="180" fill="url(#gDusk)"/>${semisEtoiles()}${lune(52,32,13)}
+  <path d="M0 148 Q80 128 160 146 Q240 164 320 142 L320 180 L0 180Z" fill="#3c2a63"/>`;
+const bgChambre=()=>`<rect width="320" height="180" fill="url(#gRoom)"/>
+  <rect x="196" y="22" width="86" height="66" rx="8" fill="#20194f"/>
+  <rect x="196" y="22" width="86" height="66" rx="8" fill="none" stroke="#c99a5e" stroke-width="5"/>
+  <line x1="239" y1="22" x2="239" y2="88" stroke="#c99a5e" stroke-width="4"/>${lune(262,44,9)}
+  <circle cx="212" cy="40" r="1.8" fill="#fff8dc"/><circle cx="222" cy="66" r="1.5" fill="#fff8dc"/>
+  <rect y="150" width="320" height="30" fill="url(#gWood)"/>
+  <ellipse cx="120" cy="164" rx="86" ry="13" fill="#e0a3b8" opacity=".55"/>`;
+const bgSalon=()=>`<rect width="320" height="180" fill="url(#gRoom)"/>
+  <rect x="24" y="26" width="66" height="48" rx="6" fill="#fff6e2" stroke="#c99a5e" stroke-width="4"/>
+  <path d="M34 66 l16 -22 12 14 9 -10 12 18Z" fill="#7fc0e8"/>
+  <rect y="150" width="320" height="30" fill="url(#gWood)"/>`;
+const bgCuisine=()=>`<rect width="320" height="180" fill="#fdf0d8"/>
+  <rect y="150" width="320" height="30" fill="#d9c2a0"/>
+  <rect x="0" y="96" width="320" height="12" fill="#c98a4b" opacity=".5"/>
+  <g opacity=".8"><rect x="18" y="40" width="34" height="30" rx="4" fill="#fff" stroke="#c99a5e" stroke-width="3"/>
+  <rect x="60" y="46" width="26" height="24" rx="4" fill="#ffe1a8" stroke="#c99a5e" stroke-width="3"/></g>`;
+const bgHopital=()=>`<rect width="320" height="180" fill="url(#gHosp)"/>
+  <rect x="206" y="20" width="82" height="60" rx="8" fill="#bfe3f5" stroke="#fff" stroke-width="5"/>
+  <line x1="247" y1="20" x2="247" y2="80" stroke="#fff" stroke-width="4"/>${soleil(268,40,10)}
+  <rect y="148" width="320" height="32" fill="#dcece9"/>
+  <line x1="0" y1="148" x2="320" y2="148" stroke="#b7d6d1" stroke-width="3"/>
+  <g opacity=".55" stroke="#5bc7bd" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 108 h20 l6 -14 l7 26 l6 -12 h22"/></g>
+  ${coeur(30,96,.9,'#ff9db4')}`;
+const bgJardin=()=>`${bgJour()}${arbre(276,152,1)}${arbre(36,154,.72)}
+  ${fleur(96,160,'#ff7a9c')}${fleur(126,166,'#ffd54a')}${fleur(196,162,'#c78cf0')}${fleur(232,168,'#ff9d4d')}`;
+const bgParc=()=>`${bgJour()}${arbre(48,150,.85)}${arbre(292,152,.9)}
+  <path d="M0 176 Q90 150 320 168 L320 180 L0 180Z" fill="#e7cf9e"/>`;
+const bgNeige=()=>`<rect width="320" height="180" fill="url(#gSnow)"/>${nuage(70,32,.9,.8)}${nuage(230,26,.75,.7)}
+  <path d="M0 140 Q80 118 160 138 Q240 158 320 134 L320 180 L0 180Z" fill="#fff"/>
+  <rect y="152" width="320" height="28" fill="#eef6fb"/>
+  <g fill="#fff" opacity=".9"><circle cx="40" cy="70" r="2.4"/><circle cx="120" cy="52" r="2"/><circle cx="200" cy="76" r="2.6"/><circle cx="268" cy="60" r="2"/><circle cx="90" cy="104" r="2.2"/><circle cx="176" cy="112" r="1.8"/></g>`;
+
+/* ============ PERSONNAGES ============ */
+/* Amine : héros de 6 ans, t-shirt bleu à éclair, cape rouge en option */
+function amine(x,y,s,o){o=o||{};
+  const cape=o.cape?`<g class="a-sway"><path d="M-15 -56 Q-34 -20 -26 4 L0 -8 L0 -56Z" fill="#e8465a"/><path d="M15 -56 Q34 -20 26 4 L0 -8 L0 -56Z" fill="#c8243a"/></g>`:'';
+  const bras=(o.arms==='up')
+    ? `<rect x="-27" y="-60" width="9" height="27" rx="4.5" fill="#c98a52" transform="rotate(-40 -22 -58)"/><rect x="18" y="-60" width="9" height="27" rx="4.5" fill="#c98a52" transform="rotate(40 22 -58)"/>`
+    : (o.arms==='hold')
+    ? `<rect x="-24" y="-46" width="9" height="24" rx="4.5" fill="#c98a52" transform="rotate(24 -20 -44)"/><rect x="15" y="-46" width="9" height="24" rx="4.5" fill="#c98a52" transform="rotate(-24 19 -44)"/>`
+    : `<rect x="-24" y="-52" width="9" height="28" rx="4.5" fill="#c98a52"/><rect x="15" y="-52" width="9" height="28" rx="4.5" fill="#c98a52"/>`;
+  return `${ombre(x,y+1,17)}<g transform="translate(${x},${y}) scale(${s})">${cape}
+    <rect x="-12" y="-22" width="10" height="22" rx="5" fill="#3a4790"/><rect x="2" y="-22" width="10" height="22" rx="5" fill="#3a4790"/>
+    <ellipse cx="-7" cy="0" rx="8" ry="4" fill="#26305f"/><ellipse cx="7" cy="0" rx="8" ry="4" fill="#26305f"/>
+    <rect x="-16" y="-56" width="32" height="36" rx="12" fill="#2f6fd6"/>
+    <path d="M0 -48 l5 9 -4 1 3 8 -8 -10 4 -1 -4 -7Z" fill="#ffd60a"/>
+    ${bras}
+    <circle cx="0" cy="-70" r="15" fill="#c98a52"/>
+    <ellipse cx="-9" cy="-66" rx="3" ry="2" fill="#e79a9a" opacity=".45"/><ellipse cx="9" cy="-66" rx="3" ry="2" fill="#e79a9a" opacity=".45"/>
+    <path d="M-15 -74 q5 -15 15 -13 q11 -2 15 13 q-6 -7 -15 -6 q-9 -1 -15 6Z" fill="#2a1a11"/>
+    <circle cx="-5.4" cy="-71" r="2.4" fill="#26150c"/><circle cx="5.4" cy="-71" r="2.4" fill="#26150c"/>
+    <circle cx="-4.6" cy="-71.8" r=".8" fill="#fff"/><circle cx="6.2" cy="-71.8" r=".8" fill="#fff"/>
+    <path d="M-5 -63 q5 4.5 10 0" stroke="#7d4522" stroke-width="1.9" fill="none" stroke-linecap="round"/>
+  </g>`;}
+
+/* Leyla : 2 ans, robe violette, deux couettes */
+function leyla(x,y,s,o){o=o||{};
+  const bras=(o.arms==='up')
+    ? `<rect x="-19" y="-40" width="8" height="19" rx="4" fill="#f0c49a" transform="rotate(-42 -15 -38)"/><rect x="11" y="-40" width="8" height="19" rx="4" fill="#f0c49a" transform="rotate(42 15 -38)"/>`
+    : `<rect x="-17" y="-34" width="8" height="20" rx="4" fill="#f0c49a"/><rect x="9" y="-34" width="8" height="20" rx="4" fill="#f0c49a"/>`;
+  return `${ombre(x,y+1,13)}<g transform="translate(${x},${y}) scale(${s})">
+    <rect x="-9" y="-14" width="7" height="14" rx="3.5" fill="#f0c49a"/><rect x="2" y="-14" width="7" height="14" rx="3.5" fill="#f0c49a"/>
+    <ellipse cx="-5.5" cy="0" rx="6" ry="3.2" fill="#e2569a"/><ellipse cx="5.5" cy="0" rx="6" ry="3.2" fill="#e2569a"/>
+    <path d="M-13 -38 h26 l7 24 h-40Z" fill="#b96ad8"/>
+    <rect x="-11" y="-40" width="22" height="12" rx="6" fill="#cf85e6"/>
+    ${bras}
+    <circle cx="-12" cy="-56" r="6" fill="#33220f"/><circle cx="12" cy="-56" r="6" fill="#33220f"/>
+    <circle cx="0" cy="-50" r="13" fill="#f0c49a"/>
+    <path d="M-13 -54 q4 -13 13 -11 q10 -2 13 11 q-6 -6 -13 -5 q-8 -1 -13 5Z" fill="#33220f"/>
+    <ellipse cx="-8" cy="-46" rx="2.6" ry="1.8" fill="#e79a9a" opacity=".5"/><ellipse cx="8" cy="-46" rx="2.6" ry="1.8" fill="#e79a9a" opacity=".5"/>
+    <circle cx="-4.6" cy="-51" r="2.2" fill="#26150c"/><circle cx="4.6" cy="-51" r="2.2" fill="#26150c"/>
+    <circle cx="-3.9" cy="-51.7" r=".7" fill="#fff"/><circle cx="5.3" cy="-51.7" r=".7" fill="#fff"/>
+    <path d="M-4 -44 q4 3.6 8 0" stroke="#a9613a" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+  </g>`;}
+
+/* Yasmine : le tout petit bébé, emmailloté, couché — centré sur (x,y) */
+function yasmine(x,y,s,o){o=o||{};
+  const c=o.couleur||'#ffc2d4';
+  const yeux=o.eveille
+    ? `<circle cx="-3.4" cy="-1.4" r="1.5" fill="#26150c"/><circle cx="3.4" cy="-1.4" r="1.5" fill="#26150c"/>`
+    : `<path d="M-5.4 -1.4 q2 1.8 4 0" stroke="#26150c" stroke-width="1.2" fill="none" stroke-linecap="round"/><path d="M1.4 -1.4 q2 1.8 4 0" stroke="#26150c" stroke-width="1.2" fill="none" stroke-linecap="round"/>`;
+  return `<g transform="translate(${x},${y}) scale(${s})">
+    <ellipse cx="9" cy="2" rx="21" ry="12" fill="${c}"/>
+    <path d="M-6 -8 q16 -5 30 2 q4 8 -2 12 q-16 5 -30 -1Z" fill="#fff0f5" opacity=".55"/>
+    <circle cx="-9" cy="-2" r="11" fill="#f2c9a4"/>
+    <path d="M-19 -6 q4 -9 10 -8 q7 -1 9 7 q-5 -4 -9 -3 q-6 -1 -10 4Z" fill="#3a2718"/>
+    ${yeux}
+    <path d="M-11 3.4 q2.4 2 4.8 0" stroke="#c07a52" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+    <ellipse cx="-14" cy="1" rx="2.2" ry="1.5" fill="#e79a9a" opacity=".5"/>
+    <ellipse cx="-4" cy="1" rx="2.2" ry="1.5" fill="#e79a9a" opacity=".5"/>
+    ${o.bonnet?`<path d="M-20 -8 q3 -12 11 -11 q9 -1 11 9 q-11 -5 -22 2Z" fill="#ffe08a"/><circle cx="-9" cy="-19" r="3" fill="#fff"/>`:''}
+    ${o.main?`<circle cx="14" cy="-6" r="3.4" fill="#f2c9a4"/>`:''}
+  </g>`;}
+
+/* Adultes : maman, papa, mamie, infirmière — pieds à l'origine */
+function adulte(x,y,s,o){o=o||{};
+  const hab=o.habit||'#e0559a', peau=o.peau||'#c98a52', chev=o.cheveux||'#2a1a11';
+  const cheveux=o.style==='long'
+    ? `<path d="M-16 -84 q3 -17 16 -16 q14 -1 16 16 q2 20 -3 26 q-2 -20 -13 -21 q-11 1 -13 21 q-5 -6 -3 -26Z" fill="${chev}"/>`
+    : o.style==='foulard'
+    ? `<path d="M-16 -84 q4 -16 16 -15 q13 -1 16 15 q1 8 -2 11 q-14 -8 -30 0 q-3 -3 0 -11Z" fill="${o.foulard||'#5bc7bd'}"/>`
+    : `<path d="M-16 -84 q4 -16 16 -15 q13 -1 16 15 q-6 -7 -16 -6 q-10 -1 -16 6Z" fill="${chev}"/>`;
+  const bras=(o.arms==='hold')
+    ? `<rect x="-26" y="-58" width="10" height="28" rx="5" fill="${peau}" transform="rotate(28 -22 -56)"/><rect x="16" y="-58" width="10" height="28" rx="5" fill="${peau}" transform="rotate(-28 21 -56)"/>`
+    : (o.arms==='wave')
+    ? `<rect x="-27" y="-72" width="10" height="30" rx="5" fill="${peau}" transform="rotate(-28 -22 -70)"/><rect x="17" y="-64" width="10" height="32" rx="5" fill="${peau}"/>`
+    : `<rect x="-27" y="-64" width="10" height="33" rx="5" fill="${peau}"/><rect x="17" y="-64" width="10" height="33" rx="5" fill="${peau}"/>`;
+  return `${ombre(x,y+1,20)}<g transform="translate(${x},${y}) scale(${s})">
+    <rect x="-14" y="-30" width="12" height="30" rx="6" fill="${o.bas||'#3d4a7a'}"/><rect x="2" y="-30" width="12" height="30" rx="6" fill="${o.bas||'#3d4a7a'}"/>
+    <ellipse cx="-8" cy="0" rx="9" ry="4.2" fill="#33305a"/><ellipse cx="8" cy="0" rx="9" ry="4.2" fill="#33305a"/>
+    ${o.robe?`<path d="M-17 -68 h34 l10 40 h-54Z" fill="${hab}"/>`:`<rect x="-18" y="-68" width="36" height="42" rx="12" fill="${hab}"/>`}
+    ${o.blouse?`<path d="M-19 -68 h9 l9 12 l9 -12 h9 l3 42 h-42Z" fill="#ffffff"/><rect x="-3" y="-30" width="18" height="4" rx="2" fill="#5bc7bd"/>`:''}
+    ${bras}
+    <circle cx="0" cy="-80" r="16" fill="${peau}"/>
+    ${cheveux}
+    <circle cx="-5.8" cy="-81" r="2.5" fill="#26150c"/><circle cx="5.8" cy="-81" r="2.5" fill="#26150c"/>
+    <circle cx="-5" cy="-81.9" r=".8" fill="#fff"/><circle cx="6.6" cy="-81.9" r=".8" fill="#fff"/>
+    <ellipse cx="-10" cy="-76" rx="3" ry="2" fill="#e79a9a" opacity=".4"/><ellipse cx="10" cy="-76" rx="3" ry="2" fill="#e79a9a" opacity=".4"/>
+    <path d="M-5 -73 q5 4.5 10 0" stroke="#7d4522" stroke-width="1.9" fill="none" stroke-linecap="round"/>
+  </g>`;}
+const maman=(x,y,s,o)=>adulte(x,y,s,Object.assign({habit:'#e0559a',style:'long',robe:true},o||{}));
+const papa=(x,y,s,o)=>adulte(x,y,s,Object.assign({habit:'#4a8f5e',style:'court'},o||{}));
+const mamie=(x,y,s,o)=>adulte(x,y,s,Object.assign({habit:'#8c6bd0',style:'foulard',foulard:'#f0d48a',cheveux:'#d8d2cc',robe:true},o||{}));
+const infirmiere=(x,y,s,o)=>adulte(x,y,s,Object.assign({habit:'#7fd4cc',style:'court',blouse:true,bas:'#7fd4cc'},o||{}));
+
+/* --- accessoires --- */
+const couveuse=(x,y,s)=>`<g transform="translate(${x},${y}) scale(${s})">
+  <rect x="-52" y="-6" width="104" height="10" rx="4" fill="#b8c9cc"/>
+  <rect x="-40" y="4" width="8" height="26" fill="#9fb2b6"/><rect x="32" y="4" width="8" height="26" fill="#9fb2b6"/>
+  <rect x="-46" y="30" width="92" height="7" rx="3" fill="#9fb2b6"/>
+  <rect x="-50" y="-44" width="100" height="40" rx="14" fill="url(#gDome)" stroke="#e7f4f5" stroke-width="3"/>
+  <circle cx="-34" cy="-24" r="4.5" fill="#dff2f3" opacity=".8"/>
+  <circle cx="-30" cy="-30" r="2.6" fill="#fff" opacity=".9"/>
+  <rect x="-52" y="-8" width="104" height="4" rx="2" fill="#dfeced"/></g>`;
+/* berceau avec le bebe couche dedans : le panneau avant passe devant la couverture,
+   ce qui donne vraiment l'impression que Yasmine est A L'INTERIEUR du berceau */
+const berceauBebe=(x,y,s,o)=>`<g transform="translate(${x},${y}) scale(${s})">
+  <path d="M-48 -30 h96 v26 h-96Z" fill="#f6dfc0"/>
+  <rect x="-50" y="-35" width="100" height="9" rx="4" fill="#e6b483"/>
+  <g transform="translate(2,-20)">${yasmine(0,0,1,o)}</g>
+  <path d="M-48 -8 h96 v10 q0 12 -14 12 h-68 q-14 0 -14 -12Z" fill="url(#gWood)"/>
+  <g stroke="#e6b483" stroke-width="3">${[-32,-18,-4,10,24,38].map(i=>`<line x1="${i}" y1="-6" x2="${i}" y2="8"/>`).join('')}</g>
+  <path d="M-42 16 q42 12 84 0" stroke="#8a5628" stroke-width="4" fill="none"/></g>`;
+const lit=(x,y,s)=>`<g transform="translate(${x},${y}) scale(${s})">
+  <rect x="-56" y="-6" width="112" height="16" rx="5" fill="url(#gWood)"/>
+  <rect x="-56" y="-26" width="30" height="24" rx="6" fill="#e6b483"/>
+  <rect x="-52" y="-22" width="34" height="16" rx="7" fill="#fff6e6"/>
+  <path d="M-24 -10 h78 q6 0 6 6 v6 h-84Z" fill="#8fd0e8"/>
+  <rect x="-58" y="10" width="8" height="14" fill="#9c6330"/><rect x="50" y="10" width="8" height="14" fill="#9c6330"/></g>`;
+const table=(x,y,s)=>`<g transform="translate(${x},${y}) scale(${s})">
+  <rect x="-60" y="-8" width="120" height="10" rx="4" fill="url(#gWood)"/>
+  <rect x="-50" y="2" width="9" height="26" fill="#9c6330"/><rect x="41" y="2" width="9" height="26" fill="#9c6330"/></g>`;
+const gateau=(x,y,s)=>`<g transform="translate(${x},${y}) scale(${s})">
+  <ellipse cx="0" cy="6" rx="24" ry="6" fill="#e6b483"/>
+  <rect x="-22" y="-10" width="44" height="16" rx="4" fill="#ffd9e6"/>
+  <path d="M-22 -10 q11 8 22 0 q11 -8 22 0 v-4 h-44Z" fill="#fff"/>
+  <rect x="-1.5" y="-24" width="3" height="12" fill="#ff9d4d"/>
+  <ellipse class="a-spark" cx="0" cy="-27" rx="3" ry="5" fill="#ffd54a"/></g>`;
+const ballon=(x,y,r,c)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${c||'#ff6b6b'}"/><path d="M${x-r} ${y} q${r} ${r*0.7} ${r*2} 0" stroke="#fff" stroke-width="2" fill="none" opacity=".7"/>`;
+const bulleTexte=(x,y,w,t)=>`<g transform="translate(${x},${y})"><rect x="${-w/2}" y="-16" width="${w}" height="26" rx="12" fill="#fff" stroke="#d9c3a0" stroke-width="2"/>
+  <path d="M-6 10 l3 9 8 -9Z" fill="#fff" stroke="#d9c3a0" stroke-width="2"/>
+  <text x="0" y="2" font-family="Baloo 2, sans-serif" font-size="13" font-weight="700" fill="#5a4a6a" text-anchor="middle">${t}</text></g>`;
+const doudou=(x,y,s)=>`<g transform="translate(${x},${y}) scale(${s})"><circle cx="-8" cy="-9" r="5" fill="#b98a5e"/><circle cx="8" cy="-9" r="5" fill="#b98a5e"/>
+  <circle cx="0" cy="0" r="11" fill="#cf9d6d"/><circle cx="-3.6" cy="-2" r="1.6" fill="#3a2718"/><circle cx="3.6" cy="-2" r="1.6" fill="#3a2718"/>
+  <ellipse cx="0" cy="3.6" rx="4" ry="3" fill="#f0d2ae"/><circle cx="0" cy="2.6" r="1.4" fill="#3a2718"/></g>`;
+
+/* ==========================================================================
+   SCÈNES — chaque clé est un moment de récit illustré
+   ========================================================================== */
+const SCENES={
+
+/* ---------- YASMINE & L'HÔPITAL ---------- */
+hopAnnonce:()=>V(`${bgChambre()}
+  ${maman(96,150,.78,{arms:'wave'})}
+  ${amine(168,152,.72,{arms:'up'})}
+  ${leyla(216,152,.8,{arms:'up'})}
+  ${bulleTexte(120,58,120,'Elle est née !')}
+  ${coeur(250,110,1.3)}<g class="a-float">${coeur(272,92,.9,'#ffb3c8')}</g>`),
+
+hopCouloir:()=>V(`<rect width="320" height="180" fill="url(#gHosp)"/>
+  <rect x="0" y="88" width="320" height="8" fill="#b7d6d1" opacity=".7"/>
+  <rect x="20" y="34" width="54" height="54" rx="8" fill="#cfe9e5" stroke="#fff" stroke-width="4"/>
+  <rect x="246" y="34" width="54" height="54" rx="8" fill="#cfe9e5" stroke="#fff" stroke-width="4"/>
+  <rect y="148" width="320" height="32" fill="#dcece9"/>
+  ${papa(92,150,.76)}${amine(146,152,.7,{arms:'hold'})}${leyla(186,152,.78)}
+  ${maman(240,150,.76,{arms:'hold'})}
+  <g opacity=".85">${coeur(160,44,1.1,'#ffb3c8')}</g>`),
+
+hopCouveuse:()=>V(`${bgHopital()}
+  ${couveuse(150,116,1)}
+  ${yasmine(140,96,.92,{bonnet:true})}
+  ${amine(56,152,.66,{arms:'hold'})}${leyla(96,152,.72)}
+  <g class="a-float">${coeur(214,64,1.2)}</g>${coeur(238,84,.8,'#ffb3c8')}`),
+
+/* gros plan : le doigt d'Amine entre dans la couveuse, la main de Yasmine s'y accroche */
+hopMainMinuscule:()=>V(`<rect width="320" height="180" fill="url(#gHosp)"/>
+  <rect x="8" y="26" width="304" height="128" rx="28" fill="#fff" opacity=".5"/>
+  <rect x="8" y="26" width="304" height="128" rx="28" fill="none" stroke="#dff0ef" stroke-width="4"/>
+  <rect x="24" y="112" width="272" height="38" rx="16" fill="#fdf3f6"/>
+  ${yasmine(92,100,1.55,{bonnet:true})}
+  <rect x="112" y="98" width="44" height="13" rx="6.5" fill="#f2c9a4"/>
+  <g transform="translate(214,106)">
+    <rect x="24" y="-17" width="86" height="36" rx="17" fill="#c98a52"/>
+    <rect x="-8" y="-19" width="48" height="40" rx="17" fill="#d99a5b"/>
+    <rect x="-4" y="5" width="28" height="11" rx="5.5" fill="#c07d47"/>
+    <rect x="-54" y="-11" width="62" height="16" rx="8" fill="#d99a5b"/>
+    <ellipse cx="-52" cy="-3" rx="7" ry="8" fill="#e3aa72"/>
+  </g>
+  <g transform="translate(158,103)">
+    <circle cx="0" cy="2" r="10" fill="#f2c9a4"/>
+    <rect x="-9" y="-9" width="6" height="11" rx="3" fill="#f7d6b4" transform="rotate(-14 -6 -4)"/>
+    <rect x="-2" y="-11" width="6" height="12" rx="3" fill="#f7d6b4"/>
+    <rect x="5" y="-10" width="6" height="11" rx="3" fill="#f7d6b4" transform="rotate(12 8 -5)"/>
+    <rect x="10" y="-4" width="6" height="10" rx="3" fill="#f7d6b4" transform="rotate(28 13 1)"/>
+  </g>
+  <g class="a-beat">${coeur(244,52,1.6)}</g>
+  ${etoile(52,48,7,'#ffe08a')}${etoile(288,136,5,'#ffe08a')}`),
+
+hopPeauAPeau:()=>V(`${bgHopital()}
+  <g transform="translate(150,150)"><rect x="-52" y="-58" width="104" height="60" rx="16" fill="#8c6bd0"/>
+  <rect x="-58" y="-30" width="14" height="32" rx="6" fill="#7a5cbd"/><rect x="44" y="-30" width="14" height="32" rx="6" fill="#7a5cbd"/>
+  <rect x="-44" y="0" width="12" height="14" fill="#6a4fa8"/><rect x="32" y="0" width="12" height="14" fill="#6a4fa8"/></g>
+  ${maman(150,120,.82,{arms:'hold'})}
+  ${yasmine(148,102,.8,{couleur:'#ffe08a'})}
+  ${amine(252,152,.62)}
+  <g class="a-float">${coeur(96,58,1.2)}</g>`),
+
+hopInfirmiere:()=>V(`${bgHopital()}
+  ${couveuse(178,116,.95)}${yasmine(168,98,.86,{eveille:true,bonnet:true})}
+  ${infirmiere(72,152,.82,{arms:'wave'})}
+  ${bulleTexte(74,58,132,'Elle est costaude !')}
+  ${coeur(268,66,1)}`),
+
+hopDessin:()=>V(`${bgHopital()}
+  ${couveuse(172,118,.92)}${yasmine(162,100,.84,{bonnet:true})}
+  <g transform="rotate(-6 66 74)"><rect x="34" y="46" width="64" height="52" rx="5" fill="#fffdf2" stroke="#e0cba6" stroke-width="3"/>
+  <circle cx="52" cy="64" r="7" fill="#ffd54a"/><path d="M44 88 l10 -14 8 9 7 -12 12 17Z" fill="#8fd06a"/>
+  ${coeur(80,62,.8)}</g>
+  ${amine(120,152,.62,{arms:'up'})}${leyla(60,152,.7,{arms:'up'})}`),
+
+hopBerceuse:()=>V(`<rect width="320" height="180" fill="#123b52"/>
+  <rect x="206" y="22" width="82" height="58" rx="8" fill="#1c2a63"/>${lune(248,44,10)}
+  <rect y="148" width="320" height="32" fill="#17485f"/>
+  <circle cx="150" cy="96" r="74" fill="url(#gGlow)" opacity=".45"/>
+  ${couveuse(150,118,.95)}${yasmine(140,100,.86,{bonnet:true})}
+  ${maman(66,152,.76)}${papa(240,152,.78)}
+  <g fill="#ffe9c2" opacity=".9"><text x="96" y="52" font-size="15">♪</text><text x="206" y="44" font-size="13">♫</text><text x="140" y="36" font-size="12">♪</text></g>`),
+
+hopVeilleuse:()=>V(`<rect width="320" height="180" fill="#10324a"/>
+  <rect y="150" width="320" height="30" fill="#154257"/>
+  <circle cx="160" cy="104" r="66" fill="url(#gGlow)" opacity=".4"/>
+  ${couveuse(160,120,1)}${yasmine(150,100,.92)}
+  ${semisEtoiles()}
+  <g class="a-spark">${coeur(250,58,1)}</g>`),
+
+hopBiberon:()=>V(`${bgHopital()}
+  ${maman(150,152,.86,{arms:'hold'})}
+  ${yasmine(146,102,.82,{eveille:true,couleur:'#cfe9ff'})}
+  <g transform="translate(186,100) rotate(28)"><rect x="-6" y="-14" width="12" height="24" rx="5" fill="#fff" stroke="#cfd9dd" stroke-width="2"/>
+  <rect x="-4" y="-2" width="8" height="10" fill="#fff2d8"/><rect x="-3" y="-20" width="6" height="7" rx="3" fill="#f7c9a0"/></g>
+  ${leyla(258,152,.7)}${coeur(76,60,1.1)}`),
+
+hopBonnet:()=>V(`${bgHopital()}
+  ${berceauBebe(158,132,1,{bonnet:true,eveille:true})}
+  ${mamie(60,152,.8,{arms:'wave'})}
+  ${bulleTexte(232,54,116,'Je l’ai tricoté')}
+  ${coeur(112,58,.9,'#ffb3c8')}`),
+
+hopGrandit:()=>V(`${bgHopital()}
+  ${berceauBebe(160,132,1.05,{eveille:true,main:true})}
+  ${amine(58,152,.66,{arms:'up'})}${leyla(102,152,.72,{arms:'up'})}
+  ${etoile(258,50,8,'#ffd54a')}${etoile(286,80,5,'#ffe08a')}
+  ${bulleTexte(240,130,96,'+ 100 g !')}`),
+
+hopRetourMaison:()=>V(`<rect width="320" height="180" fill="url(#gDay)"/>${soleil(52,32,16)}${nuage(214,30,.9)}
+  <rect y="140" width="320" height="40" fill="#c9c4bd"/>
+  <rect x="0" y="140" width="320" height="4" fill="#a9a49d"/>
+  <rect x="196" y="66" width="112" height="74" rx="6" fill="#e8f4f2" stroke="#b7d6d1" stroke-width="4"/>
+  <path d="M190 66 h124 l-12 -18 h-100Z" fill="#7fd4cc"/>
+  ${maman(120,150,.84,{arms:'hold'})}${yasmine(116,102,.78,{bonnet:true})}
+  ${papa(56,150,.84,{arms:'wave'})}${amine(174,152,.7,{arms:'up'})}${leyla(214,152,.76,{arms:'up'})}
+  <g class="a-float">${coeur(266,44,1.3)}</g>`),
+
+maisonBerceau:()=>V(`${bgChambre()}
+  ${berceauBebe(180,140,1.05)}
+  ${amine(66,152,.7,{arms:'hold'})}${leyla(112,152,.76)}
+  <g class="a-float">${coeur(250,102,1)}</g>
+  ${doudou(232,140,.9)}`),
+
+/* ---------- LA FAMILLE À LA MAISON ---------- */
+famRepas:()=>V(`${bgCuisine()}
+  ${table(160,124,1.1)}
+  <circle cx="118" cy="112" r="11" fill="#fff"/><circle cx="160" cy="110" r="12" fill="#fff"/><circle cx="202" cy="112" r="11" fill="#fff"/>
+  <circle cx="118" cy="112" r="7" fill="#ffd9a8"/><circle cx="160" cy="110" r="8" fill="#ffd9a8"/><circle cx="202" cy="112" r="7" fill="#ffd9a8"/>
+  ${maman(56,150,.8)}${papa(268,150,.82)}
+  ${amine(118,152,.62)}${leyla(200,152,.68)}
+  ${coeur(160,52,1.1)}`),
+
+famCanape:()=>V(`${bgSalon()}
+  <g transform="translate(158,152)"><rect x="-88" y="-46" width="176" height="46" rx="14" fill="#8c6bd0"/>
+  <rect x="-96" y="-30" width="18" height="32" rx="8" fill="#7a5cbd"/><rect x="78" y="-30" width="18" height="32" rx="8" fill="#7a5cbd"/>
+  <rect x="-74" y="-52" width="42" height="16" rx="8" fill="#a684e0"/><rect x="30" y="-52" width="42" height="16" rx="8" fill="#a684e0"/></g>
+  ${maman(96,124,.72,{arms:'hold'})}${yasmine(94,104,.68)}
+  ${papa(224,124,.74)}${amine(150,126,.58)}${leyla(190,126,.62)}
+  <g class="a-float">${coeur(160,44,1.2)}</g>${coeur(74,54,.8,'#ffb3c8')}`),
+
+famHistoireSoir:()=>V(`<rect width="320" height="180" fill="#241a58"/>
+  <rect x="200" y="20" width="88" height="62" rx="8" fill="#141046"/>${lune(244,44,11)}${semisEtoiles()}
+  <rect y="150" width="320" height="30" fill="#3a2a63"/>
+  <circle cx="130" cy="112" r="80" fill="url(#gGlow)" opacity=".35"/>
+  ${lit(140,150,1.05)}
+  ${papa(60,150,.78,{arms:'hold'})}
+  <g transform="translate(96,104) rotate(-12)"><rect x="-16" y="-11" width="32" height="22" rx="3" fill="#fff6e6" stroke="#c99a5e" stroke-width="2"/><line x1="0" y1="-11" x2="0" y2="11" stroke="#c99a5e" stroke-width="2"/></g>
+  ${amine(168,136,.56)}${leyla(202,136,.6)}
+  <g fill="#ffe9c2"><text x="238" y="112" font-size="13">♪</text></g>`),
+
+famGateau:()=>V(`${bgCuisine()}
+  ${table(164,126,1.1)}${gateau(164,110,1.05)}
+  ${maman(58,150,.8,{arms:'hold'})}
+  ${amine(112,152,.62,{arms:'up'})}${leyla(216,152,.68,{arms:'up'})}
+  ${papa(272,150,.8)}
+  ${etoile(96,44,6,'#ffd54a')}${etoile(236,38,7,'#ffd54a')}`),
+
+famRangement:()=>V(`${bgChambre()}
+  <rect x="120" y="120" width="66" height="32" rx="6" fill="#e0873f"/><rect x="120" y="120" width="66" height="8" rx="4" fill="#f0a45e"/>
+  ${amine(76,152,.68,{arms:'hold'})}${leyla(216,152,.74,{arms:'hold'})}
+  <g class="a-bob"><rect x="86" y="104" width="16" height="16" rx="3" fill="#5bd0e8"/></g>
+  <rect x="196" y="112" width="14" height="14" rx="3" fill="#ff9d4d"/>
+  ${ballon(268,140,11,'#ffd54a')}
+  ${bulleTexte(160,44,148,'À deux, c’est rapide !')}`),
+
+famPhoto:()=>V(`${bgJardin()}
+  ${papa(72,152,.82,{arms:'wave'})}${maman(120,152,.8,{arms:'hold'})}${yasmine(118,110,.66,{bonnet:true})}
+  ${amine(172,154,.66,{arms:'up'})}${leyla(212,154,.72,{arms:'up'})}${mamie(262,152,.78)}
+  <g transform="translate(30,60)"><rect x="-14" y="-10" width="28" height="20" rx="4" fill="#4a4458"/><circle cx="0" cy="0" r="7" fill="#8fd0e8"/><rect x="-6" y="-14" width="12" height="5" rx="2" fill="#4a4458"/></g>
+  <g class="a-spark">${etoile(46,42,6,'#fff')}</g>`),
+
+famMamie:()=>V(`${bgSalon()}
+  ${mamie(96,152,.86,{arms:'hold'})}
+  ${amine(168,152,.68)}${leyla(210,152,.74)}
+  <g transform="translate(258,120)"><rect x="-20" y="-14" width="40" height="28" rx="5" fill="#ffd9e6"/><path d="M-20 -14 h40 v6 h-40Z" fill="#ff9dbb"/><path d="M0 -14 v28" stroke="#ff9dbb" stroke-width="3"/></g>
+  ${coeur(140,52,1.2)}${coeur(196,40,.8,'#ffb3c8')}`),
+
+famJardin:()=>V(`${bgJardin()}
+  ${papa(232,154,.82,{arms:'wave'})}
+  ${amine(112,154,.7,{arms:'up'})}${leyla(158,154,.76)}
+  <g class="a-float">${ballon(150,96,13,'#ff6b6b')}</g>
+  ${maman(56,154,.78,{arms:'hold'})}${yasmine(54,112,.62,{bonnet:true})}`),
+
+famMatin:()=>V(`${bgChambre()}
+  ${lit(180,150,1.05)}
+  ${maman(84,150,.8,{arms:'hold'})}
+  ${amine(140,150,.62,{arms:'up'})}${leyla(224,142,.66,{arms:'up'})}
+  ${soleil(60,42,14)}
+  <g class="a-float">${coeur(258,58,1)}</g>`),
+
+famPluie:()=>V(`${bgSalon()}
+  <rect x="24" y="26" width="66" height="48" rx="6" fill="#8aa6bd" stroke="#c99a5e" stroke-width="4"/>
+  <g stroke="#cfe4f2" stroke-width="2.4" stroke-linecap="round" opacity=".9">
+  <line x1="36" y1="34" x2="32" y2="46"/><line x1="52" y1="38" x2="48" y2="50"/><line x1="68" y1="32" x2="64" y2="44"/><line x1="80" y1="42" x2="76" y2="54"/></g>
+  ${table(180,128,1)}
+  <rect x="150" y="106" width="26" height="18" rx="3" fill="#ffd54a"/><rect x="184" y="104" width="24" height="20" rx="3" fill="#8fd06a"/>
+  ${amine(146,152,.66,{arms:'hold'})}${leyla(214,152,.72,{arms:'hold'})}
+  ${maman(60,150,.78)}
+  ${coeur(272,58,1)}`),
+
+famCourses:()=>V(`<rect width="320" height="180" fill="#fdf3e0"/>
+  <rect y="150" width="320" height="30" fill="#ddd3c2"/>
+  <g opacity=".9"><rect x="18" y="40" width="56" height="70" rx="4" fill="#fff" stroke="#d9c3a0" stroke-width="3"/>
+  <rect x="238" y="40" width="60" height="70" rx="4" fill="#fff" stroke="#d9c3a0" stroke-width="3"/>
+  <g fill="#ff9d4d"><circle cx="34" cy="58" r="6"/><circle cx="50" cy="58" r="6"/></g>
+  <g fill="#8fd06a"><circle cx="256" cy="58" r="6"/><circle cx="272" cy="58" r="6"/></g></g>
+  <g transform="translate(160,148)"><path d="M-30 -32 h56 l-8 26 h-42Z" fill="#b8c4cc"/><circle cx="-18" cy="4" r="5" fill="#5a5a66"/><circle cx="16" cy="4" r="5" fill="#5a5a66"/>
+  <rect x="-36" y="-38" width="10" height="34" rx="4" fill="#8a949c"/></g>
+  ${papa(94,152,.8,{arms:'hold'})}${amine(214,152,.66,{arms:'hold'})}${leyla(252,152,.72)}`),
+
+famChambre3:()=>V(`${bgChambre()}
+  ${lit(96,150,.9)}${berceauBebe(238,142,.86)}
+  ${amine(150,150,.64)}${leyla(190,150,.7)}
+  <g class="a-float">${coeur(168,58,1.1)}</g>
+  ${doudou(60,120,.85)}${etoile(276,44,6,'#ffd54a')}`),
+
+/* ---------- HÉROS & AVENTURES ---------- */
+heroDepart:()=>V(`${bgChambre()}
+  ${amine(150,152,.92,{cape:true,arms:'up'})}
+  <g class="a-spark">${etoile(70,52,8,'#ffd54a')}</g>${etoile(246,66,6,'#ffd54a')}
+  ${doudou(66,142,.9)}${bulleTexte(240,120,104,'C’est parti !')}`),
+
+heroVol:()=>V(`${bgNuit()}
+  <g transform="translate(0,-6)">${amine(148,110,.95,{cape:true,arms:'up'})}</g>
+  <g class="a-float">${nuage(70,118,.8,.35)}${nuage(252,96,.7,.3)}</g>
+  ${etoile(48,52,8)}${etoile(272,60,7)}${etoile(206,40,5)}`),
+
+heroSauvetageChat:()=>V(`${bgJour()}
+  ${arbre(224,152,1.15)}
+  <g transform="translate(224,96)"><ellipse cx="0" cy="0" rx="12" ry="9" fill="#f0a45e"/><circle cx="-11" cy="-6" r="8" fill="#f0a45e"/>
+  <path d="M-16 -11 l1 -7 6 4Z" fill="#f0a45e"/><path d="M-6 -12 l3 -7 4 6Z" fill="#f0a45e"/>
+  <circle cx="-13" cy="-7" r="1.6" fill="#26150c"/><circle cx="-8" cy="-7" r="1.6" fill="#26150c"/></g>
+  ${amine(122,154,.9,{cape:true,arms:'up'})}
+  ${bulleTexte(84,54,104,'Miaou !')}`),
+
+heroBouclier:()=>V(`<rect width="320" height="180" fill="#7f93b8"/>
+  <g stroke="#dbe9f5" stroke-width="2.6" stroke-linecap="round" opacity=".9">
+  ${[30,72,116,164,206,248,290].map((v,i)=>`<line x1="${v}" y1="${10+i*4}" x2="${v-8}" y2="${44+i*4}"/>`).join('')}</g>
+  <rect y="150" width="320" height="30" fill="#5f7595"/>
+  ${amine(150,152,.9,{cape:true,arms:'up'})}
+  <path d="M150 62 m-64 0 a64 46 0 0 1 128 0" fill="none" stroke="#7fe3ff" stroke-width="7" opacity=".85" class="a-pulse"/>
+  ${leyla(238,152,.72)}${amine(66,152,.6,{cape:false})}`),
+
+heroEquipe:()=>V(`${bgSoir()}
+  ${amine(160,154,.86,{cape:true,arms:'up'})}
+  ${leyla(216,154,.76,{arms:'up'})}
+  <g transform="translate(88,154)"><rect x="-15" y="-52" width="30" height="32" fill="#3aa0c8"/><rect x="-15" y="-72" width="30" height="22" fill="#c98a52"/>
+  <rect x="-15" y="-78" width="30" height="10" fill="#5a3a1e"/><rect x="-9" y="-66" width="5" height="5" fill="#fff"/><rect x="4" y="-66" width="5" height="5" fill="#fff"/>
+  <rect x="-13" y="-20" width="11" height="20" fill="#3a4790"/><rect x="2" y="-20" width="11" height="20" fill="#3a4790"/></g>
+  <g transform="translate(258,154)"><rect x="-13" y="-46" width="26" height="28" fill="#ffd54a"/><rect x="-13" y="-70" width="26" height="24" fill="#ffd54a"/>
+  <rect x="-7" y="-62" width="5" height="6" fill="#26150c"/><rect x="3" y="-62" width="5" height="6" fill="#26150c"/>
+  <rect x="-11" y="-18" width="9" height="18" fill="#3aa0c8"/><rect x="3" y="-18" width="9" height="18" fill="#3aa0c8"/></g>
+  ${etoile(46,44,7)}${etoile(286,40,6)}`),
+
+heroEtoile:()=>V(`${bgNuit()}
+  <g class="a-pulse">${etoile(210,86,22,'#ffd54a')}</g>
+  <circle cx="210" cy="86" r="40" fill="url(#gGlow)" opacity=".55"/>
+  ${amine(118,154,.9,{cape:true,arms:'up'})}
+  ${leyla(66,154,.74,{arms:'up'})}`),
+
+heroNuit:()=>V(`${bgNuit()}
+  <g fill="#251a5e">${[[20,110,34,60],[62,96,30,74],[100,120,28,50],[214,104,32,66],[254,88,34,82],[294,116,26,54]].map(([x,y,w,h])=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3"/>`).join('')}</g>
+  <g fill="#ffd54a" opacity=".85">${[[28,120],[70,110],[108,130],[222,116],[264,102],[300,126]].map(([x,y])=>`<rect x="${x}" y="${y}" width="7" height="7" rx="1"/>`).join('')}</g>
+  ${amine(160,150,.86,{cape:true})}
+  <g class="a-float">${coeur(200,54,1)}</g>`),
+
+heroCourage:()=>V(`<rect width="320" height="180" fill="#2a1f6b"/>${semisEtoiles()}
+  <rect y="150" width="320" height="30" fill="#221a56"/>
+  <g class="a-float" opacity=".75"><ellipse cx="228" cy="106" rx="46" ry="40" fill="#160f3f"/>
+  <circle cx="212" cy="96" r="6" fill="#ff9d4d"/><circle cx="244" cy="96" r="6" fill="#ff9d4d"/>
+  <path d="M208 122 q20 10 40 0" stroke="#ff9d4d" stroke-width="3" fill="none"/></g>
+  ${amine(104,152,.9,{cape:true,arms:'up'})}
+  <circle cx="104" cy="96" r="44" fill="#ffd54a" opacity=".14" class="a-halo"/>
+  ${leyla(52,152,.7)}`),
+
+heroSteve:()=>V(`<rect width="320" height="180" fill="#3b3b52"/>
+  <g fill="#5a5a72">${[[0,120],[40,120],[80,120],[120,120],[160,120],[200,120],[240,120],[280,120]].map(([x,y])=>`<rect x="${x}" y="${y}" width="38" height="38" stroke="#4a4a60" stroke-width="2"/>`).join('')}</g>
+  <rect y="158" width="320" height="22" fill="#4a4a60"/>
+  <rect x="196" y="82" width="34" height="34" fill="#6a6a80" stroke="#8f8fa8" stroke-width="2"/>
+  <g class="a-spark"><rect x="204" y="90" width="8" height="8" fill="#5be0d8"/><rect x="216" y="100" width="8" height="8" fill="#5be0d8"/></g>
+  <g transform="translate(110,154)"><rect x="-16" y="-54" width="32" height="34" fill="#3aa0c8"/><rect x="-16" y="-76" width="32" height="24" fill="#c98a52"/>
+  <rect x="-16" y="-82" width="32" height="10" fill="#5a3a1e"/><rect x="-10" y="-69" width="6" height="6" fill="#fff"/><rect x="4" y="-69" width="6" height="6" fill="#fff"/>
+  <rect x="-14" y="-20" width="12" height="20" fill="#3a4790"/><rect x="2" y="-20" width="12" height="20" fill="#3a4790"/>
+  <rect x="16" y="-52" width="10" height="26" fill="#c98a52"/></g>
+  <rect x="136" y="96" width="8" height="30" rx="2" fill="#9c6330" transform="rotate(28 140 110)"/>`),
+
+heroGoku:()=>V(`${bgSoir()}
+  <circle cx="150" cy="104" r="56" fill="#ffd60a" opacity=".22" class="a-halo"/>
+  <g transform="translate(150,154)"><rect x="-18" y="-58" width="36" height="38" rx="6" fill="#ff8a3d"/>
+  <rect x="-18" y="-44" width="36" height="8" fill="#2f6fd6"/>
+  <rect x="-26" y="-54" width="10" height="28" rx="5" fill="#ff8a3d"/><rect x="16" y="-54" width="10" height="28" rx="5" fill="#ff8a3d"/>
+  <rect x="-13" y="-20" width="11" height="20" rx="3" fill="#ff8a3d"/><rect x="2" y="-20" width="11" height="20" rx="3" fill="#ff8a3d"/>
+  <circle cx="0" cy="-72" r="15" fill="#f0c49a"/>
+  <path d="M-16 -78 l-4 -14 8 6 -1 -14 8 10 5 -14 5 14 8 -10 -1 14 8 -6 -4 14Z" fill="#26150c"/>
+  <circle cx="-5" cy="-73" r="2.2" fill="#26150c"/><circle cx="5" cy="-73" r="2.2" fill="#26150c"/>
+  <path d="M-5 -66 q5 4 10 0" stroke="#a9613a" stroke-width="1.8" fill="none" stroke-linecap="round"/></g>
+  <g class="a-spark">${etoile(60,60,8,'#ffd60a')}${etoile(252,72,7,'#ffd60a')}</g>`),
+
+heroNoobi:()=>V(`${bgJour()}
+  <g transform="translate(160,152)"><rect x="-16" y="-48" width="32" height="30" fill="#ffd54a"/>
+  <rect x="-16" y="-74" width="32" height="26" fill="#ffd54a"/>
+  <rect x="-9" y="-66" width="6" height="7" fill="#26150c"/><rect x="4" y="-66" width="6" height="7" fill="#26150c"/>
+  <path d="M-7 -56 q7 5 14 0" stroke="#26150c" stroke-width="2" fill="none"/>
+  <rect x="-26" y="-46" width="9" height="26" fill="#ffd54a"/><rect x="18" y="-46" width="9" height="26" fill="#ffd54a"/>
+  <rect x="-14" y="-18" width="12" height="18" fill="#2f6fd6"/><rect x="3" y="-18" width="12" height="18" fill="#2f6fd6"/></g>
+  ${amine(76,154,.76,{cape:true,arms:'up'})}
+  <g class="a-bounce">${ballon(252,124,14,'#ff6b6b')}</g>`),
+
+heroRobot:()=>V(`${bgSalon()}
+  <g class="a-bob" transform="translate(196,152)"><rect x="-22" y="-52" width="44" height="34" rx="7" fill="#9fb6c8"/>
+  <rect x="-18" y="-82" width="36" height="30" rx="8" fill="#b8ccdc"/>
+  <circle cx="-7" cy="-68" r="4.5" fill="#5be0d8"/><circle cx="7" cy="-68" r="4.5" fill="#5be0d8"/>
+  <rect x="-8" y="-58" width="16" height="4" rx="2" fill="#6a7d8c"/>
+  <line x1="0" y1="-82" x2="0" y2="-94" stroke="#8fa4b4" stroke-width="3"/><circle cx="0" cy="-97" r="4" fill="#ff6b6b" class="a-spark"/>
+  <rect x="-30" y="-48" width="9" height="24" rx="4" fill="#8fa4b4"/><rect x="21" y="-48" width="9" height="24" rx="4" fill="#8fa4b4"/>
+  <rect x="-16" y="-18" width="13" height="18" rx="3" fill="#8fa4b4"/><rect x="4" y="-18" width="13" height="18" rx="3" fill="#8fa4b4"/></g>
+  ${amine(92,152,.74,{arms:'up'})}${leyla(136,152,.7,{arms:'up'})}`),
+
+heroDragon:()=>V(`${bgSoir()}
+  <g class="a-float" transform="translate(214,110)"><ellipse cx="0" cy="0" rx="30" ry="19" fill="#6cc36a"/>
+  <path d="M-8 -16 q14 -22 30 -6 q-12 2 -14 12Z" fill="#8ad986"/>
+  <circle cx="26" cy="-8" r="13" fill="#6cc36a"/><circle cx="30" cy="-11" r="2.4" fill="#26150c"/>
+  <path d="M-28 2 q-22 8 -30 -6 q16 4 26 -6Z" fill="#6cc36a"/>
+  <path d="M18 -18 l6 -8 3 8Z" fill="#4e9a4c"/></g>
+  ${amine(96,154,.86,{cape:true,arms:'up'})}
+  <g class="a-spark">${etoile(60,50,7,'#ffd54a')}</g>`),
+
+heroMerci:()=>V(`${bgJour()}
+  ${amine(160,154,.88,{cape:true,arms:'up'})}
+  ${maman(72,152,.76,{arms:'wave'})}${papa(250,152,.78,{arms:'wave'})}
+  ${leyla(206,154,.72,{arms:'up'})}
+  ${bulleTexte(160,44,150,'Merci Amine !')}
+  <g class="a-spark">${etoile(40,66,7,'#ffd54a')}${etoile(292,72,6,'#ffd54a')}</g>`),
+
+heroVeilleSoeur:()=>V(`${bgChambre()}
+  ${berceauBebe(206,140,1)}
+  ${amine(96,152,.86,{cape:true})}
+  <circle cx="96" cy="94" r="40" fill="#ffd54a" opacity=".13" class="a-halo"/>
+  <g class="a-float">${coeur(150,58,1.2)}</g>`),
+
+/* ---------- HISTOIRES DRÔLES ---------- */
+funVache:()=>V(`${bgJour()}
+  <g class="a-float" transform="translate(180,86)"><ellipse cx="0" cy="0" rx="34" ry="22" fill="#fff"/>
+  <ellipse cx="-16" cy="-6" rx="9" ry="7" fill="#3a3a44"/><ellipse cx="12" cy="8" rx="11" ry="8" fill="#3a3a44"/>
+  <circle cx="30" cy="-10" r="14" fill="#fff"/><circle cx="34" cy="-13" r="2.2" fill="#26150c"/>
+  <ellipse cx="38" cy="-4" rx="7" ry="5" fill="#ffb3c8"/>
+  <path d="M22 -22 l-4 -8 8 4Z" fill="#c9c4bd"/>
+  <g class="a-sway"><path d="M-34 -8 q-14 -14 -6 -22 q10 10 20 14Z" fill="#fff" opacity=".95"/></g>
+  <rect x="-8" y="20" width="5" height="12" rx="2" fill="#3a3a44"/><rect x="10" y="20" width="5" height="12" rx="2" fill="#3a3a44"/></g>
+  ${amine(96,154,.76,{arms:'up'})}${leyla(140,154,.72,{arms:'up'})}
+  ${bulleTexte(70,52,96,'Meuuuh ?!')}`),
+
+funHoquet:()=>V(`${bgJour()}
+  <g class="a-bounce" transform="translate(180,154)"><rect x="-22" y="-58" width="44" height="58" fill="#67c860"/>
+  <rect x="-22" y="-84" width="44" height="28" fill="#67c860"/>
+  <rect x="-14" y="-77" width="10" height="11" fill="#1d3b1c"/><rect x="4" y="-77" width="10" height="11" fill="#1d3b1c"/>
+  <rect x="-7" y="-66" width="14" height="12" fill="#1d3b1c"/>
+  <rect x="-20" y="0" width="16" height="0" fill="#4e9a4c"/></g>
+  ${amine(88,154,.76)}${leyla(126,154,.7)}
+  <g class="a-spark">${bulleTexte(258,58,72,'HIC !')}</g>`),
+
+funChaussettes:()=>V(`${bgChambre()}
+  <g class="a-bob">${[['#ff6b6b',74,96,-18],['#5be0d8',122,72,12],['#ffd54a',196,84,-8],['#8fd06a',248,104,16],['#c78cf0',162,110,-14]].map(([c,x,y,r])=>`<g transform="translate(${x},${y}) rotate(${r})"><path d="M-6 -14 h12 v16 q0 9 -9 9 h-11 z" fill="${c}"/></g>`).join('')}</g>
+  ${amine(110,154,.76,{arms:'up'})}${leyla(206,154,.72,{arms:'up'})}
+  ${bulleTexte(160,40,164,'Où est la deuxième ?')}`),
+
+funGlissade:()=>V(`${bgNeige()}
+  <g transform="translate(150,132) rotate(-8)">${amine(0,0,.8,{arms:'up'})}</g>
+  <path d="M40 150 q60 -22 130 -4" stroke="#cfe4f2" stroke-width="6" fill="none" stroke-linecap="round"/>
+  ${leyla(240,154,.74,{arms:'up'})}
+  ${bulleTexte(70,48,96,'Youpiii !')}`),
+
+funBulles:()=>V(`${bgJardin()}
+  ${amine(112,154,.76,{arms:'up'})}${leyla(158,154,.72)}
+  <g fill="#bdeaff" opacity=".8" stroke="#fff" stroke-width="2">
+  <circle class="a-float" cx="206" cy="64" r="15"/><circle class="a-float" style="animation-delay:.6s" cx="248" cy="96" r="10"/>
+  <circle class="a-float" style="animation-delay:1.1s" cx="182" cy="104" r="8"/><circle class="a-float" style="animation-delay:.3s" cx="268" cy="52" r="12"/></g>`),
+
+funChatChapeau:()=>V(`${bgSalon()}
+  <g class="a-bob" transform="translate(200,150)"><ellipse cx="0" cy="-12" rx="26" ry="17" fill="#f0a45e"/>
+  <circle cx="-22" cy="-24" r="13" fill="#f0a45e"/><path d="M-32 -32 l1 -10 8 6Z" fill="#f0a45e"/><path d="M-18 -34 l4 -9 5 8Z" fill="#f0a45e"/>
+  <circle cx="-26" cy="-25" r="2" fill="#26150c"/><circle cx="-18" cy="-25" r="2" fill="#26150c"/>
+  <path d="M-34 -38 h24 l-2 -8 h-20Z" fill="#c94a6a"/><rect x="-38" y="-40" width="32" height="5" rx="2" fill="#c94a6a"/>
+  <path d="M24 -14 q16 -6 12 -20" stroke="#f0a45e" stroke-width="6" fill="none" stroke-linecap="round"/></g>
+  ${amine(96,152,.74)}${leyla(140,152,.7,{arms:'up'})}
+  ${bulleTexte(84,48,110,'Trop classe !')}`),
+
+funDanse:()=>V(`${bgSalon()}
+  ${amine(112,154,.78,{arms:'up'})}${leyla(160,154,.74,{arms:'up'})}
+  <g class="a-bob" transform="translate(232,154)"><rect x="-18" y="-46" width="36" height="30" rx="6" fill="#c78cf0"/>
+  <rect x="-14" y="-72" width="28" height="26" rx="7" fill="#d8a8f5"/><circle cx="-5" cy="-60" r="3.6" fill="#fff"/><circle cx="5" cy="-60" r="3.6" fill="#fff"/>
+  <rect x="-26" y="-42" width="8" height="22" rx="4" fill="#b579e0"/><rect x="18" y="-42" width="8" height="22" rx="4" fill="#b579e0"/>
+  <rect x="-13" y="-16" width="11" height="16" rx="3" fill="#b579e0"/><rect x="3" y="-16" width="11" height="16" rx="3" fill="#b579e0"/></g>
+  <g fill="#ff7a9c"><text x="70" y="52" font-size="18">♪</text><text x="270" y="64" font-size="15">♫</text><text x="176" y="40" font-size="14">♪</text></g>`),
+
+funSpaghetti:()=>V(`${bgCuisine()}
+  ${table(164,126,1.1)}
+  <g transform="translate(164,108)"><ellipse cx="0" cy="4" rx="30" ry="9" fill="#fff"/>
+  <path d="M-24 2 q10 -14 24 -6 q14 -12 24 4" stroke="#ffd08a" stroke-width="4" fill="none"/>
+  <path d="M-20 -4 q12 -10 22 -2 q10 -8 20 2" stroke="#ffdca8" stroke-width="4" fill="none"/>
+  <circle cx="-8" cy="-6" r="4.5" fill="#e35a4a"/><circle cx="12" cy="-2" r="4" fill="#e35a4a"/></g>
+  ${amine(96,152,.7,{arms:'up'})}${leyla(240,152,.72,{arms:'up'})}
+  <path d="M120 112 q14 12 26 2" stroke="#ffd08a" stroke-width="4" fill="none"/>
+  ${bulleTexte(80,46,116,'Sur le nez !')}`),
+
+/* ---------- BONNES MANIÈRES ---------- */
+manMerci:()=>V(`${bgJour()}
+  ${mamie(96,152,.82,{arms:'hold'})}
+  ${amine(190,154,.74)}${leyla(232,154,.7,{arms:'up'})}
+  <g transform="translate(148,116)"><rect x="-14" y="-12" width="28" height="24" rx="4" fill="#ffd9e6"/><path d="M-14 -12 h28 v6 h-28Z" fill="#ff9dbb"/><path d="M0 -12 v24" stroke="#ff9dbb" stroke-width="3"/></g>
+  ${bulleTexte(216,46,120,'Merci beaucoup !')}`),
+
+manPartage:()=>V(`${bgParc()}
+  ${amine(126,154,.8,{arms:'hold'})}${leyla(196,154,.76,{arms:'up'})}
+  <g transform="translate(160,116)"><circle cx="0" cy="0" r="12" fill="#e0a34a"/><path d="M-12 0 a12 12 0 0 1 24 0Z" fill="#f0bd6a"/></g>
+  ${coeur(238,58,1.1)}
+  ${bulleTexte(74,50,110,'Tiens, pour toi')}`),
+
+manTour:()=>V(`${bgParc()}
+  <g transform="translate(224,152)"><rect x="-4" y="-60" width="8" height="60" fill="#9fb6c8"/>
+  <path d="M-4 -58 q-46 26 -60 56 h20 q10 -26 44 -44Z" fill="#ff9d4d"/>
+  <rect x="-16" y="-66" width="32" height="8" rx="4" fill="#8fa4b4"/></g>
+  ${leyla(202,116,.62,{arms:'up'})}
+  ${amine(96,154,.78)}${noobi(48,154,.62)}
+  ${bulleTexte(112,50,132,'À toi d’abord !')}`),
+
+manPardon:()=>V(`${bgChambre()}
+  ${amine(118,152,.8)}${leyla(196,152,.76)}
+  <g transform="translate(158,124)"><path d="M-10 0 l8 -12 4 6 6 -8" stroke="#c94a6a" stroke-width="3" fill="none"/></g>
+  ${bulleTexte(158,52,144,'Pardon, tu vas bien ?')}
+  ${coeur(258,104,1)}`),
+
+manBonjour:()=>V(`${bgJour()}
+  <rect x="196" y="70" width="104" height="80" rx="6" fill="#f7e2c2" stroke="#c99a5e" stroke-width="4"/>
+  <path d="M190 70 h116 l-14 -20 h-88Z" fill="#c45a4a"/>
+  <rect x="234" y="104" width="30" height="46" rx="3" fill="#9c6330"/>
+  ${adulte(252,152,.8,{habit:'#5a8fd0',style:'court',arms:'wave',cheveux:'#6a5a4a'})}
+  ${amine(110,154,.78,{arms:'up'})}${leyla(154,154,.72,{arms:'up'})}
+  ${bulleTexte(78,48,110,'Bonjour !')}`),
+
+manAide:()=>V(`${bgJour()}
+  ${mamie(212,152,.82,{arms:'hold'})}
+  <g transform="translate(164,122)"><path d="M-16 -12 h32 v24 h-32Z" fill="#c9a06a"/><path d="M-16 -12 q16 -10 32 0" fill="none" stroke="#9c6330" stroke-width="3"/>
+  <circle cx="-6" cy="-16" r="5" fill="#8fd06a"/><circle cx="7" cy="-17" r="5" fill="#ff9d4d"/></g>
+  ${amine(120,154,.78,{arms:'hold'})}
+  ${bulleTexte(76,48,124,'Je t’aide, mamie')}`),
+
+manEcoute:()=>V(`${bgSalon()}
+  ${maman(210,152,.82)}
+  ${amine(120,152,.74)}${leyla(160,152,.7)}
+  <g fill="#5bd0e8" opacity=".8"><path d="M186 96 q10 -8 0 -16" stroke="#5bd0e8" stroke-width="3" fill="none"/>
+  <path d="M194 100 q16 -12 0 -24" stroke="#5bd0e8" stroke-width="3" fill="none"/></g>
+  ${bulleTexte(96,46,120,'Je t’écoute...')}`),
+
+manSilence:()=>V(`${bgChambre()}
+  ${berceauBebe(214,142,.95)}
+  ${amine(96,152,.76)}${leyla(142,152,.72)}
+  <g transform="translate(96,96)"><circle cx="0" cy="0" r="0" fill="none"/></g>
+  ${bulleTexte(112,50,86,'Chuuut...')}
+  <g class="a-float">${coeur(268,66,.9,'#ffb3c8')}</g>`),
+
+/* ---------- NUIT, SAISONS & GRANDS DEHORS ---------- */
+nuitEtoiles:()=>V(`${bgNuit()}
+  <ellipse cx="160" cy="164" rx="96" ry="16" fill="#c94a6a" opacity=".45"/>
+  ${papa(84,158,.74)}${maman(236,158,.72,{arms:'hold'})}${yasmine(234,118,.62,{bonnet:true})}
+  ${amine(140,158,.6,{arms:'up'})}${leyla(184,158,.64,{arms:'up'})}
+  <g class="a-spark">${etoile(70,44,9)}${etoile(250,52,7)}${etoile(158,32,6)}</g>`),
+
+nuitDodo:()=>V(`<rect width="320" height="180" fill="#1b1550"/>
+  <rect x="200" y="20" width="90" height="60" rx="8" fill="#120e40"/>${lune(244,44,12)}${semisEtoiles()}
+  <rect y="150" width="320" height="30" fill="#2a2064"/>
+  ${lit(148,150,1.1)}
+  <g transform="translate(120,116)"><circle cx="0" cy="0" r="13" fill="#c98a52"/>
+  <path d="M-13 -4 q4 -13 13 -11 q10 -2 13 11 q-6 -6 -13 -5 q-8 -1 -13 5Z" fill="#2a1a11"/>
+  <path d="M-5 0 q2 2 4 0" stroke="#26150c" stroke-width="1.4" fill="none"/><path d="M2 0 q2 2 4 0" stroke="#26150c" stroke-width="1.4" fill="none"/></g>
+  <g fill="#ffe9c2" opacity=".8"><text x="160" y="90" font-size="14">z</text><text x="176" y="74" font-size="17">z</text><text x="196" y="58" font-size="20">Z</text></g>`),
+
+neigeJeu:()=>V(`${bgNeige()}
+  <g transform="translate(226,150)"><circle cx="0" cy="-14" r="22" fill="#fff" stroke="#dbe9f5" stroke-width="2"/>
+  <circle cx="0" cy="-44" r="15" fill="#fff" stroke="#dbe9f5" stroke-width="2"/>
+  <circle cx="-5" cy="-47" r="2" fill="#26150c"/><circle cx="5" cy="-47" r="2" fill="#26150c"/>
+  <path d="M0 -44 l10 3 -10 3Z" fill="#ff9d4d"/><path d="M-14 -50 h28 l-2 -7 h-24Z" fill="#c94a6a"/></g>
+  ${amine(96,154,.76,{arms:'up'})}${leyla(146,154,.72,{arms:'up'})}`),
+
+foretPromenade:()=>V(`${bgJour()}
+  ${arbre(40,152,1.05)}${arbre(96,150,.8)}${arbre(276,152,1.1)}${arbre(228,150,.75)}
+  <path d="M120 180 q26 -34 44 -46 q10 -6 20 -4" stroke="#e7cf9e" stroke-width="14" fill="none" stroke-linecap="round"/>
+  ${papa(150,158,.74,{arms:'hold'})}${amine(186,158,.62)}${leyla(214,158,.66)}
+  <g class="a-float"><circle cx="262" cy="70" r="5" fill="#ffd54a"/></g>`),
+
+parcVelo:()=>V(`${bgParc()}
+  <g transform="translate(180,150)"><circle cx="-20" cy="0" r="15" fill="none" stroke="#4a4458" stroke-width="4"/>
+  <circle cx="22" cy="0" r="15" fill="none" stroke="#4a4458" stroke-width="4"/>
+  <path d="M-20 0 l14 -20 h18 l10 20 M-6 -20 h22" stroke="#ff6b6b" stroke-width="4" fill="none"/>
+  <rect x="4" y="-30" width="14" height="5" rx="2" fill="#4a4458"/></g>
+  ${amine(174,124,.66,{arms:'hold'})}
+  ${papa(94,152,.8,{arms:'wave'})}
+  ${bulleTexte(252,52,108,'Tu roules !')}`),
+
+couverture:()=>V(`${bgNuit()}
+  ${papa(52,160,.76,{arms:'wave'})}
+  ${maman(112,160,.76,{arms:'hold'})}${yasmine(110,118,.7,{bonnet:true})}
+  ${amine(184,162,.78,{cape:true,arms:'up'})}
+  ${leyla(240,162,.8,{arms:'up'})}
+  ${mamie(288,160,.72)}
+  <g class="a-float">${coeur(160,54,1.6)}</g>
+  <g class="a-spark">${etoile(28,50,8)}${etoile(300,64,7)}${etoile(210,36,6)}</g>`)
+};
+
+/* personnages secondaires appelés par certaines scènes (déclarations hissées) */
+function noobi(x,y,s){return `${ombre(x,y+1,14)}<g transform="translate(${x},${y}) scale(${s})">
+  <rect x="-16" y="-48" width="32" height="30" fill="#ffd54a"/><rect x="-16" y="-74" width="32" height="26" fill="#ffd54a"/>
+  <rect x="-9" y="-66" width="6" height="7" fill="#26150c"/><rect x="4" y="-66" width="6" height="7" fill="#26150c"/>
+  <path d="M-7 -56 q7 5 14 0" stroke="#26150c" stroke-width="2" fill="none"/>
+  <rect x="-26" y="-46" width="9" height="26" fill="#ffd54a"/><rect x="18" y="-46" width="9" height="26" fill="#ffd54a"/>
+  <rect x="-14" y="-18" width="12" height="18" fill="#2f6fd6"/><rect x="3" y="-18" width="12" height="18" fill="#2f6fd6"/></g>`;}
+
+/* ==========================================================================
+   LES HISTOIRES
+   Chaque histoire est une suite de « panneaux » : une illustration (a)
+   puis le moment du récit qu'elle raconte (t).
+   ========================================================================== */
+const C={hero:'Super-héros',fun:'Histoire drôle',manners:'Bonnes manières',family:'La famille'};
+const CCOL={hero:'#ff8a3d',fun:'#ffcf3d',manners:'#5bd0e8',family:'#ff7a9c'};
+const CICON={hero:'🦸',fun:'😄',manners:'✨',family:'❤️'};
+const CATS=['family','hero','fun','manners'];
+
+const STORIES=[
+
+/* ============ LA FAMILLE (10) ============ */
+{cat:'family',title:'La nouvelle qui change tout',panels:[
+ {a:'hopAnnonce',t:"Un matin, papa est rentré dans la chambre avec un immense sourire. « Votre petite sœur est arrivée ! Elle s'appelle Yasmine. » Amine a sauté du lit et Leyla a tapé dans ses mains si fort qu'elle en a fait tomber son doudou."},
+ {a:'hopCouloir',t:"« Elle est née un peu plus tôt que prévu, a expliqué maman en chemin. Alors elle reste quelques jours à l'hôpital, dans un petit lit tout chaud, le temps de devenir plus forte. » Amine tenait fort la main de Leyla dans le grand couloir tout blanc."},
+ {a:'hopCouveuse',t:"Derrière une petite fenêtre transparente, Yasmine dormait, minuscule, avec un bonnet plus grand que sa tête. Amine l'a regardée longtemps. Dans son cœur, quelque chose de tout neuf venait de s'allumer : il était grand frère pour la deuxième fois."}]},
+
+{cat:'family',title:'La plus petite main du monde',panels:[
+ {a:'hopInfirmiere',t:"« Est-ce que je peux la toucher ? » a demandé Amine tout doucement. L'infirmière a souri et a ouvert un petit hublot rond sur le côté du lit chaud. « Bien sûr. Mais avec des mains toutes propres, et tout doucement. »"},
+ {a:'hopMainMinuscule',t:"Amine a glissé son doigt près de la main de Yasmine. Elle était plus petite qu'une fraise. Et là, sans prévenir, les cinq minuscules doigts se sont refermés autour du sien et n'ont plus voulu le lâcher."},
+ {a:'hopPeauAPeau',t:"Après, maman l'a installée tout contre elle, peau contre peau, sous une couverture jaune. « Comme ça, elle entend mon cœur, a expliqué maman. Ça l'aide à grandir. » Amine trouvait que c'était le meilleur médicament du monde."},
+ {a:'hopBerceuse',t:"« Elle te reconnaît », a chuchoté maman. Amine n'a plus bougé pendant très longtemps. Il avait toujours cru qu'être fort, c'était soulever des choses lourdes. Ce soir-là, il a compris qu'être fort, c'est aussi savoir rester tout doux."}]},
+
+{cat:'family',title:'Le dessin pour Yasmine',panels:[
+ {a:'famPluie',t:"Il pleuvait, et on ne pouvait pas aller à l'hôpital ce jour-là. Alors Amine a sorti ses feutres. « Si on ne peut pas y aller, on va lui envoyer quelque chose de nous », a-t-il décidé. Leyla a choisi le rose, évidemment."},
+ {a:'hopDessin',t:"Le lendemain, ils ont accroché le dessin tout près du lit de Yasmine : un soleil, quatre bonhommes, un bébé minuscule au milieu et beaucoup, beaucoup de cœurs. Même Leyla avait fait un gribouillis très appliqué."},
+ {a:'hopVeilleuse',t:"La nuit, quand tout le monde était rentré à la maison, le dessin veillait sur Yasmine. « Comme ça, elle sait qu'on pense à elle même quand on n'est pas là », a dit Amine. C'est ça, une famille : on reste ensemble, même de loin."}]},
+
+{cat:'family',title:'Le bonnet de mamie',panels:[
+ {a:'famMamie',t:"Mamie est arrivée avec un panier et deux aiguilles. « Quand ton papa était bébé, je lui avais tricoté un bonnet jaune, a-t-elle raconté. Aujourd'hui, j'en tricote un pour Yasmine. » Amine a demandé s'il pouvait tenir la pelote."},
+ {a:'hopBonnet',t:"Le bonnet était si petit qu'on aurait dit un bonnet de poupée. Sur la tête de Yasmine, il allait pile poil. « Il vient de loin, ce bonnet, a souri mamie. Il a traversé le temps pour arriver jusqu'à toi. »"},
+ {a:'hopGrandit',t:"Chaque semaine, Yasmine devenait un peu plus grande. Un jour, le bonnet était devenu trop petit. Mamie en a tricoté un autre. Dans une famille, les choses se transmettent : les bonnets, les histoires, et surtout l'amour."}]},
+
+{cat:'family',title:'Le repas où chacun raconte',panels:[
+ {a:'famRepas',t:"Chez Amine, il y a une règle au dîner : chacun raconte le meilleur moment de sa journée. Papa a parlé d'un oiseau sur sa fenêtre, maman d'un câlin de Yasmine, Leyla a dit « gâteau » même si personne n'avait mangé de gâteau."},
+ {a:'famCanape',t:"Le tour d'Amine est venu. « Mon meilleur moment, c'est maintenant. » Tout le monde s'est arrêté de manger. « Parce que là, on est tous en train de s'écouter en même temps. »"},
+ {a:'nuitDodo',t:"Ce soir-là, en s'endormant, Amine s'est dit qu'une famille, ce n'est pas seulement des gens qui habitent ensemble. C'est des gens qui prennent le temps de s'écouter, même quand la journée a été longue."}]},
+
+{cat:'family',title:'Le soir des étoiles',panels:[
+ {a:'famJardin',t:"« Ce soir, on ne regarde pas d'écran, a annoncé papa. On sort les couvertures. » Amine a d'abord protesté, puis il a vu maman installer Yasmine bien emmitouflée dans ses bras, et il a couru chercher son oreiller."},
+ {a:'nuitEtoiles',t:"Allongés dans l'herbe, ils ont compté les étoiles. Amine a montré la Grande Ourse à Leyla, qui a répondu « poisson ». Personne n'a corrigé : quand on est bien, on n'a pas besoin d'avoir raison."},
+ {a:'nuitDodo',t:"« Il y a des milliards d'étoiles, a dit papa, mais une seule famille comme la nôtre. » Amine s'est endormi sur le chemin du lit, la joue contre l'épaule de son père, en pensant que c'était la meilleure soirée de sa vie."}]},
+
+{cat:'family',title:'Le gâteau de la maison pleine',panels:[
+ {a:'hopBiberon',t:"Yasmine avait appris à boire son biberon toute seule, jusqu'à la dernière goutte. C'était la dernière chose qu'elle devait savoir faire avant de pouvoir quitter l'hôpital."},
+ {a:'famGateau',t:"Le docteur avait dit le mot que tout le monde attendait : Yasmine pouvait bientôt rentrer à la maison. Alors on a fait un gâteau. Amine a cassé les œufs, Leyla a surtout mangé le chocolat, et la cuisine a fini un peu blanche de farine."},
+ {a:'hopRetourMaison',t:"Le grand jour, Yasmine est sortie de l'hôpital dans une couverture jaune. Les infirmières ont fait au revoir de la main. Amine leur a dit merci trois fois, parce qu'une seule fois, ça ne suffisait pas."},
+ {a:'maisonBerceau',t:"Le berceau attendait dans la chambre depuis des semaines. Quand Yasmine s'y est endormie pour la première fois, la maison a fait un drôle de bruit : le silence de tout le monde qui sourit en même temps."}]},
+
+{cat:'family',title:'La photo qui manquait',panels:[
+ {a:'famMamie',t:"Dans le couloir, il y a un cadre avec une vieille photo : papa, maman, Amine bébé. « Elle n'est plus juste, cette photo, a remarqué Amine. Il manque deux personnes. » Mamie a proposé d'en refaire une."},
+ {a:'famPhoto',t:"Ils se sont tous mis dans le jardin. Papa a réglé l'appareil, couru se placer, et il est arrivé en glissant sur l'herbe juste au moment du déclic. Sur la photo, tout le monde rit, même Yasmine qui dormait."},
+ {a:'famCanape',t:"La nouvelle photo est allée dans le couloir, à côté de l'ancienne. « Regarde, a dit maman, la famille a grandi. » Amine a compris que l'amour, ce n'est pas un gâteau qu'on partage en parts de plus en plus petites : c'est un gâteau qui devient plus grand."}]},
+
+{cat:'family',title:'Le jour où papa était fatigué',panels:[
+ {a:'famCourses',t:"Papa se levait souvent la nuit pour Yasmine. Ce samedi-là, aux courses, il a bâillé sept fois. Amine les a comptés. Sans rien dire, il a pris le panier et l'a poussé jusqu'à la caisse."},
+ {a:'famRangement',t:"À la maison, Amine a rangé les courses avec Leyla, qui a mis les yaourts dans le placard à chaussures. Ce n'était pas parfait. Mais papa s'est assis, et pour la première fois de la journée, il a fermé les yeux deux minutes."},
+ {a:'famCanape',t:"« Merci les enfants », a-t-il murmuré. Amine a haussé les épaules : « Ben, c'est normal. » Dans une famille, chacun s'appuie sur les autres à son tour. Un jour on porte, un jour on est porté."}]},
+
+{cat:'family',title:'Trois lits dans la même chambre',panels:[
+ {a:'famChambre3',t:"Le berceau de Yasmine est arrivé dans la chambre, entre le lit d'Amine et celui de Leyla. « On va être serrés », a fait remarquer Amine. « On va être ensemble », a corrigé maman."},
+ {a:'famHistoireSoir',t:"Le soir, papa lit une histoire pour trois. Leyla veut toujours la même, Amine veut toujours la suite, et Yasmine, elle, ne comprend pas les mots — mais elle reconnaît les voix, et ça la calme."},
+ {a:'nuitDodo',t:"Quand la lumière s'éteint, Amine écoute la respiration de ses deux sœurs. C'est un petit bruit tranquille qui dit : tu n'es jamais seul dans le noir. Alors il ferme les yeux, et il dort très bien."}]},
+
+/* ============ SUPER-HÉROS (12) ============ */
+{cat:'hero',title:'La nouvelle mission d’Amine',panels:[
+ {a:'heroDepart',t:"Amine a noué sa cape rouge devant le miroir. D'habitude, un héros part sauver des villes, arrêter des trains, éteindre des volcans. Mais ce soir-là, sa mission tenait dans un tout petit berceau."},
+ {a:'heroVeilleSoeur',t:"Il s'est installé à côté de Yasmine et n'a plus bougé. Quand elle a fait un bruit, il a posé sa main sur la couverture. Quand elle s'est calmée, il a souri, très fier, comme après une victoire."},
+ {a:'maisonBerceau',t:"« C'était comment, ta mission ? » a demandé papa. « Difficile, a répondu Amine très sérieusement. J'ai dû rester silencieux pendant quarante minutes. » Le plus grand pouvoir des héros, c'est la patience."}]},
+
+{cat:'hero',title:'Amine et la nuit sans peur',panels:[
+ {a:'heroCourage',t:"Leyla s'est réveillée en pleurant : il y avait une ombre bizarre au mur. Amine a allumé sa lampe et s'est planté devant, cape au vent. « Je vais voir. Reste derrière moi. »"},
+ {a:'heroNuit',t:"L'ombre, c'était le manteau de papa accroché à la porte. Amine aurait pu se moquer. Il n'a pas ri du tout. « Moi aussi, la première fois, j'ai cru que c'était un monstre », a-t-il dit."},
+ {a:'nuitDodo',t:"Il est resté assis près du lit de sa sœur jusqu'à ce qu'elle se rendorme. Le courage, ce n'est pas de ne jamais avoir peur. C'est de rester à côté de quelqu'un qui a peur."}]},
+
+{cat:'hero',title:'Le vol au-dessus des toits',panels:[
+ {a:'heroDepart',t:"Cette nuit-là, Amine a rêvé que sa cape le tirait doucement vers le haut. Ses pieds ont quitté le tapis, puis le lit, puis la fenêtre s'est ouverte toute seule."},
+ {a:'heroVol',t:"Il est passé au-dessus des toits endormis, des lampadaires orange et du terrain de foot. Le vent sentait la pluie et le pain chaud. En bas, tout paraissait petit et tranquille."},
+ {a:'heroNuit',t:"Avant de rentrer, il a fait un tour au-dessus de sa maison, et il a vu la petite lumière de la chambre de Yasmine. C'était le plus beau point lumineux de toute la ville. Alors il est redescendu."}]},
+
+{cat:'hero',title:'Le chat du grand arbre',panels:[
+ {a:'heroSauvetageChat',t:"Un chat roux miaulait tout en haut du grand arbre du parc, et il ne savait plus comment descendre. Les gens regardaient. Amine, lui, a enlevé sa cape et a commencé à grimper branche après branche."},
+ {a:'heroMerci',t:"En haut, il a parlé au chat tout doucement avant de le prendre. « Doucement, doucement. » Quand il est redescendu avec l'animal contre lui, tout le monde a applaudi."},
+ {a:'famJardin',t:"La dame du chat a voulu lui donner une pièce. Amine a refusé. « Je ne l'ai pas fait pour ça. » Un vrai héros ne fait pas le bien pour la récompense : il le fait parce que c'est juste."}]},
+
+{cat:'hero',title:'Le bouclier de pluie',panels:[
+ {a:'heroBouclier',t:"L'orage est tombé d'un coup à la sortie de l'école. Les copains couraient dans tous les sens. Amine a levé les bras et a fait apparaître un bouclier brillant au-dessus du groupe."},
+ {a:'heroMerci',t:"Sous le bouclier, personne n'était mouillé. Il a accompagné chaque enfant jusqu'à sa porte, un par un, sans jamais se plaindre. Sa cape, elle, était complètement trempée."},
+ {a:'famPluie',t:"À la maison, maman lui a donné une serviette et un chocolat chaud. « Tu t'es protégé, toi ? » « Non, a-t-il répondu. Il n'y avait pas assez de bouclier pour tout le monde. » Elle l'a serré très fort."}]},
+
+{cat:'hero',title:'L’étoile tombée dans le jardin',panels:[
+ {a:'heroEtoile',t:"Une nuit, une étoile est tombée dans le jardin. Elle brillait encore, mais faiblement, comme une lampe fatiguée. « Je n'arrive plus à remonter », a-t-elle soufflé."},
+ {a:'heroVol',t:"Amine l'a portée dans ses bras jusqu'en haut de la colline, puis il a couru, couru, et il l'a lancée de toutes ses forces vers le ciel. L'étoile a repris sa place."},
+ {a:'nuitEtoiles',t:"Depuis, quand la famille regarde le ciel, il y a une étoile qui clignote un peu plus que les autres, juste au-dessus de leur maison. Leyla dit que c'est elle qui dit bonsoir."}]},
+
+{cat:'hero',title:'Steve et la mine profonde',panels:[
+ {a:'heroSteve',t:"Steve creusait depuis des heures pour trouver des diamants. Sa pioche s'usait, sa torche faiblissait, et le tunnel devenait de plus en plus sombre."},
+ {a:'heroEquipe',t:"Amine et ses amis sont arrivés avec des torches neuves. « Tout seul, tu creuses un trou, a dit Amine. À plusieurs, on creuse un chemin. » Ils ont creusé ensemble jusqu'au filon."},
+ {a:'heroMerci',t:"Ils ont trouvé cinq diamants et Steve a voulu tout donner à Amine. Il en a pris un seul et a partagé le reste. Ce soir-là, cinq maisons du village brillaient au lieu d'une."}]},
+
+{cat:'hero',title:'Goku et l’énergie du cœur',panels:[
+ {a:'heroGoku',t:"Goku s'entraînait à faire grandir son énergie. Il criait, il forçait, mais sa boule de lumière restait toute petite. « Je n'y arrive pas aujourd'hui », a-t-il grogné, découragé."},
+ {a:'heroCourage',t:"Amine s'est assis à côté de lui. « Et si tu pensais à quelqu'un que tu aimes, au lieu de penser à ta force ? » Goku a fermé les yeux et a pensé à sa famille."},
+ {a:'heroEquipe',t:"La lumière a grandi d'un coup, chaude et dorée, et a éclairé toute la clairière. La plus grande énergie ne vient pas des muscles. Elle vient de ceux pour qui on se bat."}]},
+
+{cat:'hero',title:'Noobi et la course du parc',panels:[
+ {a:'heroNoobi',t:"Noobi voulait absolument gagner la grande course du parc. Il s'est entraîné toute la semaine, et le jour J, il partait comme une fusée, très loin devant tout le monde."},
+ {a:'manTour',t:"À mi-chemin, un plus petit est tombé et s'est écorché le genou. Noobi s'est arrêté net, a fait demi-tour et l'a aidé à se relever. Tous les autres les ont dépassés."},
+ {a:'parcVelo',t:"Noobi est arrivé dernier, avec le petit à côté de lui. Et pourtant, c'est lui que tout le monde a porté en triomphe. Il y a des courses qu'on gagne en s'arrêtant."}]},
+
+{cat:'hero',title:'Le robot qui voulait un ami',panels:[
+ {a:'heroRobot',t:"Un robot s'est posé dans le salon avec une petite lumière rouge sur la tête. Il répétait la même phrase : « Recherche… ami… introuvable. » Sa voix grinçait un peu."},
+ {a:'funDanse',t:"Amine ne savait pas comment réparer un robot. Alors il a mis de la musique et il s'est mis à danser n'importe comment. Leyla s'y est mise aussi. Le robot les a imités, tout raide."},
+ {a:'famCanape',t:"Sa lumière est passée du rouge au vert. « Ami… trouvé. » Il n'avait pas besoin d'être réparé : il avait besoin qu'on joue avec lui. Comme tout le monde, en fait."}]},
+
+{cat:'hero',title:'Le petit dragon perdu',panels:[
+ {a:'heroDragon',t:"Dans la forêt, Amine a trouvé un dragon vert de la taille d'un chat. Il tremblait et n'arrivait à faire qu'une toute petite fumée grise au lieu du feu."},
+ {a:'foretPromenade',t:"Amine ne l'a pas ramené à la maison, même s'il en avait très envie. Il l'a aidé à retrouver le chemin de sa grotte, où sa maman dragon l'attendait en tournant en rond."},
+ {a:'heroMerci',t:"La maman dragon a soufflé une flamme en forme de cœur dans le ciel. Aimer, parfois, c'est ramener quelqu'un chez lui au lieu de le garder pour soi."}]},
+
+{cat:'hero',title:'L’équipe des super-frangins',panels:[
+ {a:'heroEquipe',t:"Amine a dessiné un logo pour l'équipe : un A, un L et un Y entourés d'un bouclier. « On est une équipe maintenant, a-t-il expliqué à Leyla. Chacun a un pouvoir. »"},
+ {a:'heroVeilleSoeur',t:"« Toi, tu as le pouvoir de faire rire tout le monde. Moi, j'ai la force. Et Yasmine, elle, elle a le pouvoir de nous rassembler tous autour d'elle sans rien faire du tout. »"},
+ {a:'famChambre3',t:"Leyla a trouvé ça juste. Ils ont collé le logo au-dessus des trois lits. Les meilleures équipes ne sont pas celles où tout le monde est pareil, mais celles où chacun compte."}]},
+
+/* ============ HISTOIRES DRÔLES (6) ============ */
+{cat:'fun',title:'La vache qui prenait le vent',panels:[
+ {a:'funVache',t:"Ce jour-là, il y avait tellement de vent que Marguerite la vache s'est envolée. Elle est passée au-dessus du poulailler en faisant « Meuuuh ?! » d'un air très étonné."},
+ {a:'heroVol',t:"Amine a couru sous elle avec une corde. Marguerite tournait dans le ciel comme un cerf-volant à taches noires, et son beurre était déjà tout battu."},
+ {a:'famJardin',t:"Quand le vent est tombé, Marguerite a atterri en douceur dans un tas de foin. Depuis, dès qu'il y a du vent, elle se cache derrière la grange. On la comprend."}]},
+
+{cat:'fun',title:'Le creeper qui avait le hoquet',panels:[
+ {a:'funHoquet',t:"Le creeper avait le hoquet. « HIC ! » Et à chaque hoquet, il sautait de trente centimètres en l'air. Tous les moutons du champ le regardaient, très intrigués."},
+ {a:'funBulles',t:"Amine a essayé toutes les techniques : boire à l'envers, retenir sa respiration, compter à reculons. Le creeper a bu de travers et a fait des bulles vertes par le nez."},
+ {a:'funDanse',t:"C'est Leyla qui l'a guéri : elle lui a fait tellement de guilis qu'il a oublié de hoqueter. Parfois, le meilleur remède, c'est un fou rire."}]},
+
+{cat:'fun',title:'La guerre des chaussettes',panels:[
+ {a:'funChaussettes',t:"Le lundi matin, aucune chaussette de la maison n'avait plus sa jumelle. Une rouge avec une verte, une à pois avec une à rayures : c'était la panique générale."},
+ {a:'famRangement',t:"Amine a mené l'enquête sous les lits, derrière le canapé et jusque dans le panier du linge. Il a retrouvé onze chaussettes seules et un camion de pompier disparu depuis Noël."},
+ {a:'famMatin',t:"Ils sont tous partis dépareillés ce jour-là. À l'école, trois copains ont trouvé ça génial et ont fait pareil le lendemain. C'est comme ça qu'on lance une mode."}]},
+
+{cat:'fun',title:'Le toboggan de neige',panels:[
+ {a:'neigeJeu',t:"Il avait neigé toute la nuit. Amine et Leyla ont construit une piste dans le jardin, avec un virage, une bosse et un bonhomme de neige comme arbitre."},
+ {a:'funGlissade',t:"Amine s'est lancé le premier, sur un plateau de cuisine. Il a pris le virage beaucoup trop vite, a décollé sur la bosse et a atterri assis dans le tas de neige, le bonnet sur les yeux."},
+ {a:'famPluie',t:"Ils ont recommencé quatorze fois. À l'intérieur, avec un chocolat chaud, Amine a déclaré que c'était son meilleur crash de tous les temps."}]},
+
+{cat:'fun',title:'Le chat au chapeau de mamie',panels:[
+ {a:'funChatChapeau',t:"Mamie avait posé son chapeau à fleurs sur le canapé. Deux minutes plus tard, le chat était dedans, et il n'avait aucune intention d'en sortir."},
+ {a:'famMamie',t:"Il s'est promené dans tout le salon avec le chapeau sur la tête, très digne, comme s'il allait à un mariage. Leyla riait tellement qu'elle a eu le hoquet."},
+ {a:'famCanape',t:"Mamie n'a pas grondé. Elle a pris une photo, l'a imprimée, et l'a accrochée dans la cuisine. Elle est toujours là aujourd'hui."}]},
+
+{cat:'fun',title:'Les spaghettis volants',panels:[
+ {a:'funSpaghetti',t:"Papa avait décidé de faire sauter les spaghettis dans la poêle « comme les vrais chefs ». Les spaghettis, eux, avaient décidé d'aller au plafond."},
+ {a:'famRepas',t:"Il en est retombé un sur le nez d'Amine, deux dans les cheveux de Leyla, et un est resté collé en haut, au-dessus de la table, pendant tout le repas."},
+ {a:'famCanape',t:"Personne n'a été grondé. On a mangé en riant, et le spaghetti du plafond est devenu une légende de la maison. Les meilleurs souvenirs sont souvent des ratés."}]},
+
+/* ============ BONNES MANIÈRES (7) ============ */
+{cat:'manners',title:'Le mot magique',panels:[
+ {a:'manMerci',t:"Mamie est arrivée avec un cadeau pour Amine. Il l'a ouvert si vite qu'il a oublié quelque chose d'important. Mamie n'a rien dit, mais son sourire est devenu un peu plus petit."},
+ {a:'manEcoute',t:"Maman lui a glissé à l'oreille : « Un cadeau, ce n'est pas juste un objet. C'est du temps que quelqu'un t'a donné. » Amine a compris tout de suite."},
+ {a:'famMamie',t:"Il a couru serrer mamie dans ses bras. « Merci beaucoup, mamie. » Le sourire est revenu, encore plus grand qu'avant. Un merci, ça ne coûte rien et ça rend tout plus doux."}]},
+
+{cat:'manners',title:'Le goûter partagé',panels:[
+ {a:'manPartage',t:"Au parc, Amine avait un gros cookie et Sami n'avait rien du tout. Amine a regardé son cookie, puis Sami, puis son cookie encore une fois."},
+ {a:'famJardin',t:"Il l'a cassé en deux. Pas en un petit bout et un gros : en deux vraies moitiés. « Tiens. » Sami n'en revenait pas."},
+ {a:'famCanape',t:"Bizarrement, la moitié de cookie avait meilleur goût que le cookie entier. Le partage, ça ne divise pas le plaisir : ça le multiplie."}]},
+
+{cat:'manners',title:'Chacun son tour au toboggan',panels:[
+ {a:'manTour',t:"Il y avait une longue file au toboggan. Amine attendait depuis un moment quand un plus grand est passé devant tout le monde en bousculant les autres."},
+ {a:'manPardon',t:"Amine n'a pas crié. Il a dit calmement : « Il y a une file, tu sais. On attend tous. » Le grand a rougi et il est allé se remettre à la fin."},
+ {a:'parcVelo',t:"Après, ils ont joué ensemble tout l'après-midi. Dire les choses sans se fâcher, c'est parfois plus puissant que de crier."}]},
+
+{cat:'manners',title:'Pardon, c’était sans faire exprès',panels:[
+ {a:'manPardon',t:"En courant dans le couloir, Amine a fait tomber la tour de cubes que Leyla construisait depuis une heure. Tout s'est écroulé d'un coup."},
+ {a:'famRangement',t:"Sa première idée a été de dire « ce n'est pas ma faute ». Mais il a vu les yeux de sa sœur. Alors il s'est assis par terre à côté d'elle : « Pardon. Je t'aide à la refaire ? »"},
+ {a:'famCanape',t:"Ils l'ont reconstruite encore plus haute. Reconnaître une bêtise, ça fait un peu mal deux secondes, et ça répare tout pour longtemps."}]},
+
+{cat:'manners',title:'Bonjour, madame la voisine',panels:[
+ {a:'manBonjour',t:"Madame Lucie habite à côté et elle vit seule. Amine passait devant chez elle tous les jours sans jamais rien dire, un peu intimidé."},
+ {a:'manEcoute',t:"Un matin, il a pris son courage et a lancé un « Bonjour madame ! » bien clair. Elle s'est arrêtée, surprise, puis son visage s'est éclairé d'un coup."},
+ {a:'famJardin',t:"Maintenant, ils se disent bonjour chaque jour, et elle garde des graines pour les oiseaux qu'ils regardent ensemble. Un mot de rien du tout peut changer la journée de quelqu'un."}]},
+
+{cat:'manners',title:'Le panier trop lourd',panels:[
+ {a:'manAide',t:"Dans la rue, mamie portait un panier de courses qui penchait dangereusement d'un côté. Elle s'arrêtait tous les dix pas pour souffler."},
+ {a:'famCourses',t:"Amine a couru la rejoindre. « Je prends l'autre anse ! » À deux, le panier ne penchait plus du tout, et ils sont arrivés en discutant."},
+ {a:'famCanape',t:"« Tu vois, a dit mamie, aider, ce n'est pas tout faire à la place des autres. C'est porter un bout du poids. » Amine s'en souvient encore."}]},
+
+{cat:'manners',title:'Chuuut, Yasmine dort',panels:[
+ {a:'manSilence',t:"Amine avait très envie de montrer sa nouvelle voiture qui fait du bruit. Mais Yasmine venait tout juste de s'endormir dans son berceau."},
+ {a:'famChambre3',t:"Il a posé la voiture, mis un doigt devant sa bouche pour prévenir Leyla, et ils sont sortis de la chambre sur la pointe des pieds, tout doucement."},
+ {a:'famCanape',t:"Dans le salon, ils ont joué en chuchotant, ce qui était finalement très rigolo. Faire attention aux autres, ce n'est pas se priver : c'est aimer."}]}
+];
+
+/* ============ MOTEUR DU LIVRE ============ */
+const COVER=-1;
+let idx=COVER;
+const bookEl=document.getElementById('book');
+const prevBtn=document.getElementById('prev');
+const nextBtn=document.getElementById('next');
+const pcount=document.getElementById('pcount');
+const pfill=document.getElementById('pfill');
+const total=STORIES.length;
+const familleCount=STORIES.filter(s=>s.cat==='family').length;
+const yasmineCount=STORIES.filter(s=>s.panels.some(p=>/Yasmine/.test(p.t))).length;
+const panneauxCount=STORIES.reduce((n,s)=>n+s.panels.length,0);
+console.assert(total===35, `STORIES devrait contenir 35 histoires, en contient ${total}`);
+console.assert(familleCount===10, `il devrait y avoir 10 histoires « famille », il y en a ${familleCount}`);
+console.assert(STORIES.every(s=>s.panels.every(p=>typeof SCENES[p.a]==='function')), 'une illustration référencée est introuvable dans SCENES');
+
+/* texte complet d'une histoire, pour la lecture à voix haute */
+const texteHistoire=(s)=>s.title+'. '+s.panels.map(p=>p.t).join(' ');
+
+function coverHTML(){
+  return `<div class="page cover" id="page">
+    <div class="eyebrow">★ DODO TIME · TOME 3 ★</div>
+    <h1>Le Grand Livre des Histoires du Soir</h1>
+    <div class="sub">${total} histoires illustrées, dont ${familleCount} sur la famille — avec Amine, Leyla et la petite Yasmine</div>
+    <div class="cover-art" aria-hidden="true">${SCENES.couverture()}</div>
+    <button type="button" class="start" id="startBtn">Commencer ▶</button>
+    <div class="pour">${panneauxCount} illustrations · une image à chaque moment du récit</div>
+  </div>`;
+}
+
+function storyHTML(i){
+  const s=STORIES[i];
+  const panneaux=s.panels.map((p,n)=>`<div class="panel">
+      <div class="pillus" aria-hidden="true">${SCENES[p.a]()}</div>
+      <div class="step"><span class="dot" style="background:${CCOL[s.cat]}"></span>MOMENT ${n+1} / ${s.panels.length}</div>
+      <p>${p.t}</p>
+    </div>`).join('');
+  return `<div class="page" id="page">
+    <span class="cat-tag" style="background:${CCOL[s.cat]}">${CICON[s.cat]} ${C[s.cat]}</span>
+    <span class="story-no">${String(i+1).padStart(2,'0')}/${total}</span>
+    <h2>${s.title}</h2>
+    <div class="story-scroll">${panneaux}</div>
+    <div class="speak-ctl" id="speakCtl">
+      <button type="button" class="speak-btn s-play" aria-label="Écouter l'histoire à voix haute">🔊 Écouter l'histoire</button>
+      <button type="button" class="speak-btn s-pause" aria-label="Mettre en pause la lecture" style="display:none">⏸️ Pause</button>
+      <button type="button" class="speak-btn s-stop" aria-label="Arrêter la lecture" style="display:none">⏹️</button>
+    </div>
+    <div class="audio-progress" id="audioProgress">
+      <div class="alabel" id="alabel">Progression de la lecture</div>
+      <div class="abar" role="progressbar" aria-labelledby="alabel" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="afill" id="afill"></div></div>
+    </div>
+  </div>`;
+}
+
+function render(){
+  if(typeof stopSpeak==='function') stopSpeak();
+  // re-acquérir l'élément vivant : après outerHTML, l'ancienne référence est détachée
+  document.getElementById('page').outerHTML = (idx===COVER)?coverHTML():storyHTML(idx);
+  rebind();
+  if(idx===COVER){pcount.textContent='Couverture';pfill.style.width='0%';}
+  else{pcount.textContent=`Page ${idx+1} sur ${total}`;pfill.style.width=`${((idx+1)/total)*100}%`;}
+  prevBtn.disabled=(idx===COVER);
+  nextBtn.disabled=(idx===total-1);
+}
+function rebind(){
+  const sb=document.getElementById('startBtn');
+  if(sb) sb.onclick=()=>turn(1);
+  const ctl=document.getElementById('speakCtl');
+  if(ctl){
+    if('speechSynthesis' in window){
+      ctl.querySelector('.s-play').onclick=startSpeak;
+      ctl.querySelector('.s-pause').onclick=togglePause;
+      ctl.querySelector('.s-stop').onclick=stopSpeak;
+      updateSpeakUI();
+    } else {
+      ctl.style.display='none';   // navigateur sans synthèse vocale
+      const ap=document.getElementById('audioProgress'); if(ap) ap.style.display='none';
+    }
+  }
+}
+
+/* ===== LECTURE À VOIX HAUTE + jauge de progression ===== */
+let speaking=false, paused=false, speakLen=0;
+let cachedFrVoice=null;
+function pickFrVoice(){
+  const vs=window.speechSynthesis.getVoices()||[];
+  return vs.find(v=>/^fr-fr$/i.test(v.lang)) || vs.find(v=>/^fr(-|_)/i.test(v.lang)) || vs.find(v=>(v.lang||'').toLowerCase().startsWith('fr')) || null;
+}
+function refreshFrVoice(){ cachedFrVoice=pickFrVoice(); }
+function updateSpeakUI(){
+  const ctl=document.getElementById('speakCtl');
+  if(!ctl) return;
+  const play=ctl.querySelector('.s-play'), pause=ctl.querySelector('.s-pause'), stop=ctl.querySelector('.s-stop');
+  if(!speaking){
+    play.style.display=''; pause.style.display='none'; stop.style.display='none';
+  } else {
+    play.style.display='none'; pause.style.display=''; stop.style.display='';
+    pause.innerHTML = paused ? '▶️ Reprendre' : '⏸️ Pause';
+    pause.setAttribute('aria-label', paused ? 'Reprendre la lecture' : 'Mettre en pause la lecture');
+  }
+  const ap=document.getElementById('audioProgress');
+  if(ap) ap.style.display = speaking ? 'flex' : 'none';
+}
+let lastProgressPct=0;
+function setAudioProgress(pct){
+  const p=Math.max(0,Math.min(100,pct));
+  if(p<lastProgressPct) return; // la jauge n'avance que vers l'avant (onboundary vs secours temporel)
+  lastProgressPct=p;
+  const af=document.getElementById('afill');
+  if(af) af.style.width = p+'%';
+  const ab=document.querySelector('.abar');
+  if(ab) ab.setAttribute('aria-valuenow', Math.round(p));
+}
+function resetAudioProgress(){
+  lastProgressPct=0;
+  const af=document.getElementById('afill');
+  if(af) af.style.width='0%';
+  const ab=document.querySelector('.abar');
+  if(ab) ab.setAttribute('aria-valuenow','0');
+}
+/* secours basé sur le temps estimé : certains navigateurs (ex. Safari iOS)
+   ne déclenchent jamais onboundary, la jauge resterait alors figée à 0% */
+let progTimer=null, progStart=0, progEstMs=0, progPausedAt=0;
+function tickProgress(){ setAudioProgress(Math.min(96,(Date.now()-progStart)/progEstMs*100)); }
+function startProgressFallback(estMs){
+  progEstMs=estMs; progStart=Date.now();
+  clearInterval(progTimer);
+  progTimer=setInterval(tickProgress,200);
+}
+function pauseProgressFallback(){ clearInterval(progTimer); progTimer=null; progPausedAt=Date.now(); }
+function resumeProgressFallback(){
+  if(!progEstMs) return;
+  progStart += (Date.now()-progPausedAt);
+  progTimer=setInterval(tickProgress,200);
+}
+function stopProgressFallback(){ clearInterval(progTimer); progTimer=null; progEstMs=0; }
+
+function stopSpeak(){
+  if(!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  speaking=false; paused=false;
+  stopProgressFallback();
+  resetAudioProgress();
+  updateSpeakUI();
+}
+function startSpeak(){
+  if(!('speechSynthesis' in window)||idx===COVER) return;
+  const fullText=texteHistoire(STORIES[idx]);
+  speakLen = fullText.length || 1;
+  const u=new SpeechSynthesisUtterance(fullText);
+  u.lang='fr-FR';u.rate=0.85;u.pitch=1.05;      // débit ralenti, voix douce pour l'enfant
+  const v=cachedFrVoice||pickFrVoice();if(v){u.voice=v;u.lang=v.lang;}
+  const estMs=Math.max(2000,fullText.length*70);  // ~70 ms/caractère à ce débit
+  u.onstart=()=>{ startProgressFallback(estMs); };
+  u.onboundary=(e)=>{
+    if(typeof e.charIndex==='number') setAudioProgress((e.charIndex/speakLen)*100);
+  };
+  u.onend=()=>{
+    stopProgressFallback();
+    setAudioProgress(100);   // flash de complétion avant de masquer la jauge
+    paused=false;
+    setTimeout(()=>{ speaking=false; resetAudioProgress(); updateSpeakUI(); },450);
+  };
+  u.onerror=()=>{speaking=false;paused=false;stopProgressFallback();resetAudioProgress();updateSpeakUI();};
+  window.speechSynthesis.cancel();
+  // Chrome avorte parfois un speak() lancé dans le même tick qu'un cancel() : court délai
+  setTimeout(()=>window.speechSynthesis.speak(u),50);
+  speaking=true; paused=false;
+  resetAudioProgress();
+  updateSpeakUI();
+}
+function togglePause(){
+  if(!speaking) return;
+  if(paused){ window.speechSynthesis.resume(); paused=false; resumeProgressFallback(); }
+  else      { window.speechSynthesis.pause();  paused=true;  pauseProgressFallback(); }
+  updateSpeakUI();
+}
+// certaines plateformes chargent la liste des voix de façon asynchrone
+if('speechSynthesis' in window){ window.speechSynthesis.onvoiceschanged=refreshFrVoice; refreshFrVoice(); }
+
+let busy=false;
+function turn(dir){
+  if(busy) return;
+  const target=idx+dir;
+  if(target<COVER||target>total-1) return;
+  busy=true;
+  const cur=document.getElementById('page');
+  cur.classList.add('flip-out');
+  setTimeout(()=>{
+    idx=target;
+    render();
+    const np=document.getElementById('page');
+    np.classList.add('flip-in');
+    let safety;
+    const release=()=>{np.classList.remove('flip-in');busy=false;clearTimeout(safety);};
+    np.addEventListener('animationend',release,{once:true});
+    safety=setTimeout(release,500);   // sécurité si animationend ne se déclenche pas
+  },340);
+}
+
+prevBtn.onclick=()=>turn(-1);
+nextBtn.onclick=()=>turn(1);
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('menuView').classList.contains('show')) return;
+  if(e.key==='ArrowRight') turn(1);
+  if(e.key==='ArrowLeft') turn(-1);
+});
+
+// swipe (on ignore les défilements verticaux : la page se lit en scrollant)
+let sx=0, sy=0;
+bookEl.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+bookEl.addEventListener('touchend',e=>{
+  if(document.getElementById('menuView').classList.contains('show')) return;
+  const dx=e.changedTouches[0].clientX-sx;
+  const dy=e.changedTouches[0].clientY-sy;
+  if(Math.abs(dx)>50 && Math.abs(dx)>Math.abs(dy)*1.5){ if(dx<0) turn(1); else turn(-1); }
+});
+
+/* ===== SOMMAIRE ===== */
+const menuBtn=document.getElementById('menuBtn');
+const backBtn=document.getElementById('backBtn');
+const menuView=document.getElementById('menuView');
+const bookView=document.getElementById('bookView');
+const menuList=document.getElementById('menuList');
+
+function buildMenu(){
+  const groups={hero:[],fun:[],manners:[],family:[]};
+  STORIES.forEach((s,i)=>groups[s.cat].push({s,i}));
+  let html='';
+  for(const k of CATS){
+    html+=`<h3><span class="pip" style="background:${CCOL[k]}"></span>${CICON[k]} ${C[k]} (${groups[k].length})</h3><div class="cards">`;
+    groups[k].forEach(({s,i})=>{
+      html+=`<div class="scard" role="button" tabindex="0" data-i="${i}">
+        <span class="nn">N°${String(i+1).padStart(2,'0')}</span>
+        <span class="tt">${s.title}</span></div>`;
+    });
+    html+='</div>';
+  }
+  menuList.innerHTML=html;
+  menuList.querySelectorAll('.scard').forEach(c=>{
+    const go=()=>{
+      const n=parseInt(c.dataset.i,10);
+      if(!Number.isInteger(n)||n<0||n>=total) return;
+      idx=n;busy=false;closeMenu();render();
+    };
+    c.onclick=go;
+    c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}};
+  });
+}
+function openMenu(){stopSpeak();busy=false;menuView.classList.add('show');bookView.style.display='none';buildMenu();}
+function closeMenu(){menuView.classList.remove('show');bookView.style.display='flex';}
+menuBtn.onclick=openMenu;
+backBtn.onclick=closeMenu;
+
+/* étoiles d'ambiance */
+const starWrap=document.getElementById('stars');
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  for(let i=0;i<40;i++){
+    const d=document.createElement('div');
+    d.className='star-dot';
+    const sz=Math.random()*2.4+1;
+    d.style.width=d.style.height=sz+'px';
+    d.style.left=Math.random()*100+'%';
+    d.style.top=Math.random()*100+'%';
+    d.style.animationDelay=(Math.random()*3)+'s';
+    starWrap.appendChild(d);
+  }
+}
+
+render();
+</script>
+</body>
+</html>

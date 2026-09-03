@@ -1,6 +1,6 @@
 # 🌙 Night Audio Book
 
-> An interactive bedtime storybook with text-to-speech narration. Two volumes, 31 enchanting stories each, designed for children ages 6+, featuring the hero **Amine** — and in Tome 2, his little sister **Leyla**.
+> An interactive bedtime storybook with text-to-speech narration. Three volumes designed for children ages 6+, featuring the hero **Amine** — joined in Tome 2 by his little sister **Leyla**, and in Tome 3 by the youngest, **Yasmine**.
 
 ## 📖 Read Now
 
@@ -10,11 +10,14 @@
 ### ⭐ Tome 2 — with Leyla (GitHub Pages)
 **[👉 Open Tome 2 in your browser](https://theb2a.github.io/night-audio-book/livre-histoires-tome2.html)**
 
+### ⭐ Tome 3 — with Yasmine, fully illustrated (GitHub Pages)
+**[👉 Open Tome 3 in your browser](https://theb2a.github.io/night-audio-book/livre-histoires-tome3.html)**
+
 No installation needed — hosted directly on GitHub Pages!
 
 ### Alternative Links
-- **jsDelivr CDN**: https://cdn.jsdelivr.net/gh/theb2a/night-audio-book@main/livre-histoires.html (Tome 1) · https://cdn.jsdelivr.net/gh/theb2a/night-audio-book@main/livre-histoires-tome2.html (Tome 2)
-- **GitHub Raw**: https://raw.githubusercontent.com/theb2a/night-audio-book/main/livre-histoires.html (Tome 1) · https://raw.githubusercontent.com/theb2a/night-audio-book/main/livre-histoires-tome2.html (Tome 2)
+- **jsDelivr CDN**: [Tome 1](https://cdn.jsdelivr.net/gh/theb2a/night-audio-book@main/livre-histoires.html) · [Tome 2](https://cdn.jsdelivr.net/gh/theb2a/night-audio-book@main/livre-histoires-tome2.html) · [Tome 3](https://cdn.jsdelivr.net/gh/theb2a/night-audio-book@main/livre-histoires-tome3.html)
+- **GitHub Raw**: [Tome 1](https://raw.githubusercontent.com/theb2a/night-audio-book/main/livre-histoires.html) · [Tome 2](https://raw.githubusercontent.com/theb2a/night-audio-book/main/livre-histoires-tome2.html) · [Tome 3](https://raw.githubusercontent.com/theb2a/night-audio-book/main/livre-histoires-tome3.html)
 
 ## Features
 
@@ -87,6 +90,7 @@ Click **"Open the book in your browser"** at the top of this page. The book is s
 .
 ├── livre-histoires.html         # Tome 1 (single file, no build needed)
 ├── livre-histoires-tome2.html   # Tome 2, with Amine & Leyla (single file, no build needed)
+├── livre-histoires-tome3.html   # Tome 3, with Yasmine — 35 stories, 107 illustrations
 ├── GUIDE-RAPIDE.md              # Quick modification guide
 ├── RAPPORT-QA.md                # Tome 1 quality assurance & validation report
 ├── README-CONTINUATION.md       # Development notes & feature roadmap
@@ -121,6 +125,15 @@ A full second volume (`livre-histoires-tome2.html`), same structure as Tome 1 (3
 - Shows live reading progress while the story is narrated aloud
 - Always moves forward smoothly, even on browsers that don't support fine-grained playback events (e.g. iOS Safari)
 - Reaches 100% when the story finishes
+
+## Tome 3 — Amine, Leyla & Yasmine 👶
+
+A third volume (`livre-histoires-tome3.html`) with **35 stories**: 10 about family, 12 hero tales, 6 funny stories and 7 about good manners. It welcomes the youngest sister, **Yasmine**, born early — her arc runs across 14 stories, from the announcement of her birth to the day she comes home, told gently and reassuringly.
+
+🎨 **New: an illustration for every beat of the story**
+- Each story is split into moments, and **every moment has its own picture** (107 illustrations in all), shown between the paragraphs
+- Rewritten drawing toolkit: shared gradients, drop shadows, layered backdrops (night, hospital, bedroom, garden, kitchen, snow, forest) and parameterized characters — Amine, Leyla, Yasmine, mum, dad, grandma, the nurse
+- The story page scrolls through picture → text → picture → text, so the book reads like a real picture book
 
 ## Technology
 
